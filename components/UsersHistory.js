@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { List, Title, Text, Divider } from 'react-native-paper';
 
-
-const usersHistory = props => {
+export default class usersHistory extends Component {
+  render() {
     return (
       <View>
         <Title style={styles.title}>History</Title>
@@ -92,7 +92,8 @@ const usersHistory = props => {
         </ScrollView>
       </View>
     );
-};
+  }
+}
 
 const styles = StyleSheet.create({
   list: {
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
   title: {
       paddingTop: 40,
       marginTop: 0,
+      marginBottom: 0,
       top: 0,
       textAlign: 'center', 
       fontWeight: 'bold',
@@ -129,5 +131,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });  
-
-export default usersHistory;

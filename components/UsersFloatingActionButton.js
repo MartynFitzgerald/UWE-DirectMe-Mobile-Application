@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FAB, Portal, Provider } from 'react-native-paper';
 
-export default class UsersFloatingActionButton extends React.Component {
+export default class UsersFloatingActionButton extends Component {
     state = {
       open: false,
     };
