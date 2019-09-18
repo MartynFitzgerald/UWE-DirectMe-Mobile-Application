@@ -17,6 +17,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "android": {
+      "package": "map.display",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCu6_DCGV4g7LT66nIHrWaRu0dteV1lFeY"
+        }
+      }
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
