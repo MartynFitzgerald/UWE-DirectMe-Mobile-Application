@@ -12,9 +12,9 @@ export default class UsersAccount extends Component {
                 <Image style={styles.avatar}
                   source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
 
-                <Text style={styles.name}>Martyn Fitzgerald</Text>
-                <Text style={styles.userInfo}>Martyn2.Fitzgerald@live.uwe.ac.uk</Text>
-                <Text style={styles.userInfo}>Bristol, UK</Text>
+                <Text style={styles.name}>Martyn Fitzgerald </Text>
+                <Text style={styles.userInfo}>Martyn2.Fitzgerald@live.uwe.ac.uk </Text>
+                <Text style={styles.userInfo}>Bristol, UK </Text>
             </View>
           </View>
       </View>
@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
   },
   userInfo:{
     textAlign: 'center', 
+    width:'100%',
     fontSize:14,
     color:"#fff",
-    fontWeight:'600',
   },
 });
