@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import BottomNav from './components/BottomNavigation';
+import BottomNav from './views/BottomNavigation';
 
 export default function App() {
   

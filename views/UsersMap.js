@@ -7,7 +7,7 @@ export default class usersMap extends Component {
     render() {
         return (
             <View style={styles.mapContainer}>
-                <Title style={styles.title}>Name</Title>
+                <Title style={styles.title}>DirectMe</Title>
                 <MapView
                 //ither "google" for GoogleMaps, otherwise null or undefined to use the native map framework (MapKit in iOS and GoogleMaps in android).
                 provider={"google"} // remove if not using Google Maps
