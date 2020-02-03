@@ -7,15 +7,14 @@ import UsersAccount from './UsersAccount';
 import UsersMap from './UsersMap';
 import UsersFloatingActionButton from './UsersFloatingActionButton';
 
-const HomeRoute = () => <Text>Home</Text>;
+const HomeRoute = () => <Text>Information</Text>;
 
-const LibraryRoute = () => <Text>Library</Text>;
+const carParksRoute = () => <Text>Car Parks</Text>;
 
 const MapRoute = () => 
   <View>
     <UsersMap onGetLocation={this.usersMap}/>
     <UsersFloatingActionButton onGetFloatingActionButton={this.UsersFloatingActionButton}/>
-            
   </View>;
 
 const HistoryRoute = () => <UsersHistory onGetList={this.usersHistory}/>;
@@ -27,7 +26,7 @@ class Navigation extends React.Component {
       index: 2,
       routes: [
         { key: 'home', title: 'Home', icon: 'queue-music', color: '#7C26CB', focused:false   },
-        { key: 'library', title: 'Library', icon: 'album', color: '#4285F4', focused:false   },
+        { key: 'carParks', title: 'Car Parks', icon: 'queue-music', color: '#4285F4', focused:false   },
         { key: 'map', title: 'Map', icon: 'map', color: '#0F9D58', focused:true  },
         { key: 'history', title: 'History', icon: 'history', color: '#F4B400', focused:false   },
         { key: 'account', title: 'Account', icon: 'account-circle', color: '#DB4437', focused:false   },
@@ -38,7 +37,7 @@ class Navigation extends React.Component {
   
     _renderScene = BottomNavigation.SceneMap({
         home: HomeRoute,
-        library: LibraryRoute,
+        carParks: carParksRoute,
         map: MapRoute,
         history: HistoryRoute,
         account: AccountRoute,
@@ -52,7 +51,7 @@ class Navigation extends React.Component {
         renderScene={this._renderScene}
       />
     );
-      }
+    }
   }
 
   const styles = StyleSheet.create({
