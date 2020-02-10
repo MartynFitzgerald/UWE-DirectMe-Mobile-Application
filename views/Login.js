@@ -13,7 +13,9 @@ export default class LoginView extends Component {
           end={{ x: 0, y: 1 }}
           style={styles.LinearGradient}
         />
+
         <Image style={styles.logo} source={require('../assets/Logo.png')}/>
+
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
               placeholder="Email"
@@ -32,22 +34,38 @@ export default class LoginView extends Component {
             <Text>Forgot Password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}>
+        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
+          onPress={() => {
+            alert('You tapped the Login button!');
+          }}
+        >
           <Text>Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}>
+        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
+          onPress={() => {
+            alert('You tapped the Register button!');
+          }}
+        >
             <Text>Register</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.facebookButton]}>
+        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.facebookButton]}
+          onPress={() => {
+            alert('You tapped the Facebook button!');
+          }}
+        >
           <View style={styles.socialButtonContent}>
             <Image style={styles.icon} source={{uri: 'https://img.icons8.com/ios-glyphs/60/ffffff/facebook.png'}}/>
             <Text style={styles.loginText}>Log in with Facebook</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.googleButton]}>
+        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.googleButton]}
+          onPress={() => {
+            alert('You tapped the Google button!');
+          }}
+        >
           <View style={styles.socialButtonContent}>
             <Image style={styles.icon} source={{uri: 'https://img.icons8.com/color/48/000000/google-logo.png'}}/>
             <Text style={styles.googleText}>Sign in with Google</Text>
