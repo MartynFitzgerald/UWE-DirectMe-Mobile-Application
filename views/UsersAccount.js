@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       backgroundColor: '#DB4437',
       color: '#fff',
-      fontFamily: "Pacifico"
   },
   header:{
     backgroundColor: "#4285F4",

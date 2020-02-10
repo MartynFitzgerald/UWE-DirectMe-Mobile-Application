@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import BottomNav from './views/BottomNavigation';
+import Login from './views/Login';
 
 export default function App() {
   
@@ -9,7 +10,7 @@ export default function App() {
     <View style={styles.container}>
       {/* <ProgressBarAndroid /> */}
 
-      <BottomNav onGetBottomNav={this.BottomNav} />
+      <Login onGetBottomNav={this.Login} />
     </View>
     );
 }
