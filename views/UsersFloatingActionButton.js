@@ -14,9 +14,9 @@ export default class UsersFloatingActionButton extends Component {
                 <FAB.Group
                 style={styles.fab}
                 open={this.state.open}
-                icon={this.state.open ? 'today' : 'add'}
+                icon={this.state.open ? 'tag-plus' : 'tag-plus'}
                 actions={[
-                    { icon: 'add', onPress: () => console.log('Pressed add') },
+                    { icon: 'tag-plus', onPress: () => console.log('Pressed add') },
                     { icon: 'star', label: 'Star', onPress: () => console.log('Pressed star')},
                     { icon: 'email', label: 'Email', onPress: () => console.log('Pressed email') },
                     { icon: 'star', label: 'Remind', onPress: () => console.log('Pressed notifications') },

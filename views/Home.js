@@ -21,12 +21,12 @@ const HistoryRoute = () => <UsersHistory onGetList={this.usersHistory}/>;
 
 const AccountRoute = () => <UsersAccount onGetList={this.UsersAccount}/>;
 
-class Navigation extends React.Component {
+class HomeView extends React.Component {
     state = {
       index: 2,
       routes: [
-        { key: 'home', title: 'Home', icon: 'queue-music', color: '#7C26CB', focused:false   },
-        { key: 'carParks', title: 'Car Parks', icon: 'queue-music', color: '#4285F4', focused:false   },
+        { key: 'home', title: 'Home', icon: 'information', color: '#7C26CB', focused:false   },
+        { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#4285F4', focused:false   },
         { key: 'map', title: 'Map', icon: 'map', color: '#0F9D58', focused:true  },
         { key: 'history', title: 'History', icon: 'history', color: '#F4B400', focused:false   },
         { key: 'account', title: 'Account', icon: 'account-circle', color: '#DB4437', focused:false   },
