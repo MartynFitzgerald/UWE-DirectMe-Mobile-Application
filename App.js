@@ -1,21 +1,29 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import Login from './views/Login';
-import Home from './views/Home';
+import * as React from 'react';
+import { Button, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import LoginScreen from './views/Login';
+import HomeScreen from './views/Home';
+
+const Stack = createStackNavigator();
+
+function MyStack() {
+  return (
+    <Stack.Navigator 
+      initialRouteName="Login"
+      headerMode = 'none'
+      >
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  );
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <ProgressBarAndroid /> */}
-
-      <Login onGetLogin={this.Login} />
-    </View>
-    );
+    <NavigationContainer>
+      <MyStack/>
+    </NavigationContainer>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});

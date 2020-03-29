@@ -21,7 +21,7 @@ const HistoryRoute = () => <UsersHistory onGetList={this.usersHistory}/>;
 
 const AccountRoute = () => <UsersAccount onGetList={this.UsersAccount}/>;
 
-class HomeView extends React.Component {
+function HomeScreen({ navigation }) {
     state = {
       index: 2,
       routes: [
@@ -43,15 +43,13 @@ class HomeView extends React.Component {
         account: AccountRoute,
     });
 
-    render() {
-      return (
+    return (
       <BottomNavigation style={styles.nav}
         navigationState={this.state}
         onIndexChange={this._handleIndexChange}
         renderScene={this._renderScene}
       />
     );
-    }
   }
 
   const styles = StyleSheet.create({
@@ -61,4 +59,4 @@ class HomeView extends React.Component {
       },
     });  
   
-export default HomeView;
+export default HomeScreen;

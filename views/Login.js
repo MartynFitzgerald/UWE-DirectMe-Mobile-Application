@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default class LoginView extends Component {
-  render() {
-    return (
+function LoginScreen({ navigation }) {
+  return (
       <View style={styles.container}>
         <LinearGradient
           colors={['rgba(235,51,73,1)', 'rgba(244,92,67,1)']}
@@ -33,10 +32,8 @@ export default class LoginView extends Component {
             <Text>Forgot Password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
-          onPress={() => {
-            alert('You tapped the Login button!');
-          }}
+        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}     
+          onPress={() => navigation.navigate('Home')}
         >
           <Text>Login</Text>
         </TouchableOpacity>
@@ -72,8 +69,10 @@ export default class LoginView extends Component {
         </TouchableOpacity>
       </View>
     );
-  }
 }
+
+export default LoginScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
