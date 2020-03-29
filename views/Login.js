@@ -1,7 +1,6 @@
 import { React, Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Home from './views/Home';
 
 export default class LoginView extends Component {
   render() {
