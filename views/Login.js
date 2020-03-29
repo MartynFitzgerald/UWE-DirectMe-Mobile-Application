@@ -1,4 +1,4 @@
-import { React, Component } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -13,7 +13,7 @@ export default class LoginView extends Component {
           style={styles.LinearGradient}
         />
 
-        <Image style={styles.logo} source={require('../assets/Logo.png')}/>
+        <Image style={styles.logo} source={require('../assets/logo.png')}/>
 
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
