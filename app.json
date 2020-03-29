@@ -1,29 +1,21 @@
 {
   "expo": {
-    "name": "Martyn's App",
-    "slug": "MyReactNative",
+    "name": "DirectMe",
+    "slug": "Parking-Application-Mobile-Prototype",
     "privacy": "public",
-    "sdkVersion": "34.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    },
-    "android": {
-      "package": "map.display",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyCu6_DCGV4g7LT66nIHrWaRu0dteV1lFeY"
-        }
-      }
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -32,7 +24,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": true
     }
   }
 }
