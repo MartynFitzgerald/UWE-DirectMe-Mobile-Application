@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-function LoginScreen({ navigation }) {
+function RegisterScreen({ navigation }) {
   return (
       <View style={styles.container}>
         <LinearGradient
@@ -13,6 +13,20 @@ function LoginScreen({ navigation }) {
         />
 
         <Image style={styles.logo} source={require('../assets/logo.png')}/>
+
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.inputs}
+              placeholder="First Name"
+              keyboardType="default"
+              underlineColorAndroid='transparent'/>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.inputs}
+              placeholder="Second Name"
+              keyboardType="default"
+              underlineColorAndroid='transparent'/>
+        </View>
 
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
@@ -27,49 +41,26 @@ function LoginScreen({ navigation }) {
               secureTextEntry={true}
               underlineColorAndroid='transparent'/>
         </View>
-     
-        <TouchableOpacity style={styles.restoreButtonContainer}>
-            <Text>Forgot Password?</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}     
-          onPress={() => navigation.navigate('Home')}
-        >
-          <Text>Login</Text>
-        </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.inputs}
+              placeholder="Re-enter Password"
+              secureTextEntry={true}
+              underlineColorAndroid='transparent'/>
+        </View>
 
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
-          onPress={() => navigation.navigate('Register')}
+          onPress={() => {
+            alert('Registered!');
+          }}
         >
             <Text>Register</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.facebookButton]}
-          onPress={() => {
-            alert('You tapped the Facebook button!');
-          }}
-        >
-          <View style={styles.socialButtonContent}>
-            <Image style={styles.icon} source={{uri: 'https://img.icons8.com/ios-glyphs/60/ffffff/facebook.png'}}/>
-            <Text style={styles.loginText}>Log in with Facebook</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.googleButton]}
-          onPress={() => {
-            alert('You tapped the Google button!');
-          }}
-        >
-          <View style={styles.socialButtonContent}>
-            <Image style={styles.icon} source={{uri: 'https://img.icons8.com/color/48/000000/google-logo.png'}}/>
-            <Text style={styles.googleText}>Sign in with Google</Text>
-          </View>
         </TouchableOpacity>
       </View>
     );
 }
 
-export default LoginScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   container: {
