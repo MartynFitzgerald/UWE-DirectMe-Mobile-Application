@@ -61,4 +61,4 @@ class HomeView extends React.Component {
       },
     });  
   
-export default Navigation;
+export default HomeView;

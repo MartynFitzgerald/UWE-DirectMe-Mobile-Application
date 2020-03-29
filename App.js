@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Login from './views/Login';
+import Home from './views/Home';
 
 export default function App() {
   return (
