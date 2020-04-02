@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
       top: 0,
       textAlign: 'center', 
       fontWeight: 'bold',
-      backgroundColor: '#F4B400',
+      backgroundColor: '#EB3349',
       color: '#fff',
   },
   paid: {

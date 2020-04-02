@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
       top: 0,
       textAlign: 'center', 
       fontWeight: 'bold',
-      backgroundColor: '#DB4437',
+      backgroundColor: '#EB3349',
       color: '#fff',
   },
   header:{

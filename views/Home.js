@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { BottomNavigation, Text, TextInput  } from 'react-native-paper';
+import { BottomNavigation } from 'react-native-paper';
 
 import Information from './Information';
 import CarParks from './CarParks';
@@ -27,11 +27,11 @@ export default class HomeScreen extends React.Component {
     state = {
       index: 2,
       routes: [
-        { key: 'info', title: 'Info', icon: 'home', color: '#7C26CB', focused:false   },
-        { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#4285F4', focused:false   },
-        { key: 'map', title: 'Map', icon: 'map', color: '#0F9D58', focused:true  },
-        { key: 'history', title: 'History', icon: 'history', color: '#F4B400', focused:false   },
-        { key: 'account', title: 'Account', icon: 'account-circle', color: '#DB4437', focused:false   },
+        { key: 'info', title: 'Info', icon: 'information', color: '#EB3349', focused:false   },
+        { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false   },
+        { key: 'map', title: 'Map', icon: 'map', color: '#EB3349', focused:true  },
+        { key: 'history', title: 'History', icon: 'history', color: '#EB3349', focused:false   },
+        { key: 'account', title: 'Account', icon: 'account-circle', color: '#EB3349', focused:false   },
       ],
     };
 
@@ -55,9 +55,3 @@ export default class HomeScreen extends React.Component {
       );
     }
   }
-  const styles = StyleSheet.create({
-      nav: {
-          width: '100%',
-          height: '100%',
-      },
-    });  
