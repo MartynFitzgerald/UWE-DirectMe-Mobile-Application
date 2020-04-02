@@ -33,13 +33,13 @@ function LoginScreen({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}     
-          onPress={() => navigation.navigate('Home')}
+          onPress={(e) => navigation.navigate('Home')}
         >
           <Text>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
-          onPress={() => navigation.navigate('Register')}
+          onPress={(e) => navigation.navigate('Register')}
         >
             <Text>Register</Text>
         </TouchableOpacity>

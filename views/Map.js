@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Title } from 'react-native-paper';
 import MapView from 'react-native-maps';
 
-export default class usersMap extends Component {
+export default class Map extends Component {
     render() {
         return (
             <View style={styles.mapContainer}>

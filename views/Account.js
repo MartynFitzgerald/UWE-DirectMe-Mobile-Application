@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, ScrollView, Slider } from 'react-native';
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 
-export default class UsersAccount extends Component {
+export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {

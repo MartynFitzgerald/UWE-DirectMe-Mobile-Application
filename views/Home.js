@@ -2,10 +2,10 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { BottomNavigation, Text, TextInput  } from 'react-native-paper';
 
-import UsersHistory from './UsersHistory';
-import UsersAccount from './UsersAccount';
-import UsersMap from './UsersMap';
-import UsersFloatingActionButton from './UsersFloatingActionButton';
+import History from './History';
+import Account from './Account';
+import Map from './Map';
+import FloatingActionButton from './FloatingActionButton';
 
 const HomeRoute = () => <Text>Information</Text>;
 
@@ -13,17 +13,17 @@ const carParksRoute = () => <Text>Car Parks</Text>;
 
 const MapRoute = () => 
   <View>
-    <UsersMap onGetLocation={this.usersMap}/>
-    <UsersFloatingActionButton onGetFloatingActionButton={this.UsersFloatingActionButton}/>
+    <Map onGetLocation={this.Map}/>
+    <FloatingActionButton onGetFloatingActionButton={this.FloatingActionButton}/>
   </View>;
 
-const HistoryRoute = () => <UsersHistory onGetList={this.usersHistory}/>;
+const HistoryRoute = () => <History onGetList={this.History}/>;
 
-const AccountRoute = () => <UsersAccount onGetList={this.UsersAccount}/>;
+const AccountRoute = () => <Account onGetList={this.Account}/>;
 
-function HomeScreen({ navigation }) {
+export default class HomeScreen extends React.Component {
     state = {
-      index: 2,
+      index: 0,
       routes: [
         { key: 'home', title: 'Home', icon: 'information', color: '#7C26CB', focused:false   },
         { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#4285F4', focused:false   },
@@ -43,20 +43,19 @@ function HomeScreen({ navigation }) {
         account: AccountRoute,
     });
 
-    return (
-      <BottomNavigation style={styles.nav}
-        navigationState={this.state}
-        onIndexChange={this._handleIndexChange}
-        renderScene={this._renderScene}
-      />
-    );
+    render() {
+      return (
+        <BottomNavigation
+          navigationState={this.state}
+          onIndexChange={this._handleIndexChange}
+          renderScene={this._renderScene}
+        />
+      );
+    }
   }
-
   const styles = StyleSheet.create({
       nav: {
           width: '100%',
           height: '100%',
       },
     });  
-  
-export default HomeScreen;

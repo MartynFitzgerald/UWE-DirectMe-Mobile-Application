@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { List, Title, Text, Divider } from 'react-native-paper';
 
-export default class usersHistory extends Component {
+export default class History extends Component {
   render() {
     return (
       <View>
