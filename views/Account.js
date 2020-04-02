@@ -53,13 +53,13 @@ export default class Account extends Component {
             onValueChange={this.change.bind(this)}
             value={sliderValue}
           />
-          <Divider />
+          <Divider/>
           <List.Subheader>Privacy</List.Subheader>
           <List.Item
             title="Location Settings"
             right={() => <Text style={styles.paid}>PAID</Text>}
             />
-            <Divider />
+            <Divider/>
             <List.Subheader>User Information</List.Subheader>
             <List.Item
               title="First Name"
@@ -77,7 +77,7 @@ export default class Account extends Component {
               title="Profile Picture"
               right={() => <Text>Female 2</Text>}
             />
-            <Divider />
+            <Divider/>
             <List.Subheader>System</List.Subheader>
             <List.Item
               title="Sign Out"

@@ -24,7 +24,7 @@ export default class History extends Component {
               right={() => <Text style={styles.unpaid}>UNPAID</Text>}
               //right={() => <Button height={25} style={styles.unpaid} disabled={true} mode="contained">UNPAID</Button>}
           />
-          <Divider />
+          <Divider/>
           <List.Subheader>10th September 2019</List.Subheader>
           <List.Item
             title="Millennium Square Car Park"
@@ -40,7 +40,7 @@ export default class History extends Component {
               right={() => <Text style={styles.paid}>PAID</Text>}
               //right={() => <Button height={25} style={styles.unpaid} disabled={true} mode="contained">UNPAID</Button>}
             />
-            <Divider />
+            <Divider/>
             <List.Subheader>10th September 2019</List.Subheader>
             <List.Item
               title="Millennium Square Car Park"
@@ -56,7 +56,7 @@ export default class History extends Component {
               right={() => <Text style={styles.paid}>PAID</Text>}
               //right={() => <Button height={25} style={styles.unpaid} disabled={true} mode="contained">UNPAID</Button>}
             />
-            <Divider />
+            <Divider/>
             <List.Subheader>10th September 2019</List.Subheader>
             <List.Item
               title="Millennium Square Car Park"
@@ -72,7 +72,7 @@ export default class History extends Component {
                 right={() => <Text style={styles.paid}>PAID</Text>}
                 //right={() => <Button height={25} style={styles.unpaid} disabled={true} mode="contained">UNPAID</Button>}
               />
-              <Divider />
+              <Divider/>
               <List.Subheader>10th September 2019</List.Subheader>
               <List.Item
                 title="Millennium Square Car Park"
