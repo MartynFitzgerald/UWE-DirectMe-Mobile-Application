@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, ScrollView, Image, Linking, Button  } from 'react-native';
 import { List, Title, Divider,Text, Paragraph  } from 'react-native-paper';
 
 export default class History extends Component {
@@ -25,7 +25,8 @@ export default class History extends Component {
             <Divider/>
             <List.Item
               title="Contact Email:"
-              right={() => <Text>martyn2.fitzgerald@live.uwe.ac.uk</Text>}
+              right={() => <Text style={styles.EmailText} onPress={() => Linking.openURL('mailto:martyn2.fitzgerald@live.uwe.ac.uk') } >martyn2.fitzgerald@live.uwe.ac.uk</Text>}
+       
             />
             <List.Item
               title="Application Version:"
@@ -64,5 +65,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'relative',
     marginTop: 15,
+  },
+  EmailText: {
+    color: '#0000EE',
+    textDecorationLine: 'underline'
   },
 });  
