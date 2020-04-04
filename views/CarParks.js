@@ -1,30 +1,52 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, ActivityIndicator, FlatList } from 'react-native';
 import { List, Title, Text, Button } from 'react-native-paper';
 
 export default class History extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: [],
+      isLoading: true
+    };
+  }
+
+  componentDidMount() {
+    fetch('http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/api/carparks/')
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({ data: json.result });
+        //console.log(json.result)
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
+  }
+
   render() {
+    const { data, isLoading } = this.state;
+
     return (
       <View>
         <Title style={styles.title}>Car Parks</Title>
-        <ScrollView>
-          <List.Section style={styles.list}>
-            <List.Item
-              title="Trenchard Street Car Park"
-              description="BS34 9AR"
-              left={() => <List.Icon color="#4285F4" icon="parking" />}
-              right={() => <List.Icon color="#4285F4" icon="chevron-right" />}
-              //onPress={(e) => navigation.navigate('Register')}
+          {isLoading ? <ActivityIndicator/> : (
+            <FlatList 
+              style={styles.list}
+              data={data}
+              keyExtractor={({ id }, index) => id}
+              renderItem={({ item }) => (
+                <List.Item
+                  title={item.name}
+                  description={"Lat: " + item.latitude + " Long: " + item.longitude}
+                  left={() => <List.Icon color="#4285F4" icon="parking" />}
+                  right={() => <List.Icon icon="chevron-right" />}
+                  //onPress={(e) => navigation.navigate('Register')}
+                />
+              )}
             />
-              <List.Item
-                title="NCP Car Park Bristol Broadmead"
-                description="BS34 9AR"
-                left={() => <List.Icon color="#4285F4" icon="parking" />}
-                right={() => <List.Icon color="#4285F4" icon="chevron-right" />}
-                //onPress={(e) => navigation.navigate('Register')}
-            />
-        </List.Section>
-        </ScrollView>
+          )}
       </View>
     );
   }
