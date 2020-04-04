@@ -1,8 +1,21 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 function LoginScreen({ navigation }) {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [emailAddress, setEmailAddress] = useState([]);
+  const [password, setPassword] = useState([]);
+
+  useEffect(() => {
+    fetch('https://reactnative.dev/movies.json')
+      .then((response) => response.json())
+      .then((json) => setData(json.movies))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  });
+
   return (
       <View style={styles.container}>
         <LinearGradient
@@ -18,6 +31,7 @@ function LoginScreen({ navigation }) {
           <TextInput style={styles.inputs}
               placeholder="Email"
               keyboardType="email-address"
+              onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
               underlineColorAndroid='transparent'/>
         </View>
         
@@ -25,6 +39,7 @@ function LoginScreen({ navigation }) {
           <TextInput style={styles.inputs}
               placeholder="Password"
               secureTextEntry={true}
+              onChangeText={(password) => setPassword(password)}
               underlineColorAndroid='transparent'/>
         </View>
      
@@ -33,7 +48,10 @@ function LoginScreen({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}     
-          onPress={(e) => navigation.navigate('Home')}
+          //onPress={(e) => navigation.navigate('Home')}
+          onPress={() => {
+            alert(emailAddress + password);
+          }}
         >
           <Text>Login</Text>
         </TouchableOpacity>
