@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, Image, Linking, Button  } from 'react-native';
+import { StyleSheet, View, ScrollView, Image, Linking  } from 'react-native';
 import { List, Title, Divider,Text, Paragraph  } from 'react-native-paper';
 
 export default class History extends Component {
@@ -16,21 +16,21 @@ export default class History extends Component {
           <List.Section style={styles.list}>
             <Divider/>
             <List.Subheader>About Us</List.Subheader>
-            <Paragraph style={styles.text}>You also lose the ability to set up a default font for an entire subtree. Meanwhile, fontFamily only accepts a single font name, which is different from font-family in CSS. The recommended way to use consistent fonts and sizes across your application is to create a component MyAppText that includes them and use this component across your app. You can also use this component to make more specific components like MyAppHeaderText for other kinds of text</Paragraph>
+            <Paragraph style={styles.text}>The focus behind this final year computing project is to make parking easier, and dynamic for the user. The idea works by using the external data that will be displayed in our application programming interface (API) which will be combined with the user’s information that has been specified previously in the application. This information will then be inserted into an algorithm that will determine what is the best location to park their vehicle within a radius of the postcode, geo-location, or street name given.</Paragraph>
             <Divider/>
             <List.Item
               title="Author:"
-              right={() => <Text>Martyn Fitzgerald</Text>}
+              right={() => <Text style={styles.rightText} >Martyn Fitzgerald</Text>}
             />
             <Divider/>
             <List.Item
               title="Contact Email:"
-              right={() => <Text style={styles.EmailText} onPress={() => Linking.openURL('mailto:martyn2.fitzgerald@live.uwe.ac.uk') } >martyn2.fitzgerald@live.uwe.ac.uk</Text>}
-       
+              right={() => <Text style={styles.rightText, styles.EmailText} onPress={() => Linking.openURL('mailto:martyn2.fitzgerald@live.uwe.ac.uk') } >martyn2.fitzgerald@live.uwe.ac.uk</Text>}
             />
+            <Divider/>
             <List.Item
               title="Application Version:"
-              right={() => <Text>1.0.0</Text>}
+              right={() => <Text style={styles.rightText} >1.0.0</Text>}
             />
           <Divider/>
         </List.Section>
@@ -59,6 +59,9 @@ const styles = StyleSheet.create({
       textAlign: 'justify', 
       margin: 15,
   },
+  rightText: {
+    textAlignVertical: 'center',
+  },
   logo: {
     width: '100%',
     height: 100,
@@ -67,6 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   EmailText: {
+    textAlignVertical: 'center',
     color: '#0000EE',
     textDecorationLine: 'underline'
   },
