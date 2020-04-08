@@ -1,22 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-function LoginScreen({ navigation }) {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [emailAddress, setEmailAddress] = useState([]);
-  const [password, setPassword] = useState([]);
+export default class LoginScreen extends React.Component {
+  constructor(props) {
+    super(props);
 
-  useEffect(() => {
-    fetch('https://reactnative.dev/movies.json')
-      .then((response) => response.json())
-      .then((json) => setData(json.movies))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  });
-
-  return (
+    this.state = {
+      emailAddress: '',
+      password: ''
+    };
+  }
+  check_credential(emailAddress, password) {
+    return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
+     .then((response) => response.json())
+     .then((json) => {
+       if(json.result[0].email_address == emailAddress && json.result[0].password == password)
+       {
+         return json.result.length;
+       }
+     })
+     .catch((error) => console.error(error));
+  }
+  validateEmail = (emailAddress) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(emailAddress);
+  };
+  validatePassword = (password) => {
+    // 8-120 chars && No spaces && One a-z char && One A-Z char && One digit && One of the folowing chars: !@#$%^&*()-=¡£_+`~.,<>/?;:'"|[]{}
+    var re = /^.*(?=.{8,120})(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\!\@\#\$\%\^\&\*\(\)\-\=\¡\£\_\+\`\~\.\,\<\>\/\?\;\:\'\"\\\|\[\]\{\}]).*$/;
+    return re.test(password);
+  };
+  render() {
+    const { emailAddress, password } = this.state;
+    return (
       <View style={styles.container}>
         <LinearGradient
           colors={['rgba(235,51,73,1)', 'rgba(244,92,67,1)']}
@@ -31,7 +48,7 @@ function LoginScreen({ navigation }) {
           <TextInput style={styles.inputs}
               placeholder="Email"
               keyboardType="email-address"
-              onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
+              onChangeText={(emailAddress) => this.setState({emailAddress})}
               underlineColorAndroid='transparent'/>
         </View>
         
@@ -39,18 +56,32 @@ function LoginScreen({ navigation }) {
           <TextInput style={styles.inputs}
               placeholder="Password"
               secureTextEntry={true}
-              onChangeText={(password) => setPassword(password)}
+              onChangeText={(password) => this.setState({password})}
               underlineColorAndroid='transparent'/>
         </View>
-     
+    
         <TouchableOpacity style={styles.restoreButtonContainer}>
             <Text>Forgot Password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}     
-          //onPress={(e) => navigation.navigate('Home')}
-          onPress={() => {
-            alert(emailAddress + password);
+        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}    
+          onPress={async () => {
+            if (!this.validateEmail(emailAddress)) {
+              alert(`The email provided is invalid, please try again.`);
+              return;
+            }
+            if (!this.validatePassword(password)) {
+              alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
+              return;
+            }
+            //Check credential
+            if(await this.check_credential(emailAddress, password)) {
+              alert(`Succesfully logged in.`);
+              this.props.navigation.navigate('Home');
+              return;
+            } else {
+              //Failed
+            }
           }}
         >
           <Text>Login</Text>
@@ -85,9 +116,8 @@ function LoginScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     );
+  }
 }
-
-export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
