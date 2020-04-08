@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default class LoginScreen extends React.Component {
@@ -7,6 +7,7 @@ export default class LoginScreen extends React.Component {
     super(props);
 
     this.state = {
+      data: [],
       emailAddress: '',
       password: ''
     };
@@ -17,6 +18,9 @@ export default class LoginScreen extends React.Component {
      .then((json) => {
        if(json.result[0].email_address == emailAddress && json.result[0].password == password)
        {
+         this.setState({ data: json.result[0] }, () => {
+          console.log(this.state.data, 'data');
+        }); 
          return json.result.length;
        }
      })
@@ -32,7 +36,7 @@ export default class LoginScreen extends React.Component {
     return re.test(password);
   };
   render() {
-    const { emailAddress, password } = this.state;
+    const { data, emailAddress, password } = this.state;
     return (
       <View style={styles.container}>
         <LinearGradient
@@ -74,13 +78,20 @@ export default class LoginScreen extends React.Component {
               alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
               return;
             }
+            
             //Check credential
             if(await this.check_credential(emailAddress, password)) {
-              alert(`Succesfully logged in.`);
+              await AsyncStorage.setItem('fName', `${data.fName}`);
+              await AsyncStorage.setItem('lName', `${data.lName}`);
+              await AsyncStorage.setItem('emailAddress', `${data.email_address}`);
+              await AsyncStorage.setItem('phoneNumber', `${data.phone_number}`);
+              await AsyncStorage.setItem('darkmode', `${data.darkmode}`);
+              await AsyncStorage.setItem('radius', `${data.radius}`);
               this.props.navigation.navigate('Home');
               return;
             } else {
-              //Failed
+              alert(`Failed to log in! Please check the credentials submitted.`);
+              return;
             }
           }}
         >
@@ -88,7 +99,7 @@ export default class LoginScreen extends React.Component {
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
-          onPress={(e) => navigation.navigate('Register')}
+          onPress={(e) => this.props.navigation.navigate('Register')}
         >
             <Text>Register</Text>
         </TouchableOpacity>
