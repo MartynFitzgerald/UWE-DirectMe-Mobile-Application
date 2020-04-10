@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, ScrollView, Slider } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage } from 'react-native';
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 
 export default class Account extends Component {
@@ -7,7 +7,24 @@ export default class Account extends Component {
     super(props);
     this.state = {
       value: 50,
+      fName: '',
+      lName: '',
+      emailAddress: '',
+      phoneNumber: '',
+      darkmode: '',
+      radius: ''
     };
+  }
+
+  componentDidMount() {
+    async () => {
+      this.setState({ fName: await AsyncStorage.getItem('@fName',) });
+      this.setState({ lName: await AsyncStorage.getItem('@lName',) });
+      this.setState({ emailAddress: await AsyncStorage.getItem('@emailAddress',) });
+      this.setState({ phoneNumber: await AsyncStorage.getItem('@phoneNumber',) });
+      this.setState({ darkmode: await AsyncStorage.getItem('@darkmode',) });
+      this.setState({ radius: await AsyncStorage.getItem('@radius',) });
+    }
   }
 
   change(value) {
@@ -22,9 +39,7 @@ export default class Account extends Component {
   };
 
   render() {
-    const { isSwitchOn } = this.state;
-    const { sliderValue} = this.state;
-
+    const { slidervalue, fName, lName, emailAddress, phoneNumber, radius, darkmode } = this.state;
     return (
       <View style={styles.container}>
         <Title style={styles.title}>Account</Title>
@@ -33,7 +48,7 @@ export default class Account extends Component {
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
                   source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
-                <Text style={styles.name}>Martyn Fitzgerald </Text>
+                <Text style={styles.name}>{this.state.fName} Fitzgerald </Text>
                 <Text style={styles.userInfo}>Martyn2.Fitzgerald@live.uwe.ac.uk </Text>
                 <Text style={styles.userInfo}>Bristol, UK </Text>
             </View>
@@ -42,16 +57,16 @@ export default class Account extends Component {
             <List.Subheader>General Settings</List.Subheader>
             <List.Item
               title="Dark Mode"
-              right={() => <Switch value={isSwitchOn} onValueChange={() => { this.setState({ isSwitchOn: !isSwitchOn }); }}/>}
+              right={() => <Switch value={darkmode} onValueChange={() => { this.setState({ darkmode: !darkmode }); }}/>}
           />
           <List.Item
             title="Radius"
           />
           <Slider
             step={1}
-            maximumValue={100}
+            maximumValue={2500}
             onValueChange={this.change.bind(this)}
-            value={sliderValue}
+            value={slidervalue}
           />
           <Divider/>
           <List.Subheader>Privacy</List.Subheader>

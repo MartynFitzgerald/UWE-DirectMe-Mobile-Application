@@ -13,7 +13,7 @@ export default class History extends Component {
   }
 
   componentDidMount() {
-    fetch('http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/api/carparks/')
+    fetch('http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/CARPARKS/')
       .then((response) => response.json())
       .then((json) => {
         this.setState({ data: json.result });

@@ -74,7 +74,7 @@ export default class RegisterScreen extends React.Component {
             style={styles.LinearGradient}
           />
 
-          <Image style={styles.logo} source={require('../assets/logo.png')}/>
+          <Image style={styles.logo} source={require('../assets/Logo.png')}/>
 
           <View style={styles.inputContainer}>
             <TextInput style={styles.inputs}

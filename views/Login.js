@@ -18,9 +18,7 @@ export default class LoginScreen extends React.Component {
      .then((json) => {
        if(json.result[0].email_address == emailAddress && json.result[0].password == password)
        {
-         this.setState({ data: json.result[0] }, () => {
-          console.log(this.state.data, 'data');
-        }); 
+         this.setState({ data: json.result[0] });
          return json.result.length;
        }
      })
@@ -46,7 +44,7 @@ export default class LoginScreen extends React.Component {
           style={styles.LinearGradient}
         />
 
-        <Image style={styles.logo} source={require('../assets/logo.png')}/>
+        <Image style={styles.logo} source={require('../assets/Logo.png')}/>
 
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
@@ -81,12 +79,12 @@ export default class LoginScreen extends React.Component {
             
             //Check credential
             if(await this.check_credential(emailAddress, password)) {
-              await AsyncStorage.setItem('fName', `${data.fName}`);
-              await AsyncStorage.setItem('lName', `${data.lName}`);
-              await AsyncStorage.setItem('emailAddress', `${data.email_address}`);
-              await AsyncStorage.setItem('phoneNumber', `${data.phone_number}`);
-              await AsyncStorage.setItem('darkmode', `${data.darkmode}`);
-              await AsyncStorage.setItem('radius', `${data.radius}`);
+              await AsyncStorage.setItem('@fName', `${data.fName}`);
+              await AsyncStorage.setItem('@lName', `${data.lName}`);
+              await AsyncStorage.setItem('@emailAddress', `${data.email_address}`);
+              await AsyncStorage.setItem('@phoneNumber', `${data.phone_number}`);
+              await AsyncStorage.setItem('@darkmode', `${data.darkmode}`);
+              await AsyncStorage.setItem('@radius', `${data.radius}`);
               this.props.navigation.navigate('Home');
               return;
             } else {
