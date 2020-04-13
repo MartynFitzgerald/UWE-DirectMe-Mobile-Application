@@ -27,8 +27,10 @@ This is a diagram that shows how the system shall be used.
 1. If testing Android device, connect to the computer through a USB cable.
 2. Install Git (https://gitforwindows.org/).
 3. Install Node.js 12+ LTS (https://nodejs.org/en/download/).
-4. Open Command Prompt.
-5. Install Expo CLI.
+4. Setup DirectMe API (https://gitlab.uwe.ac.uk/m4-fitzgerald/DirectMe-API).
+5. Setup DirectMe Worker (https://gitlab.uwe.ac.uk/m4-fitzgerald/DirectMe-Worker).
+6. Open Command Prompt.
+7. Install Expo CLI.
 ```bash
 npm install -g expo-cli
 ```
