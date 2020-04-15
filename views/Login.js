@@ -12,7 +12,7 @@ export default class LoginScreen extends React.Component {
       password: ''
     };
   }
-  check_credential(emailAddress, password) {
+  checkCredential (emailAddress, password) {
     return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
      .then((response) => response.json())
      .then((json) => {
@@ -23,7 +23,20 @@ export default class LoginScreen extends React.Component {
        }
      })
      .catch((error) => console.error(error));
-  }
+  };
+  storeData = async (user_id, fName, lName, email_address, phone_number, darkmode, radius) => {
+    try {
+      await AsyncStorage.setItem('@id', `${user_id}`);
+      await AsyncStorage.setItem('@fName', `${fName}`);
+      await AsyncStorage.setItem('@lName', `${lName}`);
+      await AsyncStorage.setItem('@emailAddress', `${email_address}`);
+      await AsyncStorage.setItem('@phoneNumber', `${phone_number}`);
+      await AsyncStorage.setItem('@darkmode', `${darkmode}`);
+      await AsyncStorage.setItem('@radius', `${radius}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   validateEmail = (emailAddress) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(emailAddress);
@@ -78,14 +91,20 @@ export default class LoginScreen extends React.Component {
             }
             
             //Check credential
-            if(await this.check_credential(emailAddress, password)) {
-              await AsyncStorage.setItem('@fName', `${data.fName}`);
-              await AsyncStorage.setItem('@lName', `${data.lName}`);
-              await AsyncStorage.setItem('@emailAddress', `${data.email_address}`);
-              await AsyncStorage.setItem('@phoneNumber', `${data.phone_number}`);
-              await AsyncStorage.setItem('@darkmode', `${data.darkmode}`);
-              await AsyncStorage.setItem('@radius', `${data.radius}`);
+            if(await this.checkCredential(emailAddress, password)) {
+              await this.storeData(data.user_id, data.fName,data.lName, data.email_address, data.phone_number, data.darkmode, data.radius);
               Keyboard.dismiss();
+              //Output All Keys And Values
+              AsyncStorage.getAllKeys((err, keys) => {
+                AsyncStorage.multiGet(keys, (error, stores) => {
+                  stores.map((result, i, store) => {
+                    console.log({ [store[i][0]]: store[i][1] });
+                    return true;
+                  });
+                });
+              });
+
+              
               this.props.navigation.navigate('Home');
               return;
             } else {

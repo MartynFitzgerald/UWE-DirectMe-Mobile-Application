@@ -11,20 +11,36 @@ export default class Account extends Component {
       lName: '',
       emailAddress: '',
       phoneNumber: '',
-      darkmode: '',
-      radius: ''
+      darkmode: 0,
+      radius: 0
     };
   }
 
-  componentDidMount() {
-    async () => {
-      this.setState({ fName: await AsyncStorage.getItem('@fName',) });
-      this.setState({ lName: await AsyncStorage.getItem('@lName',) });
-      this.setState({ emailAddress: await AsyncStorage.getItem('@emailAddress',) });
-      this.setState({ phoneNumber: await AsyncStorage.getItem('@phoneNumber',) });
-      this.setState({ darkmode: await AsyncStorage.getItem('@darkmode',) });
-      this.setState({ radius: await AsyncStorage.getItem('@radius',) });
+  _retrieveData = async () => {
+    try {
+      const fName = await AsyncStorage.getItem('@fName');
+      const lName = await AsyncStorage.getItem('@lName');
+      const emailAddress = await AsyncStorage.getItem('@emailAddress');
+      const phoneNumber = await AsyncStorage.getItem('@phoneNumber');
+      const darkmode = parseInt(await AsyncStorage.getItem('@darkmode'));
+      const radius = parseFloat(await AsyncStorage.getItem('@radius'));
+
+      if (fName !== null || lName !== null || emailAddress !== null || phoneNumber !== null || darkmode !== null || radius !== null) {
+        // We have data!!
+        this.setState({ fName: fName });
+        this.setState({ lName: lName });
+        this.setState({ emailAddress: emailAddress });
+        this.setState({ phoneNumber: phoneNumber });
+        this.setState({ darkmode: darkmode });
+        this.setState({ radius: radius });
+      }
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  componentDidMount() {
+    this._retrieveData();
   }
 
   change(value) {
@@ -39,7 +55,7 @@ export default class Account extends Component {
   };
 
   render() {
-    const { slidervalue, fName, lName, emailAddress, phoneNumber, radius, darkmode } = this.state;
+    const { fName, lName, emailAddress, phoneNumber, radius, darkmode } = this.state;
     return (
       <View style={styles.container}>
         <Title style={styles.title}>Account</Title>
@@ -48,8 +64,8 @@ export default class Account extends Component {
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
                   source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
-                <Text style={styles.name}>{this.state.fName} Fitzgerald </Text>
-                <Text style={styles.userInfo}>Martyn2.Fitzgerald@live.uwe.ac.uk </Text>
+                <Text style={styles.name}>{fName} {lName} </Text>
+                <Text style={styles.userInfo}>{emailAddress}</Text>
                 <Text style={styles.userInfo}>Bristol, UK </Text>
             </View>
           </View>
@@ -66,7 +82,7 @@ export default class Account extends Component {
             step={1}
             maximumValue={2500}
             onValueChange={this.change.bind(this)}
-            value={slidervalue}
+            value={radius}
           />
           <Divider/>
           <List.Subheader>Privacy</List.Subheader>
@@ -78,15 +94,19 @@ export default class Account extends Component {
             <List.Subheader>User Information</List.Subheader>
             <List.Item
               title="First Name"
-              right={() => <Text>Martyn</Text>}
+              right={() => <Text>{fName}</Text>}
             />
             <List.Item
               title="Last Name"
-              right={() => <Text>Fitzgerald</Text>}
+              right={() => <Text>{lName}</Text>}
             />
             <List.Item
               title="Email"
-              right={() => <Text>martyn2.fitzgerald@live.uwe.ac.uk</Text>}
+              right={() => <Text>{emailAddress}</Text>}
+            />
+            <List.Item
+              title="Phone Number"
+              right={() => <Text>{phoneNumber}</Text>}
             />
             <List.Item
               title="Profile Picture"
