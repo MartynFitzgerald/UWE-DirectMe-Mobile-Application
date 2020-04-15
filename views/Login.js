@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, AsyncStorage, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default class LoginScreen extends React.Component {
@@ -85,6 +85,7 @@ export default class LoginScreen extends React.Component {
               await AsyncStorage.setItem('@phoneNumber', `${data.phone_number}`);
               await AsyncStorage.setItem('@darkmode', `${data.darkmode}`);
               await AsyncStorage.setItem('@radius', `${data.radius}`);
+              Keyboard.dismiss();
               this.props.navigation.navigate('Home');
               return;
             } else {

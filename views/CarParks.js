@@ -35,11 +35,11 @@ export default class History extends Component {
             <FlatList 
               style={styles.list}
               data={data}
-              keyExtractor={({ id }, index) => id}
+              keyExtractor={ item => item.car_park_id.toString()}
               renderItem={({ item }) => (
                 <List.Item
                   title={item.name}
-                  description={"Lat: " + item.latitude + " Long: " + item.longitude}
+                  description={item.address}
                   left={() => <List.Icon color="#4285F4" icon="parking" />}
                   right={() => <List.Icon icon="chevron-right" />}
                   //onPress={(e) => navigation.navigate('Register')}
