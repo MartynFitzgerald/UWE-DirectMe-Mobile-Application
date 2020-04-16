@@ -15,8 +15,6 @@ export default class Account extends Component {
     try {
       const user = JSON.parse(await AsyncStorage.getItem('@DirectMe:user'));
       if (user !== null) {
-        // We have data!!
-        console.log(user);
         this.setState({ user: user });
       }
     } catch (error) {
@@ -35,9 +33,6 @@ export default class Account extends Component {
       };
     });
   }
-  state = {
-    isSwitchOn: false,
-  };
 
   render() {
     const { user } = this.state;
