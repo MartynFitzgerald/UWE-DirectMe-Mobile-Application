@@ -7,35 +7,25 @@ export default class LoginScreen extends React.Component {
     super(props);
 
     this.state = {
-      data: [],
+      user: [],
       emailAddress: '',
       password: ''
     };
   }
-  checkCredential (emailAddress, password) {
+  async checkCredential (emailAddress, password) {
     return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
      .then((response) => response.json())
      .then((json) => {
        if(json.result[0].email_address == emailAddress && json.result[0].password == password)
        {
-         this.setState({ data: json.result[0] });
+         this.setState({ user: json.result[0] });
          return json.result.length;
        }
      })
      .catch((error) => console.error(error));
   };
-  storeData = async (user_id, fName, lName, email_address, phone_number, darkmode, radius) => {
-    try {
-      await AsyncStorage.setItem('@id', `${user_id}`);
-      await AsyncStorage.setItem('@fName', `${fName}`);
-      await AsyncStorage.setItem('@lName', `${lName}`);
-      await AsyncStorage.setItem('@emailAddress', `${email_address}`);
-      await AsyncStorage.setItem('@phoneNumber', `${phone_number}`);
-      await AsyncStorage.setItem('@darkmode', `${darkmode}`);
-      await AsyncStorage.setItem('@radius', `${radius}`);
-    } catch (error) {
-      console.error(error);
-    }
+  async setStorage () {
+    await AsyncStorage.setItem('@DirectMe:user', JSON.stringify(this.state.user));
   };
   validateEmail = (emailAddress) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -47,7 +37,7 @@ export default class LoginScreen extends React.Component {
     return re.test(password);
   };
   render() {
-    const { data, emailAddress, password } = this.state;
+    const { emailAddress, password } = this.state;
     return (
       <View style={styles.container}>
         <LinearGradient
@@ -92,25 +82,14 @@ export default class LoginScreen extends React.Component {
             
             //Check credential
             if(await this.checkCredential(emailAddress, password)) {
-              await this.storeData(data.user_id, data.fName,data.lName, data.email_address, data.phone_number, data.darkmode, data.radius);
-              Keyboard.dismiss();
-              //Output All Keys And Values
-              AsyncStorage.getAllKeys((err, keys) => {
-                AsyncStorage.multiGet(keys, (error, stores) => {
-                  stores.map((result, i, store) => {
-                    console.log({ [store[i][0]]: store[i][1] });
-                    return true;
-                  });
-                });
-              });
-
-              
-              this.props.navigation.navigate('Home');
-              return;
+              await this.setStorage().then(
+                Keyboard.dismiss(),
+                this.props.navigation.navigate('Home'),
+              );
             } else {
               alert(`Failed to log in! Please check the credentials submitted.`);
-              return;
             }
+            return;
           }}
         >
           <Text>Login</Text>

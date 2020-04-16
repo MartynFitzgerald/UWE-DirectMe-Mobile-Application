@@ -7,32 +7,17 @@ export default class Account extends Component {
     super(props);
     this.state = {
       value: 50,
-      fName: '',
-      lName: '',
-      emailAddress: '',
-      phoneNumber: '',
-      darkmode: 0,
-      radius: 0
+      user: []
     };
   }
 
   _retrieveData = async () => {
     try {
-      const fName = await AsyncStorage.getItem('@fName');
-      const lName = await AsyncStorage.getItem('@lName');
-      const emailAddress = await AsyncStorage.getItem('@emailAddress');
-      const phoneNumber = await AsyncStorage.getItem('@phoneNumber');
-      const darkmode = parseInt(await AsyncStorage.getItem('@darkmode'));
-      const radius = parseFloat(await AsyncStorage.getItem('@radius'));
-
-      if (fName !== null || lName !== null || emailAddress !== null || phoneNumber !== null || darkmode !== null || radius !== null) {
+      const user = JSON.parse(await AsyncStorage.getItem('@DirectMe:user'));
+      if (user !== null) {
         // We have data!!
-        this.setState({ fName: fName });
-        this.setState({ lName: lName });
-        this.setState({ emailAddress: emailAddress });
-        this.setState({ phoneNumber: phoneNumber });
-        this.setState({ darkmode: darkmode });
-        this.setState({ radius: radius });
+        console.log(user);
+        this.setState({ user: user });
       }
     } catch (error) {
       console.error(error);
@@ -55,7 +40,7 @@ export default class Account extends Component {
   };
 
   render() {
-    const { fName, lName, emailAddress, phoneNumber, radius, darkmode } = this.state;
+    const { user } = this.state;
     return (
       <View style={styles.container}>
         <Title style={styles.title}>Account</Title>
@@ -64,8 +49,8 @@ export default class Account extends Component {
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
                   source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
-                <Text style={styles.name}>{fName} {lName} </Text>
-                <Text style={styles.userInfo}>{emailAddress}</Text>
+                <Text style={styles.name}>{user.fName} {user.lName} </Text>
+                <Text style={styles.userInfo}>{user.email_address}</Text>
                 <Text style={styles.userInfo}>Bristol, UK </Text>
             </View>
           </View>
@@ -73,7 +58,7 @@ export default class Account extends Component {
             <List.Subheader>General Settings</List.Subheader>
             <List.Item
               title="Dark Mode"
-              right={() => <Switch value={darkmode} onValueChange={() => { this.setState({ darkmode: !darkmode }); }}/>}
+              right={() => <Switch value={user.darkmode} onValueChange={() => { this.setState({ darkmode: !darkmode }); }}/>}
           />
           <List.Item
             title="Radius"
@@ -82,7 +67,7 @@ export default class Account extends Component {
             step={1}
             maximumValue={2500}
             onValueChange={this.change.bind(this)}
-            value={radius}
+            value={user.radius}
           />
           <Divider/>
           <List.Subheader>Privacy</List.Subheader>
@@ -94,19 +79,19 @@ export default class Account extends Component {
             <List.Subheader>User Information</List.Subheader>
             <List.Item
               title="First Name"
-              right={() => <Text>{fName}</Text>}
+              right={() => <Text>{user.fName}</Text>}
             />
             <List.Item
               title="Last Name"
-              right={() => <Text>{lName}</Text>}
+              right={() => <Text>{user.lName}</Text>}
             />
             <List.Item
               title="Email"
-              right={() => <Text>{emailAddress}</Text>}
+              right={() => <Text>{user.email_address}</Text>}
             />
             <List.Item
               title="Phone Number"
-              right={() => <Text>{phoneNumber}</Text>}
+              right={() => <Text>{user.phone_number}</Text>}
             />
             <List.Item
               title="Profile Picture"
@@ -114,7 +99,8 @@ export default class Account extends Component {
             />
             <Divider/>
             <List.Subheader>System</List.Subheader>
-            <List.Item
+            <List.Item 
+              style={styles.signoutText} //Not working as expected
               title="Sign Out"
               />
         </List.Section>
@@ -147,7 +133,7 @@ const styles = StyleSheet.create({
     height: 130,
     borderRadius: 63,
     borderWidth: 4,
-    borderColor: "white",
+    borderColor: "#fff",
     marginBottom:10,
   },
   name:{
@@ -164,5 +150,8 @@ const styles = StyleSheet.create({
   },
   scrollViewPadding:{
     marginBottom:60,
+  },
+  signoutText:{
+    color:"#ff0000",
   },
 });
