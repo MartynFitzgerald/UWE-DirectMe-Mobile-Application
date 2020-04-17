@@ -37,10 +37,6 @@ export default class History extends Component {
       // If found return to newData
       return itemData.indexOf(textData) > -1;    
     });
-    if (newData.length)
-    {
-      // show no result
-    }
     this.setState({ data: newData });  
   };
 
@@ -51,7 +47,11 @@ export default class History extends Component {
   renderSeparator = () => {
     return <Divider style={{ backgroundColor: '#CCCCCC' }} />; 
   };
-  //handling onPress action  
+
+  renderEmptyContainer = () => {
+    return <Text style={styles.emptyResult} >No Result Found</Text>; 
+  };
+  
   getListViewItem = (item) => {  
       Alert.alert(item.name);  
   }  
@@ -68,6 +68,7 @@ export default class History extends Component {
               keyExtractor={ item => item.car_park_id.toString()}
               ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader(searchText)}
+              ListEmptyComponent={this.renderEmptyContainer()}
               renderItem={({ item }) => (
                 <List.Item
                   title={item.name}
@@ -119,5 +120,10 @@ const styles = StyleSheet.create({
     top:12.5,
     backgroundColor: '#E71212',
     fontWeight: 'bold',
+  },
+  emptyResult: {
+    padding: 10,
+    textAlignVertical: 'center',
+    textAlign: 'center', 
   },
 });  
