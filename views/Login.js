@@ -8,8 +8,8 @@ export default class LoginScreen extends React.Component {
 
     this.state = {
       user: [],
-      emailAddress: '',
-      password: ''
+      emailAddress: 'martynfitzzz2014@gmail.com', // TODO: Remove values on launch
+      password: 'Password123!' // TODO: Remove values on launch
     };
   }
   async checkCredential (emailAddress, password) {

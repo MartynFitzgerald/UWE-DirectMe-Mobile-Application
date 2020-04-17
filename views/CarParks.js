@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, ActivityIndicator, FlatList } from 'react-native';
+import { StyleSheet, View, Alert, ActivityIndicator, FlatList } from 'react-native';
 import { List, Title, Text, Button } from 'react-native-paper';
+import { SearchBar, Divider } from 'react-native-elements';
 
 export default class History extends Component {
   constructor(props) {
@@ -8,40 +9,72 @@ export default class History extends Component {
 
     this.state = {
       data: [],
-      isLoading: true
+      isLoading: true,
+      searchText: '',
     };
+    this.arrayholder = [];
   }
-
+  
   componentDidMount() {
     fetch('http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/CARPARKS/')
       .then((response) => response.json())
       .then((json) => {
         this.setState({ data: json.result });
-        //console.log(json.result)
-      })
+        this.arrayholder = json.result;   
+      })  
       .catch((error) => console.error(error))
       .finally(() => {
         this.setState({ isLoading: false });
       });
   }
 
+  searchFunction = searchText => {  
+    this.setState({ searchText });
+    const newData = this.arrayholder.filter(item => {      
+      const itemData = `${item.name.toUpperCase()} ${item.address.toUpperCase()}`;
+      const textData = searchText.toUpperCase();
+      
+      // If found return to newData
+      return itemData.indexOf(textData) > -1;    
+    });
+    if (newData.length)
+    {
+      // show no result
+    }
+    this.setState({ data: newData });  
+  };
+
+  renderHeader = (searchText) => {
+    return <SearchBar placeholder="Search Here..." value={searchText} onChangeText={this.searchFunction} lightTheme  round />;
+  };
+
+  renderSeparator = () => {
+    return <Divider style={{ backgroundColor: '#CCCCCC' }} />; 
+  };
+  //handling onPress action  
+  getListViewItem = (item) => {  
+      Alert.alert(item.name);  
+  }  
   render() {
-    const { data, isLoading } = this.state;
+    const { data, isLoading, searchText } = this.state;
 
     return (
       <View>
-        <Title style={styles.title}>Car Parks</Title>
+        <Title style={styles.title}>Car Parks</Title> 
           {isLoading ? <ActivityIndicator/> : (
             <FlatList 
               style={styles.list}
               data={data}
               keyExtractor={ item => item.car_park_id.toString()}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListHeaderComponent={this.renderHeader(searchText)}
               renderItem={({ item }) => (
                 <List.Item
                   title={item.name}
                   description={item.address}
                   left={() => <List.Icon color="#4285F4" icon="parking" />}
                   right={() => <List.Icon icon="chevron-right" />}
+                  onPress={this.getListViewItem.bind(this, item)}  
                   //onPress={(e) => navigation.navigate('Register')}
                 />
               )}

@@ -2,12 +2,33 @@ import React, { Component } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 import { Title } from 'react-native-paper';
 import MapView from 'react-native-maps';
+import { SearchBar } from 'react-native-elements';
 
 export default class Map extends Component {
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        search: '',
+      };
+    }
+    
+    updateSearch = search => {
+      this.setState({ search });
+    };
+
     render() {
+        const { search } = this.state;
         return (
             <View style={styles.mapContainer}>
             <Title style={styles.title}>DirectMe</Title>
+            <SearchBar
+                placeholder="Search Here..."
+                onChangeText={this.updateSearch}
+                value={search}
+                lightTheme 
+                round 
+            />
             <MapView
             //ither "google" for GoogleMaps, otherwise null or undefined to use the native map framework (MapKit in iOS and GoogleMaps in android).
             provider={"google"} // remove if not using Google Maps
@@ -31,13 +52,6 @@ export default class Map extends Component {
             //If false the user won't be able to adjust the camera’s pitch angle.
             pitchEnabled={false}
             />
-            <View style={styles.inputContainer}>
-            <TextInput style={styles.inputs}
-                placeholder="Search Location"
-                keyboardType="email-address"
-                onChangeText={(emailAddress) => this.setState({emailAddress})}
-                underlineColorAndroid='transparent'/>
-            </View>
             </View>
         );
     }
@@ -61,24 +75,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         backgroundColor: '#EB3349',
         color: '#fff',
-    },
-    inputContainer: {
-        borderBottomColor: '#F5FCFF',
-        backgroundColor: '#FFFFFF',
-        borderBottomWidth: 1,
-        width:"95%",
-        height:50,
-        marginBottom:15,
-        top: 80,
-        position: 'absolute',
-        alignSelf: 'center',
-        flexDirection: 'row',
-        alignItems:'center'
-    },
-    inputs:{
-        height:45,
-        borderBottomColor: '#FFFFFF',
-        textAlign: 'center',
-        flex:1
     },
   });

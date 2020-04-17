@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 
 import Information from './Information';
@@ -27,11 +27,11 @@ export default class HomeScreen extends React.Component {
     state = {
       index: 2,
       routes: [
-        { key: 'info', title: 'Info', icon: 'information', color: '#EB3349', focused:false   },
-        { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false   },
-        { key: 'map', title: 'Map', icon: 'map', color: '#EB3349', focused:true  },
-        { key: 'history', title: 'History', icon: 'history', color: '#EB3349', focused:false   },
-        { key: 'account', title: 'Account', icon: 'account-circle', color: '#EB3349', focused:false   },
+        { key: 'info', title: 'Info', icon: 'information', color: '#EB3349', focused:false },
+        { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false },
+        { key: 'map', title: 'Map', icon: 'map', color: '#EB3349', focused:true },
+        { key: 'history', title: 'History', icon: 'history', color: '#EB3349', focused:false },
+        { key: 'account', title: 'Account', icon: 'account-circle', color: '#EB3349', focused:false },
       ],
     };
 
