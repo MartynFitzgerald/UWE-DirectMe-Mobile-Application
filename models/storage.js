@@ -1,3 +1,5 @@
-exports.setStorage  = async function() {
-  await AsyncStorage.setItem('@DirectMe:user', JSON.stringify(this.state.user));
+import { AsyncStorage } from 'react-native';
+
+exports.setStorage  = async function(user) {
+  await AsyncStorage.setItem('@DirectMe:user', JSON.stringify(user));
 }

@@ -41,10 +41,20 @@ exports.check_credential  = async function(emailAddress, password) {
   return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
    .then((response) => response.json())
    .then((json) => {
-     if(json.result[0].email_address == emailAddress && json.result[0].password ==  hash({password: `D1rectMeSa1t${password}2020`}))
+     if (json.result.length)
      {
-       this.setState({ user: json.result[0] });
-       return json.result.length;
+      if(json.result[0].email_address == emailAddress && json.result[0].password ==  hash({password: `D1rectMeSa1t${password}2020`}))
+      {
+        return json.result[0];
+      }
+      else
+      {
+        return undefined;
+      }
+     }
+     else
+     {
+      return undefined;
      }
    })
    .catch((error) => console.error(error));

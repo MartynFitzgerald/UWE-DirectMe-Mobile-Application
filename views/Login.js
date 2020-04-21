@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, AsyncStorage, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import validation from '../controllers/validation';
 import query from '../models/query';
@@ -11,7 +11,6 @@ export default class LoginScreen extends Component {
     super(props);
 
     this.state = {
-      user: [],
       emailAddress: 'martynfitzzz2014@gmail.com', // TODO: Remove values on launch
       password: 'Password123!' // TODO: Remove values on launch
     };
@@ -59,10 +58,11 @@ export default class LoginScreen extends Component {
               alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
               return;
             }
+            var user_data = await query.check_credential(emailAddress, password);
             
             //Check credential
-            if(await query.check_credential(emailAddress, password)) {
-              await storage.setStorage().then(
+            if(user_data) {
+              await storage.setStorage(user_data).then(
                 Keyboard.dismiss(),
                 this.props.navigation.navigate('Home'),
               );
