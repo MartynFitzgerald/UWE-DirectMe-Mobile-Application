@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, AsyncStorage, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import hash from 'object-hash';
+import validation from '../controllers/validation';
+import query from '../models/query';
+import storage from '../models/storage';
+
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -13,30 +16,6 @@ export default class LoginScreen extends Component {
       password: 'Password123!' // TODO: Remove values on launch
     };
   }
-  async checkCredential (emailAddress, password) {
-    return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
-     .then((response) => response.json())
-     .then((json) => {
-       if(json.result[0].email_address == emailAddress && json.result[0].password ==  hash({password: `D1rectMeSa1t${password}2020`}))
-       {
-         this.setState({ user: json.result[0] });
-         return json.result.length;
-       }
-     })
-     .catch((error) => console.error(error));
-  };
-  async setStorage () {
-    await AsyncStorage.setItem('@DirectMe:user', JSON.stringify(this.state.user));
-  };
-  validateEmail = (emailAddress) => {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(emailAddress);
-  };
-  validatePassword = (password) => {
-    // 8-120 chars && No spaces && One a-z char && One A-Z char && One digit && One of the folowing chars: !@#$%^&*()-=¡£_+`~.,<>/?;:'"|[]{}
-    var re = /^.*(?=.{8,120})(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\!\@\#\$\%\^\&\*\(\)\-\=\¡\£\_\+\`\~\.\,\<\>\/\?\;\:\'\"\\\|\[\]\{\}]).*$/;
-    return re.test(password);
-  };
   render() {
     const { emailAddress, password } = this.state;
     return (
@@ -72,18 +51,18 @@ export default class LoginScreen extends Component {
 
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}    
           onPress={async () => {
-            if (!this.validateEmail(emailAddress)) {
+            if (!validation.validate_email(emailAddress)) {
               alert(`The email provided is invalid, please try again.`);
               return;
             }
-            if (!this.validatePassword(password)) {
+            if (!validation.validate_password(password)) {
               alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
               return;
             }
             
             //Check credential
-            if(await this.checkCredential(emailAddress, password)) {
-              await this.setStorage().then(
+            if(await query.check_credential(emailAddress, password)) {
+              await storage.setStorage().then(
                 Keyboard.dismiss(),
                 this.props.navigation.navigate('Home'),
               );
