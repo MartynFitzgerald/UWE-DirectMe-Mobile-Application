@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import hash from 'object-hash';
 
 export default class RegisterScreen extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export default class RegisterScreen extends Component {
         fName: fName,
         lName: lName,
         email_address: email_address,
-        password: password,
+        password: hash({password: `D1rectMeSa1t${password}2020`}), // Using Encryption To Store Password
         phone_number: phone_number
       })
     }

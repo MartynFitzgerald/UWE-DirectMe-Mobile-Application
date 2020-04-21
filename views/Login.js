@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, AsyncStorage, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import hash from 'object-hash';
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class LoginScreen extends Component {
     return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
      .then((response) => response.json())
      .then((json) => {
-       if(json.result[0].email_address == emailAddress && json.result[0].password == password)
+       if(json.result[0].email_address == emailAddress && json.result[0].password ==  hash({password: `D1rectMeSa1t${password}2020`}))
        {
          this.setState({ user: json.result[0] });
          return json.result.length;
