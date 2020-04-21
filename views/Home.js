@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 
@@ -23,7 +23,10 @@ const HistoryRoute = () => <History onGetList={this.History}/>;
 
 const AccountRoute = () => <Account onGetList={this.Account}/>;
 
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
     state = {
       index: 2,
       routes: [

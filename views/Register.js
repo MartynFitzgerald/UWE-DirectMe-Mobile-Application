@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default class RegisterScreen extends React.Component {
+export default class RegisterScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -15,15 +15,17 @@ export default class RegisterScreen extends React.Component {
       repassword: ''
     };
   }
-  check_if_exists(emailAddress) {
-    return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
-     .then((response) => response.json())
-     .then((json) => {
-      return  json.result.length;
-     })
-     .catch((error) => console.error(error));
+  async check_if_exists(emailAddress) {
+    try {
+      const response = await fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`);
+      const json = await response.json();
+      return json.result.length;
+    }
+    catch (error) {
+      return console.error(error);
+    }
   }
-  insert_user(fName, lName, email_address, password, phone_number) {
+  async insert_user(fName, lName, email_address, password, phone_number) {
     let data = {
       method: 'POST',
       headers: {
@@ -39,12 +41,14 @@ export default class RegisterScreen extends React.Component {
       })
     }
 
-    return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/INSERT/USER/`, data)
-     .then((response) => response.json())
-     .then((json) => {
-      return  json.result.length;
-     })
-     .catch((error) => console.error(error));
+    try {
+      const response = await fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/INSERT/USER/`, data);
+      const json = await response.json();
+      return json.result.length;
+    }
+    catch (error) {
+      return console.error(error);
+    }
   }
   validateName = (Name) => {
     var re = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
@@ -169,13 +173,13 @@ export default class RegisterScreen extends React.Component {
               }
             }}
           >
-              <Text>Register</Text>
+            <Text>Register</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
-            onPress={(e) => this.props.navigation.navigate('Login')}
+            onPress={() => this.props.navigation.navigate('Login')}
           >
-              <Text>Go Back</Text>
+            <Text>Go Back</Text>
           </TouchableOpacity>
         </View>
     );
@@ -282,5 +286,5 @@ const styles = StyleSheet.create({
     margin:50,
     width:369,
     height:82
-  }
+  },
 });

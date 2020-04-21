@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, AsyncStorage, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default class LoginScreen extends React.Component {
+export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -96,7 +96,7 @@ export default class LoginScreen extends React.Component {
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
-          onPress={(e) => this.props.navigation.navigate('Register')}
+          onPress={() => this.props.navigation.navigate('Register')}
         >
             <Text>Register</Text>
         </TouchableOpacity>

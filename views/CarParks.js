@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Alert, ActivityIndicator, FlatList } from 'react-native';
-import { List, Title, Text, Button } from 'react-native-paper';
+import { StyleSheet, View, ActivityIndicator, FlatList } from 'react-native';
+import { List, Title, Text } from 'react-native-paper';
 import { SearchBar, Divider } from 'react-native-elements';
 
-export default class History extends Component {
+export default class CarParks extends Component {
   constructor(props) {
     super(props);
 
@@ -52,12 +52,9 @@ export default class History extends Component {
     return <Text style={styles.emptyResult} >No Result Found</Text>; 
   };
   
-  getListViewItem = (item) => {  
-      Alert.alert(item.name);  
-  }  
   render() {
     const { data, isLoading, searchText } = this.state;
-
+    console.log(this.props);
     return (
       <View>
         <Title style={styles.title}>Car Parks</Title> 
@@ -74,9 +71,8 @@ export default class History extends Component {
                   title={item.name}
                   description={item.address}
                   left={() => <List.Icon color="#4285F4" icon="parking" />}
-                  right={() => <List.Icon icon="chevron-right" />}
-                  onPress={this.getListViewItem.bind(this, item)}  
-                  //onPress={(e) => navigation.navigate('Register')}
+                  right={() => <List.Icon icon="chevron-right" />} 
+                  onPress={() => this.props.navigation.navigate('Login')}
                 />
               )}
             />
@@ -84,7 +80,7 @@ export default class History extends Component {
       </View>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   list: {
