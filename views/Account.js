@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage } from 'react-native';
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
+import query from '../models/query';
+import storage from '../models/storage';
 
 export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 50,
       user: []
     };
   }
@@ -26,12 +27,12 @@ export default class Account extends Component {
     this._retrieveData();
   }
 
-  change(value) {
-    this.setState(() => {
-      return {
-        value: parseFloat(value),
-      };
-    });
+  _changeUserValues = async (keyText, value) => {
+    var tempUser = this.state.user;
+    tempUser[keyText] = value;
+    await this.setState({user: tempUser});
+    await storage.setStorage(tempUser);
+    query.update_user(tempUser);
   }
 
   render() {
@@ -53,7 +54,7 @@ export default class Account extends Component {
             <List.Subheader>General Settings</List.Subheader>
             <List.Item
               title="Dark Mode"
-              right={() => <Switch value={user.darkmode} onValueChange={() => { this.setState({ darkmode: !darkmode }); }}/>}
+              right={() => <Switch value={user.darkmode} onValueChange={() => { this._changeUserValues.bind(this, "darkmode"); }}/>}
           />
           <List.Item
             title="Radius"
@@ -61,7 +62,7 @@ export default class Account extends Component {
           <Slider
             step={1}
             maximumValue={2500}
-            onValueChange={this.change.bind(this)}
+            onValueChange={this._changeUserValues.bind(this, 'radius')}
             value={user.radius}
           />
           <Divider/>

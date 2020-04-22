@@ -37,6 +37,36 @@ exports.insert_user  = async function(fName, lName, email_address, password, pho
   }
 }
 
+exports.update_user  = async function(user) {
+  let data = {
+    method: 'PUT',
+    headers: {
+      'Accept':       'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: user.id,
+      fName: user.fName,
+      lName: user.lName,
+      email_address: user.email_address,
+      password: user.password,
+      phone_number: user.phone_number,
+      darkmode: user.darkmode,
+      radius: user.radius
+    })
+  }
+  try {
+    const response = await fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/UPDATE/USER/`, data);
+    const json = await response.json();
+    console.log(user)
+    console.log(json)
+    return json.result.length;
+  }
+  catch (error) {
+    return console.error(error);
+  }
+}
+
 exports.check_credential  = async function(emailAddress, password) {
   return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
    .then((response) => response.json())
