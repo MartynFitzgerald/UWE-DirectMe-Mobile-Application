@@ -45,7 +45,7 @@ exports.update_user  = async function(user) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      id: user.id,
+      id: user.user_id,
       fName: user.fName,
       lName: user.lName,
       email_address: user.email_address,
@@ -58,8 +58,6 @@ exports.update_user  = async function(user) {
   try {
     const response = await fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/UPDATE/USER/`, data);
     const json = await response.json();
-    console.log(user)
-    console.log(json)
     return json.result.length;
   }
   catch (error) {
