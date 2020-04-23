@@ -15,15 +15,26 @@ export default class LoginScreen extends Component {
       emailAddress: 'martynfitzzz2014@gmail.com', // TODO: Remove values on launch
       password: 'Password123!' // TODO: Remove values on launch
     };
-    
-    let { status } = await Location.requestPermissionsAsync();
-    if (status !== 'granted') {
-      setErrorMsg('Permission to access location was denied');
-    }
-
-    let location = await Location.getCurrentPositionAsync({});
-    console.log(location);
   }
+
+  componentDidMount() {
+    this._locationRequest();
+  }
+
+  _locationRequest = async () => {
+    try {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      }
+      //Get Location
+      //let location = await Location.getCurrentPositionAsync({});
+      //console.log(location);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   render() {
     const { emailAddress, password } = this.state;

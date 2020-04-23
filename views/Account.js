@@ -36,11 +36,8 @@ export default class Account extends Component {
     query.update_user(tempUser);
   }
 
-  
-
   userSettings = async () => {
     await Linking.openSettings();
-    
   }
 
   render() {
@@ -77,7 +74,7 @@ export default class Account extends Component {
           <Divider/>
           <List.Subheader>Privacy</List.Subheader>
           <List.Item
-            title="Location Settings"
+            title="Location Permissions"
             onPress={() => {this.userSettings()}}
             />
             <Divider/>
