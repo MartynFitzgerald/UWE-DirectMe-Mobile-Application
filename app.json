@@ -1,12 +1,11 @@
 {
   "expo": {
     "name": "DirectMe",
-    "slug": "Parking-Application-Mobile-Prototype",
+    "slug": "DirectMe-Mobile-Prototype",
     "privacy": "public",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.1.0",
     "orientation": "portrait",
@@ -22,8 +21,14 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "androidStatusBar": {
+      "hidden": false, 
+      "translucent": true,
+      "barStyle": "light-content",
+      "backgroundColor": "#00000000"
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     }
   }
 }

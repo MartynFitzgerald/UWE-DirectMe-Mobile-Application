@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Keyboard, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import validation from '../controllers/validation';
 import query from '../models/query';
