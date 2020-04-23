@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage, Linking } from 'react-native';
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 import query from '../models/query';
 import storage from '../models/storage';
@@ -27,12 +27,20 @@ export default class Account extends Component {
     this._retrieveData();
   }
 
-  _changeUserValues = async (keyText, value) => {
+  changeUserValues = async (keyText, value) => {
+    console.log(keyText, value)
     var tempUser = this.state.user;
     tempUser[keyText] = value;
     await this.setState({user: tempUser});
     await storage.setStorage(tempUser);
     query.update_user(tempUser);
+  }
+
+  
+
+  userSettings = async () => {
+    await Linking.openSettings();
+    
   }
 
   render() {
@@ -54,22 +62,23 @@ export default class Account extends Component {
             <List.Subheader>General Settings</List.Subheader>
             <List.Item
               title="Dark Mode"
-              right={() => <Switch value={user.darkmode} onValueChange={() => { this._changeUserValues.bind(this, "darkmode"); }}/>}
+              right={() => <Switch value={user.darkmode} onValueChange={this.changeUserValues.bind(this, 'darkmode')}/>}
           />
           <List.Item
             title="Radius"
+            right={() => <Text>{user.radius}</Text>}
           />
           <Slider
             step={1}
             maximumValue={2500}
-            onValueChange={this._changeUserValues.bind(this, 'radius')}
+            onValueChange={this.changeUserValues.bind(this, 'radius')}
             value={user.radius}
           />
           <Divider/>
           <List.Subheader>Privacy</List.Subheader>
           <List.Item
             title="Location Settings"
-            right={() => <Text style={styles.paid}>PAID</Text>}
+            onPress={() => {this.userSettings()}}
             />
             <Divider/>
             <List.Subheader>User Information</List.Subheader>

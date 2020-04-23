@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import validation from '../controllers/validation';
 import query from '../models/query';
 import storage from '../models/storage';
+import * as Location from 'expo-location';
 
 
 export default class LoginScreen extends Component {
@@ -14,7 +15,16 @@ export default class LoginScreen extends Component {
       emailAddress: 'martynfitzzz2014@gmail.com', // TODO: Remove values on launch
       password: 'Password123!' // TODO: Remove values on launch
     };
+    
+    let { status } = await Location.requestPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    console.log(location);
   }
+
   render() {
     const { emailAddress, password } = this.state;
     return (
