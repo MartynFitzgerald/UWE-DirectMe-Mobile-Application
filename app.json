@@ -3,7 +3,6 @@
     "name": "DirectMe",
     "slug": "Parking-Application-Mobile-Prototype",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
