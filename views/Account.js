@@ -3,6 +3,7 @@ import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage, Linking } fr
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 import query from '../models/query';
 import storage from '../models/storage';
+import Dialog from "react-native-dialog";
 
 export default class Account extends Component {
   constructor(props) {
@@ -40,6 +41,9 @@ export default class Account extends Component {
     await Linking.openSettings();
   }
 
+ 
+
+
   render() {
     const { user } = this.state;
     return (
@@ -75,6 +79,7 @@ export default class Account extends Component {
           <List.Subheader>Privacy</List.Subheader>
           <List.Item
             title="Location Permissions"
+            right={() => <List.Icon icon="chevron-right" />} 
             onPress={() => {this.userSettings()}}
             />
             <Divider/>
@@ -82,6 +87,7 @@ export default class Account extends Component {
             <List.Item
               title="First Name"
               right={() => <Text>{user.fName}</Text>}
+              //onPress={() => {userDetailAlert()}}
             />
             <List.Item
               title="Last Name"
