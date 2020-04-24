@@ -3,17 +3,16 @@ import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage, Linking } fr
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 import query from '../models/query';
 import storage from '../models/storage';
-import Dialog from "react-native-dialog";
 
 export default class Account extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: []
+      user: [],
     };
   }
 
-  _retrieveData = async () => {
+  retrieveData = async () => {
     try {
       const user = JSON.parse(await AsyncStorage.getItem('@DirectMe:user'));
       if (user !== null) {
@@ -25,7 +24,7 @@ export default class Account extends Component {
   };
 
   componentDidMount() {
-    this._retrieveData();
+    this.retrieveData();
   }
 
   changeUserValues = async (keyText, value) => {
@@ -41,9 +40,6 @@ export default class Account extends Component {
     await Linking.openSettings();
   }
 
- 
-
-
   render() {
     const { user } = this.state;
     return (
@@ -51,13 +47,11 @@ export default class Account extends Component {
         <Title style={styles.title}>Account</Title>
         <ScrollView style={styles.scrollViewPadding}>
           <View style={styles.header}>
-            <View style={styles.headerContent}>
-                <Image style={styles.avatar}
-                  source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
-                <Text style={styles.name}>{user.fName} {user.lName} </Text>
-                <Text style={styles.userInfo}>{user.email_address}</Text>
-                <Text style={styles.userInfo}>Bristol, UK </Text>
-            </View>
+              <Image style={styles.avatar}
+                source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
+              <Text style={styles.name}>{user.fName} {user.lName} </Text>
+              <Text style={styles.userInfo}>{user.email_address}</Text>
+              <Text style={styles.userInfo}>Bristol, UK </Text>
           </View>
           <List.Section style={styles.list}>
             <List.Subheader>General Settings</List.Subheader>
@@ -87,7 +81,7 @@ export default class Account extends Component {
             <List.Item
               title="First Name"
               right={() => <Text>{user.fName}</Text>}
-              //onPress={() => {userDetailAlert()}}
+              //onPress={() => {this.showDialog()}}
             />
             <List.Item
               title="Last Name"
@@ -106,9 +100,9 @@ export default class Account extends Component {
               right={() => <Text>Female 2</Text>}
             />
             <Divider/>
-            <List.Subheader>System</List.Subheader>
+            <List.Subheader>Application Settings</List.Subheader>
             <List.Item 
-              style={styles.signoutText} //Not working as expected
+              titleStyle={styles.signoutText}
               title="Sign Out"
               />
         </List.Section>
@@ -131,15 +125,13 @@ const styles = StyleSheet.create({
   },
   header:{
     backgroundColor: "#4285F4",
-  },
-  headerContent:{
-    padding:30,
+    padding:15,
     alignItems: 'center',
   },
   avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     borderWidth: 4,
     borderColor: "#fff",
     marginBottom:10,
@@ -148,7 +140,7 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     fontSize:22,
     color:"#fff",
-    fontWeight:'600',
+    fontWeight:'bold',
   },
   userInfo:{
     textAlign: 'center', 
