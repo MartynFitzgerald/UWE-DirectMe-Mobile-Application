@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage, Linking } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage, Linking, Button, TextInput } from 'react-native';
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
+import Modal from 'react-native-modal';
+
 import query from '../models/query';
 import storage from '../models/storage';
 
@@ -9,9 +11,13 @@ export default class Account extends Component {
     super(props);
     this.state = {
       user: [],
+      isModalVisible: false,
     };
   }
 
+  toggleModal = () => {
+    this.setState({isModalVisible: !this.state.isModalVisible});
+  };
   retrieveData = async () => {
     try {
       const user = JSON.parse(await AsyncStorage.getItem('@DirectMe:user'));
@@ -25,7 +31,7 @@ export default class Account extends Component {
 
   componentDidMount() {
     this.retrieveData();
-  }
+  };
 
   changeUserValues = async (keyText, value) => {
     console.log(keyText, value)
@@ -34,14 +40,14 @@ export default class Account extends Component {
     await this.setState({user: tempUser});
     await storage.setStorage(tempUser);
     query.update_user(tempUser);
-  }
+  };
 
   userSettings = async () => {
     await Linking.openSettings();
-  }
+  };
 
   render() {
-    const { user } = this.state;
+    const { user, isModalVisible } = this.state;
     return (
       <View style={styles.container}>
         <Title style={styles.title}>Account</Title>
@@ -81,7 +87,7 @@ export default class Account extends Component {
             <List.Item
               title="First Name"
               right={() => <Text>{user.fName}</Text>}
-              //onPress={() => {this.showDialog()}}
+              onPress={this.toggleModal}
             />
             <List.Item
               title="Last Name"
@@ -107,6 +113,23 @@ export default class Account extends Component {
               />
         </List.Section>
         </ScrollView>
+
+        <View style={{flex: 1}}>
+          <Modal 
+            isVisible={isModalVisible}
+          >
+            <View style={styles.alertbox}>
+              <Text>Edit First Name</Text>
+              <TextInput style={styles.inputs}
+                  placeholder="Phone Number"
+                  keyboardType="phone-pad"
+                  onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+                  underlineColorAndroid='transparent'/>
+              <Button title="Hide modal" onPress={this.toggleModal} />
+            </View>
+          </Modal>
+        </View>
+
       </View>
     );
   }
@@ -152,6 +175,15 @@ const styles = StyleSheet.create({
     marginBottom:60,
   },
   signoutText:{
+    color:"#ff0000",
+  },
+  alertbox:{
+    backgroundColor: "#ffffff",
+    padding:15,
+  },
+  inputs:{
+    padding:10,
+    borderBottomWidth: 1,
     color:"#ff0000",
   },
 });
