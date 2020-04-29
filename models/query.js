@@ -1,3 +1,5 @@
+//import 'react-native-get-random-values';
+import { v1 as uuidv1 } from 'react-native-uuid';
 import hash from 'object-hash';
 
 exports.user_exists  = async function(emailAddress) {
@@ -19,6 +21,7 @@ exports.insert_user  = async function(fName, lName, email_address, password, pho
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      user_id: uuidv1(),
       fName: fName,
       lName: lName,
       email_address: email_address,
