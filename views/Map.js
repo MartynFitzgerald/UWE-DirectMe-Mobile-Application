@@ -26,8 +26,9 @@ export default class Map extends Component {
                 placeholder="Search Here..."
                 onChangeText={this.updateSearch}
                 value={search}
+                containerStyle={styles.outerBox} 
+                inputContainerStyle={styles.searchBox} 
                 lightTheme 
-                round 
             />
             <MapView
             //ither "google" for GoogleMaps, otherwise null or undefined to use the native map framework (MapKit in iOS and GoogleMaps in android).
@@ -75,5 +76,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         backgroundColor: '#EB3349',
         color: '#fff',
+    },
+    outerBox: {
+      padding: 0,
+      margin: 0,
+    },
+    searchBox: {
+      width: "100%",
     },
   });

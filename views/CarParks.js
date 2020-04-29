@@ -41,7 +41,7 @@ export default class CarParks extends Component {
   };
 
   renderHeader = (searchText) => {
-    return <SearchBar placeholder="Search Here..." value={searchText} onChangeText={this.searchFunction} lightTheme  round />;
+    return <SearchBar placeholder="Search Here..." value={searchText} onChangeText={this.searchFunction} containerStyle={styles.outerBox} inputContainerStyle={styles.searchBox} lightTheme  />;
   };
 
   renderSeparator = () => {
@@ -121,5 +121,12 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlignVertical: 'center',
     textAlign: 'center', 
+  },
+  outerBox: {
+    padding: 0,
+    margin: 0,
+  },
+  searchBox: {
+    width: "100%",
   },
 });  
