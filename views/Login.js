@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Keyboard, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import validation from '../controllers/validation';
-import query from '../models/query';
+import apiMethods from '../models/apiMethods';
 import storage from '../models/storage';
 import * as Location from 'expo-location';
-
+import hash from 'object-hash';
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class LoginScreen extends Component {
 
     this.state = {
       emailAddress: 'martynfitzzz2014@gmail.com', // TODO: Remove values on launch
-      password: 'Password123!' // TODO: Remove values on launch
+      password: 'Password!123' // TODO: Remove values on launch
     };
   }
 
@@ -79,10 +79,11 @@ export default class LoginScreen extends Component {
               alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
               return;
             }
-            var user_data = await apiMethods.check_credential(emailAddress, password);
-            
-            //Check credential
-            if(user_data) {
+            //Get User Data From API.
+            var user_data = await apiMethods.read(`USER/${emailAddress}`);
+            //Check credential.
+            if(user_data.email_address == emailAddress && user_data.password ==  hash({password: `D1rectMeSa1t${password}2020`}))
+            {
               await storage.setStorage(user_data).then(
                 Keyboard.dismiss(),
                 this.props.navigation.navigate('Home'),

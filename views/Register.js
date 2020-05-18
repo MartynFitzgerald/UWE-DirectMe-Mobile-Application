@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { v1 as uuidv1 } from 'react-native-uuid';
+import hash from 'object-hash';
 import validation from '../controllers/validation';
 import apiMethods from '../models/apiMethods';
 
@@ -110,15 +112,25 @@ export default class RegisterScreen extends Component {
                 alert(`The password and re-enter password provided are not the same. Please try again.`);
                 return;
               }
-
+              console.log(await apiMethods.read(`USER/${emailAddress}`));
+              
               //Check email is not already registered.
-              if(await apiMethods.user_exists(emailAddress)) {
+              if(await apiMethods.read(`USER/${emailAddress}`)) {
                 alert(`The email address is already registered! Please try to login.`);
                 this.props.navigation.navigate('Login');
                 return;
               } else {
-                //Submit To API
-                apiMethods.insert_user(fName, lName, emailAddress, password, phoneNumber);
+                //Create data array to submit to API.
+                var userArray = {
+                  user_id: uuidv1(),
+                  fName: fName,
+                  lName: lName,
+                  email_address: emailAddress,
+                  password: hash({password: `D1rectMeSa1t${password}2020`}), // Using Encryption To Store Password
+                  phone_number: phoneNumber,
+                };
+                //Insert into API.
+                apiMethods.insert(`USER`, userArray).catch((error) => {console.log(error)});
                 alert(`You've registered to DirectMe! Please try to login.`);
                 this.props.navigation.navigate('Login');
               }

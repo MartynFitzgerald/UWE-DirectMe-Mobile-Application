@@ -34,12 +34,12 @@ export default class Account extends Component {
   };
 
   changeUserValues = async (keyText, value) => {
-    console.log(keyText, value)
+    //console.log(keyText, value)
     var tempUser = this.state.user;
     tempUser[keyText] = value;
     await this.setState({user: tempUser});
     await storage.setStorage(tempUser);
-    apiMethods.update_user(tempUser);
+    apiMethods.update(`USER`, tempUser);
   };
 
   userSettings = async () => {

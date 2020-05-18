@@ -1,93 +1,80 @@
-//import 'react-native-get-random-values';
-import { v1 as uuidv1 } from 'react-native-uuid';
-import hash from 'object-hash';
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 23/07/2020
+|
+|    File Name:  apiMethods.js  
+|  Description:  This is the file that holds all the functionality to the API.
+|                
+*===========================================================================*/
 const endpointAWS = `http://directme-api.eu-west-2.elasticbeanstalk.com/`;
 
-exports.user_exists  = async function(emailAddress) {
+/* 
+  A function that requests certain types of data from API depending on item string inputted
+  declaring what table to gather the data from.
+*/
+exports.read = async function(item) {
   try {
-    const response = await fetch(`${endpointAWS}API/GET/USER/${emailAddress}`);
-    const json = await response.json();
-    return json.result.length;
+    return fetch(`${endpointAWS}API/${item}/`)
+      .then((response) => response.json())
+      .then((result) => {
+        return result.result[0];
+      });
+  } catch(error) {
+    return console.error(error);
+  }
+}
+/* 
+  A function that insert certain types of data into the API depending on item string inputted
+  declaring what table to gather the data from and then using the data array to specify column
+  key and value.
+*/
+exports.insert = async function(item, data) {
+  try {
+    let header = {
+      method: 'POST',
+      headers: {
+        'Accept':       'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    }
+    return fetch(`${endpointAWS}API/${item}/`, header)
+      .then((response) => response.json())
+      .then((result) => {
+        return result;
+      });
   }
   catch (error) {
     return console.error(error);
   }
 }
-
-exports.insert_user  = async function(fName, lName, email_address, password, phone_number) {
-  let data = {
-    method: 'POST',
-    headers: {
-      'Accept':       'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      user_id: uuidv1(),
-      fName: fName,
-      lName: lName,
-      email_address: email_address,
-      password: hash({password: `D1rectMeSa1t${password}2020`}), // Using Encryption To Store Password
-      phone_number: phone_number
-    })
-  }
-
+/* 
+  A function that updates certain types of data into the API depending on item string inputted
+  declaring what table to gather the data from and then using the data array to specify column
+  key and value.
+*/
+exports.update  = async function(item, data) {
   try {
-    const response = await fetch(`${endpointAWS}API/INSERT/USER/`, data);
-    const json = await response.json();
-    return json.result.length;
+    let header = {
+      method: 'PUT',
+      headers: {
+        'Accept':       'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    }
+    return fetch(`${endpointAWS}API/${item}/`, header)
+      .then((response) => response.json())
+      .then((result) => {
+        return result;
+      });
   }
   catch (error) {
     return console.error(error);
   }
-}
-
-exports.update_user  = async function(user) {
-  let data = {
-    method: 'PUT',
-    headers: {
-      'Accept':       'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      id: user.user_id,
-      fName: user.fName,
-      lName: user.lName,
-      email_address: user.email_address,
-      password: user.password,
-      phone_number: user.phone_number,
-      darkmode: user.darkmode,
-      radius: user.radius
-    })
-  }
-  try {
-    const response = await fetch(`${endpointAWS}API/UPDATE/USER/`, data);
-    const json = await response.json();
-    return json.result.length;
-  }
-  catch (error) {
-    return console.error(error);
-  }
-}
-
-exports.check_credential  = async function(emailAddress, password) {
-  return fetch(`${endpointAWS}API/GET/USER/${emailAddress}`)
-   .then((response) => response.json())
-   .then((json) => {
-     if (json.result.length)
-     {
-      if(json.result[0].email_address == emailAddress && json.result[0].password ==  hash({password: `D1rectMeSa1t${password}2020`}))
-      {
-        return json.result[0];
-      }
-      else
-      {
-        return undefined;
-      }
-     }
-     else
-     {
-      return undefined;
-     }
-   })
-   .catch((error) => console.error(error));
 }
