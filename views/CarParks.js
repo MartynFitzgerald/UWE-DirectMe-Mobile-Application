@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator, FlatList } from 'react-native';
 import { List, Title, Text } from 'react-native-paper';
 import { SearchBar, Divider } from 'react-native-elements';
+import apiMethods from '../models/apiMethods';
 
 export default class CarParks extends Component {
   constructor(props) {
@@ -16,16 +17,11 @@ export default class CarParks extends Component {
   }
   
   componentDidMount() {
-    fetch('http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/CARPARKS/')
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ data: json.result });
-        this.arrayholder = json.result;   
-      })  
-      .catch((error) => console.error(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+    var user_data = apiMethods.read(`CARPARK`);
+    console.log(user_data);
+    this.setState({ data: user_data });
+    //this.setState({ isLoading: false });
+    this.arrayholder = user_data;  
   }
 
   searchFunction = searchText => {  
@@ -58,7 +54,7 @@ export default class CarParks extends Component {
     return (
       <View>
         <Title style={styles.title}>Car Parks</Title> 
-          {isLoading ? <ActivityIndicator/> : (
+          {isLoading ? <ActivityIndicator size="large"/> : (
             <FlatList 
               style={styles.list}
               data={data}

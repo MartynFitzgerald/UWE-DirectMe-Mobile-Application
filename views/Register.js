@@ -112,10 +112,9 @@ export default class RegisterScreen extends Component {
                 alert(`The password and re-enter password provided are not the same. Please try again.`);
                 return;
               }
-              console.log(await apiMethods.read(`USER/${emailAddress}`));
               
               //Check email is not already registered.
-              if(await apiMethods.read(`USER/${emailAddress}`)) {
+              if(await apiMethods.read(`USER/${emailAddress}`)[0]) {
                 alert(`The email address is already registered! Please try to login.`);
                 this.props.navigation.navigate('Login');
                 return;

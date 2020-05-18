@@ -82,7 +82,7 @@ export default class LoginScreen extends Component {
             //Get User Data From API.
             var user_data = await apiMethods.read(`USER/${emailAddress}`);
             //Check credential.
-            if(user_data.email_address == emailAddress && user_data.password ==  hash({password: `D1rectMeSa1t${password}2020`}))
+            if(user_data[0].email_address == emailAddress && user_data[0].password == hash({password: `D1rectMeSa1t${password}2020`}))
             {
               await storage.setStorage(user_data).then(
                 Keyboard.dismiss(),

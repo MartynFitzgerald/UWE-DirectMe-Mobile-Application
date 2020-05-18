@@ -22,7 +22,7 @@ exports.read = async function(item) {
     return fetch(`${endpointAWS}API/${item}/`)
       .then((response) => response.json())
       .then((result) => {
-        return result.result[0];
+        return result.result;
       });
   } catch(error) {
     return console.error(error);
