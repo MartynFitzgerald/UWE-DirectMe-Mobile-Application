@@ -79,7 +79,7 @@ export default class LoginScreen extends Component {
               alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
               return;
             }
-            var user_data = await query.check_credential(emailAddress, password);
+            var user_data = await apiMethods.check_credential(emailAddress, password);
             
             //Check credential
             if(user_data) {

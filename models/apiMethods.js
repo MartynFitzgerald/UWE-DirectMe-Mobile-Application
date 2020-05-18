@@ -1,10 +1,11 @@
 //import 'react-native-get-random-values';
 import { v1 as uuidv1 } from 'react-native-uuid';
 import hash from 'object-hash';
+const endpointAWS = `http://directme-api.eu-west-2.elasticbeanstalk.com/`;
 
 exports.user_exists  = async function(emailAddress) {
   try {
-    const response = await fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`);
+    const response = await fetch(`${endpointAWS}API/GET/USER/${emailAddress}`);
     const json = await response.json();
     return json.result.length;
   }
@@ -31,7 +32,7 @@ exports.insert_user  = async function(fName, lName, email_address, password, pho
   }
 
   try {
-    const response = await fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/INSERT/USER/`, data);
+    const response = await fetch(`${endpointAWS}API/INSERT/USER/`, data);
     const json = await response.json();
     return json.result.length;
   }
@@ -59,7 +60,7 @@ exports.update_user  = async function(user) {
     })
   }
   try {
-    const response = await fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/UPDATE/USER/`, data);
+    const response = await fetch(`${endpointAWS}API/UPDATE/USER/`, data);
     const json = await response.json();
     return json.result.length;
   }
@@ -69,7 +70,7 @@ exports.update_user  = async function(user) {
 }
 
 exports.check_credential  = async function(emailAddress, password) {
-  return fetch(`http://parkingapplicationapi-env.fwmaq3pfqz.us-east-1.elasticbeanstalk.com/API/GET/USER/${emailAddress}`)
+  return fetch(`${endpointAWS}API/GET/USER/${emailAddress}`)
    .then((response) => response.json())
    .then((json) => {
      if (json.result.length)

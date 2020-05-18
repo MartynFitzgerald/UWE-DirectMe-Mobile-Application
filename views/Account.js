@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage, Linking, But
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 import Modal from 'react-native-modal';
 
-import query from '../models/query';
+import apiMethods from '../models/apiMethods';
 import storage from '../models/storage';
 
 export default class Account extends Component {
@@ -39,7 +39,7 @@ export default class Account extends Component {
     tempUser[keyText] = value;
     await this.setState({user: tempUser});
     await storage.setStorage(tempUser);
-    query.update_user(tempUser);
+    apiMethods.update_user(tempUser);
   };
 
   userSettings = async () => {

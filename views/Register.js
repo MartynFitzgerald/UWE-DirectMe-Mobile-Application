@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import validation from '../controllers/validation';
-import query from '../models/query';
+import apiMethods from '../models/apiMethods';
 
 export default class RegisterScreen extends Component {
   constructor(props) {
@@ -112,13 +112,13 @@ export default class RegisterScreen extends Component {
               }
 
               //Check email is not already registered.
-              if(await query.user_exists(emailAddress)) {
+              if(await apiMethods.user_exists(emailAddress)) {
                 alert(`The email address is already registered! Please try to login.`);
                 this.props.navigation.navigate('Login');
                 return;
               } else {
                 //Submit To API
-                query.insert_user(fName, lName, emailAddress, password, phoneNumber);
+                apiMethods.insert_user(fName, lName, emailAddress, password, phoneNumber);
                 alert(`You've registered to DirectMe! Please try to login.`);
                 this.props.navigation.navigate('Login');
               }
