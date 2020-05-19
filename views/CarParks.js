@@ -17,11 +17,15 @@ export default class CarParks extends Component {
   }
   
   componentDidMount() {
-    var user_data = apiMethods.read(`CARPARK`);
-    console.log(user_data);
-    this.setState({ data: user_data });
-    //this.setState({ isLoading: false });
-    this.arrayholder = user_data;  
+    apiMethods.read(`CARPARK`)
+      .then((json) => {
+        this.setState({ data: json });
+        this.arrayholder = json;   
+      })  
+      .catch((error) => console.error(error))
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
   }
 
   searchFunction = searchText => {  
