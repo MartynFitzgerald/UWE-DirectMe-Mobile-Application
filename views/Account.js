@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, ScrollView, Slider, AsyncStorage, Linking, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, Slider, Linking, Button, TextInput } from 'react-native';
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 import Modal from 'react-native-modal';
 

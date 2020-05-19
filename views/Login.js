@@ -18,10 +18,18 @@ export default class LoginScreen extends Component {
   }
 
   componentDidMount() {
-    this._locationRequest();
+    this.locationRequest();
+    storage.get(`user`)
+    .then((user) => {
+      if (user != undefined || user != null) {
+        Keyboard.dismiss();
+        this.props.navigation.navigate('Home');
+      } 
+    });
+
   }
 
-  _locationRequest = async () => {
+  locationRequest = async () => {
     try {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== 'granted') {
