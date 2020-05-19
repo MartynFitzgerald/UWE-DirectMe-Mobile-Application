@@ -27,34 +27,34 @@ export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
   }
-    state = {
-      index: 2,
-      routes: [
-        { key: 'info', title: 'Info', icon: 'information', color: '#EB3349', focused:false },
-        { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false },
-        { key: 'map', title: 'Map', icon: 'map', color: '#EB3349', focused:true },
-        { key: 'history', title: 'History', icon: 'history', color: '#EB3349', focused:false },
-        { key: 'account', title: 'Account', icon: 'account-circle', color: '#EB3349', focused:false },
-      ],
-    };
+  state = {
+    index: 2,
+    routes: [
+      { key: 'info', title: 'Info', icon: 'information', color: '#EB3349', focused:false },
+      { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false },
+      { key: 'map', title: 'Map', icon: 'map', color: '#EB3349', focused:true },
+      { key: 'history', title: 'History', icon: 'history', color: '#EB3349', focused:false },
+      { key: 'account', title: 'Account', icon: 'account-circle', color: '#EB3349', focused:false },
+    ],
+  };
 
-    _handleIndexChange = index => this.setState({ index });
-  
-    _renderScene = BottomNavigation.SceneMap({
-        info: InformationRoute,
-        carParks: CarParksRoute,
-        map: MapRoute,
-        history: HistoryRoute,
-        account: AccountRoute,
-    });
+  handleIndexChange = index => this.setState({ index });
 
-    render() {
-      return (
-        <BottomNavigation
-          navigationState={this.state}
-          onIndexChange={this._handleIndexChange}
-          renderScene={this._renderScene}
-        />
-      );
-    }
+  renderScene = BottomNavigation.SceneMap({
+      info: InformationRoute,
+      carParks: CarParksRoute,
+      map: MapRoute,
+      history: HistoryRoute,
+      account: AccountRoute,
+  });
+
+  render() {
+    return (
+      <BottomNavigation
+        navigationState={this.state}
+        onIndexChange={this.handleIndexChange}
+        renderScene={this.renderScene}
+      />
+    );
   }
+}
