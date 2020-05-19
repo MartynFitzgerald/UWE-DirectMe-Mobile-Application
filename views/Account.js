@@ -18,19 +18,15 @@ export default class Account extends Component {
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
-  retrieveData = async () => {
-    try {
-      const user = JSON.parse(await AsyncStorage.getItem('@DirectMe:user'));
-      if (user !== null) {
-        this.setState({ user: user });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  
   componentDidMount() {
-    this.retrieveData();
+    console.log("Account View Open");
+    //Retrieve User Data From Local Storage.
+    AsyncStorage.getItem('@DirectMe:user')
+     .then((user) => {
+       this.setState({ user: JSON.parse(user)[0] });
+     })  
+     .catch((error) => console.error(error));
   };
 
   changeUserValues = async (keyText, value) => {

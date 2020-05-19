@@ -54,7 +54,7 @@ export default class CarParks extends Component {
   
   render() {
     const { data, isLoading, searchText } = this.state;
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <View>
         <Title style={styles.title}>Car Parks</Title> 
