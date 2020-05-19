@@ -23,12 +23,11 @@ export default class Account extends Component {
   componentDidMount() {
     console.log("Account View Open");
     //Retrieve User Data From Local Storage.
-    AsyncStorage.getItem('@DirectMe:user')
+    storage.get(`user`)
      .then((user) => {
-      this.setState({ user: JSON.parse(user)[0] });
-      this.setState({ userDefaults: JSON.parse(user)[0] });
-     })  
-     .catch((error) => console.error(error));
+      this.setState({ user: user[0] });
+      this.setState({ userDefaults: user[0] });
+     });
   };
   componentDidUpdate() {
     console.log("Account View Update");
@@ -42,7 +41,7 @@ export default class Account extends Component {
     var tempUser = this.state.user;
     tempUser[keyText] = value;
     await this.setState({user: tempUser});
-    await storage.setStorage(tempUser);
+    await storage.set(`user`, tempUser);
     //TODO: Need to slow the amount of posts sent to the API.
     //apiMethods.update(`USER`, tempUser);
   };

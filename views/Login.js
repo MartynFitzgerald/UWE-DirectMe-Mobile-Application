@@ -84,7 +84,7 @@ export default class LoginScreen extends Component {
             //Check credential.
             if(user_data[0].email_address == emailAddress && user_data[0].password == hash({password: `D1rectMeSa1t${password}2020`}))
             {
-              await storage.setStorage(user_data).then(
+              await storage.set(`user`, user_data).then(
                 Keyboard.dismiss(),
                 this.props.navigation.navigate('Home'),
               );

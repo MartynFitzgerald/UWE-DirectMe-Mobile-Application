@@ -3,6 +3,7 @@ import { StyleSheet, View, ActivityIndicator, FlatList } from 'react-native';
 import { List, Title, Text } from 'react-native-paper';
 import { SearchBar, Divider } from 'react-native-elements';
 import apiMethods from '../models/apiMethods';
+import storage from '../models/storage';
 
 export default class CarParks extends Component {
   constructor(props) {
@@ -15,14 +16,40 @@ export default class CarParks extends Component {
     };
     this.arrayholder = [];
   }
+
+  fetchCarParks = () => {
+    //Fetch Car Parks From API.
+    apiMethods.read(`CARPARK`)
+      .then((carParks) => {
+        storage.set(`carParksTimeStamp`, new Date());
+        storage.set(`carParks`, carParks);
+        this.setState({ data: carParks });
+        this.arrayholder = carParks;   
+      })
+  };
   
   componentDidMount() {
-    apiMethods.read(`CARPARK`)
-      .then((json) => {
-        this.setState({ data: json });
-        this.arrayholder = json;   
-      })  
-      .catch((error) => console.error(error))
+    //Check storage if the carparks are stored.
+    storage.get(`carParks`)
+      .then((localCarParks) => {
+        if (localCarParks != undefined || localCarParks != null) {
+          storage.get(`carParksTimeStamp`)
+          .then((timeStamp) => {
+            //Check the data when these car parks were stored.
+            if((new Date().getDate() - new Date(timeStamp).getDate() >= 5)) {
+              //Fetch Car Parks From API.
+              this.fetchCarParks();
+            } else {
+              //Fetch Car Parks From Local Storage.
+              this.setState({ data: localCarParks });
+              this.arrayholder = localCarParks;  
+            }
+          }); 
+        } else {
+          //Fetch Car Parks From API.
+          this.fetchCarParks();
+        }
+      })
       .finally(() => {
         this.setState({ isLoading: false });
       });
