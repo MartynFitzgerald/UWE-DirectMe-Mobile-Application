@@ -15,6 +15,8 @@ import MetaDataScreen from './views/MetaData';
 const Stack = createStackNavigator();
 
 function MyStack() {
+  //TODO: Remove On Production
+  console.disableYellowBox = true; 
   return (
     <Stack.Navigator initialRouteName="Login" headerMode = 'none' >
       <Stack.Screen name="Login" component={LoginScreen} />
