@@ -3,7 +3,6 @@ import { StyleSheet, View, Image, ScrollView, Slider, Linking, Button, TextInput
 import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 import Modal from 'react-native-modal';
 
-import apiMethods from '../models/apiMethods';
 import storage from '../models/storage';
 
 export default class Account extends Component {
@@ -11,39 +10,32 @@ export default class Account extends Component {
     super(props);
     this.state = {
       user: [],
-      userDefaults: [],
       isModalVisible: false,
     };
   }
+  componentDidMount() {
+    //Retrieve User Data From Local Storage.
+    storage.get(`userLocal`)
+     .then((user) => {
+      this.setState({ user: user[0] });
+     });
+  };
+
+  componentWillUnmount(){
+    //Check if user has moved to another screen, to update information in API.
+    checkStorage.checkChange();
+  };
+
 
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
-  
-  componentDidMount() {
-    console.log("Account View Open");
-    //Retrieve User Data From Local Storage.
-    storage.get(`user`)
-     .then((user) => {
-      this.setState({ user: user[0] });
-      this.setState({ userDefaults: user[0] });
-     });
-  };
-  componentDidUpdate() {
-    console.log("Account View Update");
-  }
-  componentWillUnmount(){
-    console.log("Account View Close");
-  };
-  
 
   changeUserValues = async (keyText, value) => {
     var tempUser = this.state.user;
     tempUser[keyText] = value;
     await this.setState({user: tempUser});
-    await storage.set(`user`, tempUser);
-    //TODO: Need to slow the amount of posts sent to the API.
-    //apiMethods.update(`USER`, tempUser);
+    await storage.set(`userLocal`, [tempUser]);
   };
 
   userSettings = async () => {
@@ -51,7 +43,6 @@ export default class Account extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { user, isModalVisible } = this.state;
     return (
       <View style={styles.container}>

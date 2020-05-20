@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 
+import checkStorage from '../controllers/checkStorage';
+
 import Information from './Information';
 import CarParks from './CarParks';
 import Map from './Map';
@@ -38,7 +40,13 @@ export default class HomeScreen extends Component {
     ],
   };
 
-  handleIndexChange = index => this.setState({ index });
+  handleIndexChange = async (index) => {
+    //Check if user has moved to another screen, to update information in API.
+    if(this.state.routes[this.state.index].key == "account" && this.state.routes[index].key != "account"){
+      checkStorage.checkChange();
+    };
+    this.setState({ index });
+  };
 
   renderScene = BottomNavigation.SceneMap({
       info: InformationRoute,

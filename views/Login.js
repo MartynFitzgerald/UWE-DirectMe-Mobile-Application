@@ -19,11 +19,11 @@ export default class LoginScreen extends Component {
 
   componentDidMount() {
     this.locationRequest();
-    storage.get(`user`)
+    storage.get(`userLocal`)
     .then((user) => {
       if (user != undefined || user != null) {
         Keyboard.dismiss();
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('NagivationBar');
       } 
     });
 
@@ -92,9 +92,10 @@ export default class LoginScreen extends Component {
             //Check credential.
             if(user_data[0].email_address == emailAddress && user_data[0].password == hash({password: `D1rectMeSa1t${password}2020`}))
             {
-              await storage.set(`user`, user_data).then(
+              await storage.set(`userAPI`, user_data);
+              await storage.set(`userLocal`, user_data).then(
                 Keyboard.dismiss(),
-                this.props.navigation.navigate('Home'),
+                this.props.navigation.navigate('NagivationBar'),
               );
             } else {
               alert(`Failed to log in! Please check the credentials submitted.`);
