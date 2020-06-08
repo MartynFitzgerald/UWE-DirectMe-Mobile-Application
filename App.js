@@ -11,11 +11,11 @@ import HistoryScreen from './views/History';
 import InformationScreen from './views/Information';
 import MapScreen from './views/Map';
 import MetaDataScreen from './views/MetaData';
-
+//Create a navigator of all the different views possible to access.
 const Stack = createStackNavigator();
-
+//This function incorporated all the views into the stack perviously created.
 function MyStack() {
-  //TODO: Remove On Production
+  //TODO: Remove On Production.
   console.disableYellowBox = true; 
   return (
     <Stack.Navigator initialRouteName="Login" headerMode = 'none' >
@@ -31,7 +31,7 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
-
+//Exports this function that includes the view that includes the stack of views.
 export default function App() {
   return (
     <NavigationContainer>

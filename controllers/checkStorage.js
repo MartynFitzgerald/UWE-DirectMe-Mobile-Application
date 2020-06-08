@@ -1,6 +1,22 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 06/08/2020
+|
+|    File Name:  checkStorage.js  
+|  Description:  This is the file that holds all the functionality to check 
+|                if there is any changes.
+|                
+*===========================================================================*/
 import storage from '../models/storage';
 import apiMethods from '../models/apiMethods';
-
+/* 
+  A function that checks if the user locally stored has been modified.
+*/
 exports.checkChange = async function() {
   //Retrieve User Data From Local Storage.
   var userLocal = await storage.get(`userLocal`);
