@@ -82,8 +82,9 @@ export default class CarParks extends Component {
   render() {
     const { data, isLoading, searchText } = this.state;
     return (
+      //this.props.route.oldProps.navigation.navigate('MetaData')
       <View>
-        <Title style={styles.title}>Car Parks</Title> 
+        <Title style={styles.title}>{this.props.route.tabTitle}</Title>
           {isLoading ? <ActivityIndicator size="large"/> : (
             <FlatList 
               style={styles.list}

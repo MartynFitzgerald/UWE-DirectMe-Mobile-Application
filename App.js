@@ -8,7 +8,7 @@ import NavigationBarScreen from './views/NavigationBar';
 //Create a navigator of all the different views possible to access.
 const Stack = createStackNavigator();
 //This function incorporated all the views into the stack perviously created.
-function MyStack() {
+function MainStack() {
   //TODO: Remove On Production.
   console.disableYellowBox = true; 
   return (
@@ -23,7 +23,7 @@ function MyStack() {
 export default function App() {
   return (
     <NavigationContainer>
-      <MyStack/>
+      <MainStack/>
     </NavigationContainer>
   );
 }

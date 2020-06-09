@@ -9,20 +9,27 @@ import Map from './Map';
 import History from './History';
 import Account from './Account';
 
+const InformationComponent = (props) => (<Information {...props} />);
+const CarParksComponent = (props) => (<CarParks {...props} />);
+const MapComponent = (props) => (<Map {...props} />);
+const HistoryComponent = (props) => (<History {...props} />);
+const AccountComponent = (props) => (<Account {...props} />);
+
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
-    state = {
-      index: 2,
-      routes: [
-        { key: 'info', title: 'Info', icon: 'information', color: '#EB3349', focused:false },
-        { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false },
-        { key: 'map', title: 'Map', icon: 'map', color: '#EB3349', focused:true },
-        { key: 'history', title: 'History', icon: 'history', color: '#EB3349', focused:false },
-        { key: 'account', title: 'Account', icon: 'account-circle', color: '#EB3349', focused:false },
-      ],
-    };
   }
+  
+  state = {
+    index: 2,
+    routes: [
+      { key: 'info', title: 'Info', tabTitle: 'Information', icon: 'information', color: '#EB3349', focused:false, oldProps: this.props },
+      { key: 'carParks', title: 'Car Parks', tabTitle: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false, oldProps: this.props  },
+      { key: 'map', title: 'Map', tabTitle: 'DirectMe', icon: 'map', color: '#EB3349', focused:true, oldProps: this.props  },
+      { key: 'history', title: 'History', tabTitle: 'History', icon: 'history', color: '#EB3349', focused:false, oldProps: this.props  },
+      { key: 'account', title: 'Account', tabTitle: 'Account', icon: 'account-circle', color: '#EB3349', focused:false, oldProps: this.props  },
+    ],
+  };
 
   handleIndexChange = async (index) => {
     //Check if user has moved to another screen, to update information in API.
@@ -33,14 +40,15 @@ export default class HomeScreen extends Component {
   };
 
   renderScene = BottomNavigation.SceneMap({
-      info: <Information/>,
-      carParks: <CarParks/>,
-      map: <Map/>,
-      history: <History/>,
-      account: <Account/>,
+      info: InformationComponent,
+      carParks: CarParksComponent,
+      map: MapComponent,
+      history: HistoryComponent,
+      account: AccountComponent,
   });
 
   render() {
+    //console.log(this.props);
     return (
       <BottomNavigation
         navigationState={this.state}

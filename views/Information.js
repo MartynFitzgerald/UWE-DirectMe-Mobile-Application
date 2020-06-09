@@ -6,7 +6,7 @@ export default class History extends Component {
   render() {
     return (
       <View>
-        <Title style={styles.title}>Information</Title>
+        <Title style={styles.title}>{this.props.route.tabTitle}</Title>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <Image
             style={styles.logo}

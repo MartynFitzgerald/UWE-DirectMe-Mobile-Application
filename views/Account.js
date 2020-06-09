@@ -47,7 +47,7 @@ export default class Account extends Component {
     const { user, isModalVisible } = this.state;
     return (
       <View style={styles.container}>
-        <Title style={styles.title}>Account</Title>
+        <Title style={styles.title}>{this.props.route.tabTitle}</Title>
         <ScrollView style={styles.scrollViewPadding}>
           <View style={styles.header}>
               <Image style={styles.avatar}

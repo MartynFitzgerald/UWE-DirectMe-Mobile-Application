@@ -21,7 +21,7 @@ export default class Map extends Component {
         const { search } = this.state;
         return (
             <View style={styles.mapContainer}>
-            <Title style={styles.title}>DirectMe</Title>
+            <Title style={styles.title}>{this.props.route.tabTitle}</Title>
             <SearchBar
                 placeholder="Search Here..."
                 onChangeText={this.updateSearch}
