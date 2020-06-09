@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 
 import checkStorage from '../controllers/checkStorage';
@@ -10,30 +9,20 @@ import Map from './Map';
 import History from './History';
 import Account from './Account';
 
-const InformationRoute = () => <Information onGetList={this.Information}/>;
-
-const CarParksRoute = () => <CarParks onGetList={this.CarParks}/>;
-
-const MapRoute = () => <Map onGetLocation={this.Map}/>;
-
-const HistoryRoute = () => <History onGetList={this.History}/>;
-
-const AccountRoute = () => <Account onGetList={this.Account}/>;
-
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
+    state = {
+      index: 2,
+      routes: [
+        { key: 'info', title: 'Info', icon: 'information', color: '#EB3349', focused:false },
+        { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false },
+        { key: 'map', title: 'Map', icon: 'map', color: '#EB3349', focused:true },
+        { key: 'history', title: 'History', icon: 'history', color: '#EB3349', focused:false },
+        { key: 'account', title: 'Account', icon: 'account-circle', color: '#EB3349', focused:false },
+      ],
+    };
   }
-  state = {
-    index: 2,
-    routes: [
-      { key: 'info', title: 'Info', icon: 'information', color: '#EB3349', focused:false },
-      { key: 'carParks', title: 'Car Parks', icon: 'parking', color: '#EB3349', focused:false },
-      { key: 'map', title: 'Map', icon: 'map', color: '#EB3349', focused:true },
-      { key: 'history', title: 'History', icon: 'history', color: '#EB3349', focused:false },
-      { key: 'account', title: 'Account', icon: 'account-circle', color: '#EB3349', focused:false },
-    ],
-  };
 
   handleIndexChange = async (index) => {
     //Check if user has moved to another screen, to update information in API.
@@ -44,11 +33,11 @@ export default class HomeScreen extends Component {
   };
 
   renderScene = BottomNavigation.SceneMap({
-      info: InformationRoute,
-      carParks: CarParksRoute,
-      map: MapRoute,
-      history: HistoryRoute,
-      account: AccountRoute,
+      info: <Information/>,
+      carParks: <CarParks/>,
+      map: <Map/>,
+      history: <History/>,
+      account: <Account/>,
   });
 
   render() {

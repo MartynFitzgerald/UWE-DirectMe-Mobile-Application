@@ -4,6 +4,7 @@ import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
 import Modal from 'react-native-modal';
 
 import storage from '../models/storage';
+import checkStorage from '../controllers/checkStorage';
 
 export default class Account extends Component {
   constructor(props) {
@@ -104,7 +105,7 @@ export default class Account extends Component {
             <Divider/>
             <List.Subheader>Application Settings</List.Subheader>
             <List.Item 
-              titleStyle={styles.signoutText}
+              titleStyle={styles.signOutText}
               title="Sign Out"
               />
         </List.Section>
@@ -114,7 +115,7 @@ export default class Account extends Component {
           <Modal 
             isVisible={isModalVisible}
           >
-            <View style={styles.alertbox}>
+            <View style={styles.alertBox}>
               <Text>Edit First Name</Text>
               <TextInput style={styles.inputs}
                   placeholder="Phone Number"
@@ -170,10 +171,10 @@ const styles = StyleSheet.create({
   scrollViewPadding:{
     marginBottom:60,
   },
-  signoutText:{
+  signOutText:{
     color:"#ff0000",
   },
-  alertbox:{
+  alertBox:{
     backgroundColor: "#ffffff",
     padding:15,
   },
