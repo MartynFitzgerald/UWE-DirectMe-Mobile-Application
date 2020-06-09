@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginScreen from './views/Login';
 import RegisterScreen from './views/Register';
-import NagivationBarScreen from './views/NagivationBar';
+import NavigationBarScreen from './views/NavigationBar';
 import AccountScreen from './views/Account';
 import CarParksScreen from './views/CarParks';
 import HistoryScreen from './views/History';
@@ -21,7 +21,7 @@ function MyStack() {
     <Stack.Navigator initialRouteName="Login" headerMode = 'none' >
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="NagivationBar" component={NagivationBarScreen} />
+      <Stack.Screen name="NavigationBar" component={NavigationBarScreen} />
       <Stack.Screen name="Account" component={AccountScreen} />
       <Stack.Screen name="CarParks" component={CarParksScreen} />
       <Stack.Screen name="History" component={HistoryScreen} />

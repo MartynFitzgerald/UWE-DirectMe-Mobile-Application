@@ -29,7 +29,7 @@ exports.validate_email = function(emailAddress) {
 /* 
   A function that checks if the input is a valid phoneNumber.
 */
-exports.validate_phonenumber = function(phoneNumber) {
+exports.validate_phoneNumber = function(phoneNumber) {
   var re = /[\+]?\d{0,3}([(]?\d{3}[)]?[-.]?\d{3}[-.]?\d{2}[-.]?\d{2})/;
   return re.test(phoneNumber);
 }

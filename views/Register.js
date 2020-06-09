@@ -16,12 +16,12 @@ export default class RegisterScreen extends Component {
       emailAddress: '',
       phoneNumber: '',
       password: '',
-      repassword: ''
+      reEnterPassword: ''
     };
   }
   
   render() {
-    const { fName, lName, emailAddress, phoneNumber, password, repassword } = this.state;
+    const { fName, lName, emailAddress, phoneNumber, password, reEnterPassword } = this.state;
     return (
         <View style={styles.container}>
           <LinearGradient
@@ -77,7 +77,7 @@ export default class RegisterScreen extends Component {
             <TextInput style={styles.inputs}
                 placeholder="Re-enter Password"
                 secureTextEntry={true}
-                onChangeText={(repassword) => this.setState({repassword})}
+                onChangeText={(reEnterPassword) => this.setState({rereEnterPasswordpassword})}
                 underlineColorAndroid='transparent'/>
           </View>
 
@@ -96,7 +96,7 @@ export default class RegisterScreen extends Component {
                 alert(`The email provided is invalid, please try again.`);
                 return;
               }
-              if (!validation.validate_phonenumber(phoneNumber)) {
+              if (!validation.validate_phoneNumber(phoneNumber)) {
                 alert(`The phone number provided is invalid, please try again.`);
                 return;
               }
@@ -104,11 +104,11 @@ export default class RegisterScreen extends Component {
                 alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
                 return;
               }
-              if (!validation.validate_password(repassword)) {
+              if (!validation.validate_password(reEnterPassword)) {
                 alert(`The re-enter password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
                 return;
               }
-              if (password != repassword) {
+              if (password != reEnterPassword) {
                 alert(`The password and re-enter password provided are not the same. Please try again.`);
                 return;
               }
