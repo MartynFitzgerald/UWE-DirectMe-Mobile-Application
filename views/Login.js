@@ -23,7 +23,7 @@ export default class LoginScreen extends Component {
     .then((user) => {
       if (user != undefined || user != null) {
         Keyboard.dismiss();
-        this.props.navigation.navigate('NagivationBar');
+        this.props.navigation.navigate('NavigationBar');
       } 
     });
 
@@ -95,7 +95,7 @@ export default class LoginScreen extends Component {
               await storage.set(`userAPI`, user_data);
               await storage.set(`userLocal`, user_data).then(
                 Keyboard.dismiss(),
-                this.props.navigation.navigate('NagivationBar'),
+                this.props.navigation.navigate('NavigationBar'),
               );
             } else {
               alert(`Failed to log in! Please check the credentials submitted.`);

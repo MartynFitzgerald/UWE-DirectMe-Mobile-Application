@@ -7,7 +7,6 @@ import checkStorage from '../controllers/checkStorage';
 import Information from './Information';
 import CarParks from './CarParks';
 import Map from './Map';
-import FloatingActionButton from './FloatingActionButton';
 import History from './History';
 import Account from './Account';
 
@@ -15,11 +14,7 @@ const InformationRoute = () => <Information onGetList={this.Information}/>;
 
 const CarParksRoute = () => <CarParks onGetList={this.CarParks}/>;
 
-const MapRoute = () => 
-  <View>
-    <Map onGetLocation={this.Map}/>
-    <FloatingActionButton onGetFloatingActionButton={this.FloatingActionButton}/>
-  </View>;
+const MapRoute = () => <Map onGetLocation={this.Map}/>;
 
 const HistoryRoute = () => <History onGetList={this.History}/>;
 
