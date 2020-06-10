@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView, Image, Linking  } from 'react-native';
-import { List, Title, Divider, Text, Paragraph, Button } from 'react-native-paper';
+import { List, Divider, Text, Paragraph, Appbar } from 'react-native-paper';
 
 export default class History extends Component {
   render() {
     return (
       <View>
-        <Title style={styles.title}>{this.props.route.tabTitle}</Title>
+        <Appbar.Header style={styles.Appbar}>
+          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+        </Appbar.Header>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <Image
             style={styles.logo}
@@ -54,17 +56,13 @@ export default class History extends Component {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingBottom: 60
+    paddingBottom: 100
   },
-  title: {
-      paddingTop: 40,
-      marginTop: 0,
-      marginBottom: 0,
-      top: 0,
-      textAlign: 'center', 
-      fontWeight: 'bold',
+  Appbar: {
       backgroundColor: '#EB3349',
-      color: '#fff',
+  },
+  AppbarTitle: {
+    alignItems: 'center',
   },
   list: {
       width: '100%',

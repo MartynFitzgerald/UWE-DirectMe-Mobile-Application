@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { List, Title, Text, Divider } from 'react-native-paper';
+import { List, Appbar, Text, Divider } from 'react-native-paper';
 
 export default class History extends Component {
   render() {
     return (
       <View>
-        <Title style={styles.title}>{this.props.route.tabTitle}</Title>
+        <Appbar.Header style={styles.Appbar}>
+          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+        </Appbar.Header>
         <ScrollView>
           <List.Section style={styles.list}>
             <List.Subheader>17th September 2019</List.Subheader>
@@ -100,15 +102,11 @@ const styles = StyleSheet.create({
       width: '100%',
       height: '100%',
   },
-  title: {
-      paddingTop: 40,
-      marginTop: 0,
-      marginBottom: 0,
-      top: 0,
-      textAlign: 'center', 
-      fontWeight: 'bold',
+  Appbar: {
       backgroundColor: '#EB3349',
-      color: '#fff',
+  },
+  AppbarTitle: {
+    alignItems: 'center',
   },
   paid: {
     textAlignVertical: 'center',

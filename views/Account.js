@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, ScrollView, Slider, Linking, Button, TextInput } from 'react-native';
-import { List, Title, Text, Divider, Switch  } from 'react-native-paper';
+import { List, Appbar, Text, Divider, Switch  } from 'react-native-paper';
 import Modal from 'react-native-modal';
 
 import storage from '../models/storage';
@@ -47,7 +47,9 @@ export default class Account extends Component {
     const { user, isModalVisible } = this.state;
     return (
       <View style={styles.container}>
-        <Title style={styles.title}>{this.props.route.tabTitle}</Title>
+        <Appbar.Header style={styles.Appbar}>
+          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+        </Appbar.Header>
         <ScrollView style={styles.scrollViewPadding}>
           <View style={styles.header}>
               <Image style={styles.avatar}
@@ -133,15 +135,11 @@ export default class Account extends Component {
 }
   
 const styles = StyleSheet.create({
-  title: {
-      paddingTop: 40,
-      marginTop: 0,
-      marginBottom: 0,
-      top: 0,
-      textAlign: 'center', 
-      fontWeight: 'bold',
+  Appbar: {
       backgroundColor: '#EB3349',
-      color: '#fff',
+  },
+  AppbarTitle: {
+    alignItems: 'center',
   },
   header:{
     backgroundColor: "#4285F4",

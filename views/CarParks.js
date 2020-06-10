@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator, FlatList } from 'react-native';
-import { List, Title, Text } from 'react-native-paper';
+import { List, Text, Appbar } from 'react-native-paper';
 import { SearchBar, Divider } from 'react-native-elements';
 import apiMethods from '../models/apiMethods';
 import storage from '../models/storage';
@@ -10,11 +10,11 @@ export default class CarParks extends Component {
     super(props);
 
     this.state = {
-      data: [],
+      visibleCarParks: [],
       isLoading: true,
       searchText: '',
     };
-    this.arrayholder = [];
+    this.carParks = [];
   }
 
   fetchCarParks = () => {
@@ -24,12 +24,12 @@ export default class CarParks extends Component {
         storage.set(`carParksTimeStamp`, new Date());
         storage.set(`carParks`, carParks);
         this.setState({ data: carParks });
-        this.arrayholder = carParks;   
+        this.carParks = carParks;   
       })
   };
   
   componentDidMount() {
-    //Check storage if the carparks are stored.
+    //Check storage if the car parks are stored.
     storage.get(`carParks`)
       .then((localCarParks) => {
         if (localCarParks != undefined || localCarParks != null) {
@@ -42,7 +42,7 @@ export default class CarParks extends Component {
             } else {
               //Fetch Car Parks From Local Storage.
               this.setState({ data: localCarParks });
-              this.arrayholder = localCarParks;  
+              this.carParks = localCarParks;  
             }
           }); 
         } else {
@@ -57,7 +57,7 @@ export default class CarParks extends Component {
 
   searchFunction = searchText => {  
     this.setState({ searchText });
-    const newData = this.arrayholder.filter(item => {      
+    const newData = this.carParks.filter(item => {      
       const itemData = `${item.name.toUpperCase()} ${item.address.toUpperCase()}`;
       const textData = searchText.toUpperCase();
       
@@ -80,11 +80,13 @@ export default class CarParks extends Component {
   };
   
   render() {
-    const { data, isLoading, searchText } = this.state;
+    const { visibleCarParks: data, isLoading, searchText } = this.state;
     return (
       //this.props.route.oldProps.navigation.navigate('MetaData')
       <View>
-        <Title style={styles.title}>{this.props.route.tabTitle}</Title>
+        <Appbar.Header style={styles.Appbar}>
+          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+        </Appbar.Header>
           {isLoading ? <ActivityIndicator size="large"/> : (
             <FlatList 
               style={styles.list}
@@ -114,15 +116,11 @@ const styles = StyleSheet.create({
       width: '100%',
       height: '100%',
   },
-  title: {
-      paddingTop: 40,
-      marginTop: 0,
-      marginBottom: 0,
-      top: 0,
-      textAlign: 'center', 
-      fontWeight: 'bold',
+  Appbar: {
       backgroundColor: '#EB3349',
-      color: '#fff',
+  },
+  AppbarTitle: {
+    alignItems: 'center',
   },
   paid: {
     textAlignVertical: 'center',
@@ -155,5 +153,7 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     width: "100%",
+    marginTop: -1,
+    height: 55,
   },
 });  

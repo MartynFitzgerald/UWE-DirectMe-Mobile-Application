@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
-import { Title } from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import { SearchBar } from 'react-native-elements';
 
@@ -20,8 +20,10 @@ export default class Map extends Component {
     render() {
         const { search } = this.state;
         return (
-            <View style={styles.mapContainer}>
-            <Title style={styles.title}>{this.props.route.tabTitle}</Title>
+          <View style={styles.mapContainer}>
+            <Appbar.Header style={styles.Appbar}>
+              <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+            </Appbar.Header>
             <SearchBar
                 placeholder="Search Here..."
                 onChangeText={this.updateSearch}
@@ -53,7 +55,7 @@ export default class Map extends Component {
             //If false the user won't be able to adjust the camera’s pitch angle.
             pitchEnabled={false}
             />
-            </View>
+          </View>
         );
     }
 }
@@ -67,15 +69,11 @@ const styles = StyleSheet.create({
     map: {
         flex: 1,
     },
-    title: {
-        paddingTop: 40,
-        marginTop: 0,
-        marginBottom: 0,
-        top: 0,
-        textAlign: 'center', 
-        fontWeight: 'bold',
+    Appbar: {
         backgroundColor: '#EB3349',
-        color: '#fff',
+    },
+    AppbarTitle: {
+      alignItems: 'center',
     },
     outerBox: {
       padding: 0,
@@ -83,5 +81,7 @@ const styles = StyleSheet.create({
     },
     searchBox: {
       width: "100%",
+      marginTop: -1,
+      height: 55,
     },
   });
