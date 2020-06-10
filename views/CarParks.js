@@ -4,6 +4,9 @@ import { List, Text, Appbar } from 'react-native-paper';
 import { SearchBar, Divider } from 'react-native-elements';
 import apiMethods from '../models/apiMethods';
 import storage from '../models/storage';
+import MetaData from './ChangeValue';
+
+const MetaDataComponent = <MetaData/>;
 
 export default class CarParks extends Component {
   constructor(props) {
@@ -16,7 +19,7 @@ export default class CarParks extends Component {
     };
     this.carParks = [];
   }
-
+  
   fetchCarParks = () => {
     //Fetch Car Parks From API.
     apiMethods.read(`CARPARK`)
@@ -80,7 +83,7 @@ export default class CarParks extends Component {
   };
   
   render() {
-    const { visibleCarParks: visibleCarParks, isLoading, searchText } = this.state;
+    const { visibleCarParks, isLoading, searchText } = this.state;
     return (
       //this.props.route.oldProps.navigation.navigate('MetaData')
       <View>
@@ -101,7 +104,7 @@ export default class CarParks extends Component {
                   description={item.address}
                   left={() => <List.Icon color="#4285F4" icon="parking" />}
                   right={() => <List.Icon icon="chevron-right" />} 
-                  onPress={() => this.props.navigation.navigate('Login')}
+                  onPress={() => <MetaDataComponent/>}//this.props.route.oldProps.navigation.navigate('Login')
                 />
               )}
             />

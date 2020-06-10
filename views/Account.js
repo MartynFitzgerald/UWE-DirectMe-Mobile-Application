@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, ScrollView, Slider, Linking, Button, TextInput } from 'react-native';
 import { List, Appbar, Text, Divider, Switch  } from 'react-native-paper';
-import Modal from 'react-native-modal';
+import Overlay from 'react-native-modal-overlay';
 
+import Modal from './ChangeValue.js';
 import storage from '../models/storage';
 import checkStorage from '../controllers/checkStorage';
 
@@ -11,6 +12,7 @@ export default class Account extends Component {
     super(props);
     this.state = {
       user: [],
+      selectedValue: '',
       isModalVisible: false,
     };
   }
@@ -26,7 +28,6 @@ export default class Account extends Component {
     //Check if user has moved to another screen, to update information in API.
     checkStorage.checkChange();
   };
-
 
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
@@ -44,7 +45,7 @@ export default class Account extends Component {
   };
 
   render() {
-    const { user, isModalVisible } = this.state;
+    const { user, isModalVisible, props, selectedValue } = this.state;
     return (
       <View style={styles.container}>
         <Appbar.Header style={styles.Appbar}>
@@ -86,8 +87,11 @@ export default class Account extends Component {
             <List.Item
               title="First Name"
               right={() => <Text>{user.fName}</Text>}
-              onPress={this.toggleModal}
-            />
+              onPress={()=> {
+                this.toggleModal();
+                this.setState({selectedValue: 'fname'});
+                }
+              }/>
             <List.Item
               title="Last Name"
               right={() => <Text>{user.lName}</Text>}
@@ -114,21 +118,10 @@ export default class Account extends Component {
         </ScrollView>
 
         <View style={{flex: 1}}>
-          <Modal 
-            isVisible={isModalVisible}
-          >
-            <View style={styles.alertBox}>
-              <Text>Edit First Name</Text>
-              <TextInput style={styles.inputs}
-                  placeholder="Phone Number"
-                  keyboardType="phone-pad"
-                  onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-                  underlineColorAndroid='transparent'/>
-              <Button title="Hide modal" onPress={this.toggleModal} />
-            </View>
-          </Modal>
+          <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} closeOnTouchOutside>
+            <Modal value={selectedValue}/>
+          </Overlay>
         </View>
-
       </View>
     );
   }
