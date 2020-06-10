@@ -37,7 +37,7 @@ export default class RegisterScreen extends Component {
             <TextInput style={styles.inputs}
                 placeholder="First Name"
                 keyboardType="default"
-                onChangeText={(fName) =>  this.setState({fName})}
+                onChangeText={(fName) => this.setState({fName})}
                 underlineColorAndroid='transparent'/>
           </View>
 

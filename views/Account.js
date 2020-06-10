@@ -13,6 +13,8 @@ export default class Account extends Component {
     this.state = {
       user: [],
       selectedValue: '',
+      selectedTitle: '',
+      selectedExample: '',
       isModalVisible: false,
     };
   }
@@ -45,7 +47,7 @@ export default class Account extends Component {
   };
 
   render() {
-    const { user, isModalVisible, props, selectedValue } = this.state;
+    const { user, isModalVisible, selectedValue, selectedTitle, selectedExample } = this.state;
     return (
       <View style={styles.container}>
         <Appbar.Header style={styles.Appbar}>
@@ -89,21 +91,41 @@ export default class Account extends Component {
               right={() => <Text>{user.fName}</Text>}
               onPress={()=> {
                 this.toggleModal();
-                this.setState({selectedValue: 'fname'});
+                this.setState({selectedValue: 'fName'});
+                this.setState({selectedTitle: 'First Name'});
+                this.setState({selectedExample: 'E.g. Martyn'});
                 }
-              }/>
+            }/>
             <List.Item
               title="Last Name"
               right={() => <Text>{user.lName}</Text>}
-            />
+              onPress={()=> {
+                this.toggleModal();
+                this.setState({selectedValue: 'lName'});
+                this.setState({selectedTitle: 'Last Name'});
+                this.setState({selectedExample: 'E.g. Fitzgerald'});
+                }
+            }/>
             <List.Item
               title="Email"
               right={() => <Text>{user.email_address}</Text>}
-            />
+              onPress={()=> {
+                this.toggleModal();
+                this.setState({selectedValue: 'email_address'});
+                this.setState({selectedTitle: 'Email Address'});
+                this.setState({selectedExample: 'E.g. martyn2.fitzgerald@live.uwe.ac.uk'});
+                }
+            }/>
             <List.Item
               title="Phone Number"
               right={() => <Text>{user.phone_number}</Text>}
-            />
+              onPress={()=> {
+                this.toggleModal();
+                this.setState({selectedValue: 'phone_number'});
+                this.setState({selectedTitle: 'Phone Number'});
+                this.setState({selectedExample: 'E.g. 07145234561'});
+                }
+            }/>
             <List.Item
               title="Profile Picture"
               right={() => <Text>Female 2</Text>}
@@ -118,8 +140,8 @@ export default class Account extends Component {
         </ScrollView>
 
         <View style={{flex: 1}}>
-          <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} closeOnTouchOutside>
-            <Modal value={selectedValue}/>
+          <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
+            <Modal user={user} value={selectedValue} title={selectedTitle} example={selectedExample}/>
           </Overlay>
         </View>
       </View>
