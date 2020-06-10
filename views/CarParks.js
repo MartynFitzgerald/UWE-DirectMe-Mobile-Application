@@ -23,7 +23,7 @@ export default class CarParks extends Component {
       .then((carParks) => {
         storage.set(`carParksTimeStamp`, new Date());
         storage.set(`carParks`, carParks);
-        this.setState({ data: carParks });
+        this.setState({ visibleCarParks: carParks });
         this.carParks = carParks;   
       })
   };
@@ -41,7 +41,7 @@ export default class CarParks extends Component {
               this.fetchCarParks();
             } else {
               //Fetch Car Parks From Local Storage.
-              this.setState({ data: localCarParks });
+              this.setState({ visibleCarParks: localCarParks });
               this.carParks = localCarParks;  
             }
           }); 
@@ -64,7 +64,7 @@ export default class CarParks extends Component {
       // If found return to newData
       return itemData.indexOf(textData) > -1;    
     });
-    this.setState({ data: newData });  
+    this.setState({ visibleCarParks: newData });  
   };
 
   renderHeader = (searchText) => {
@@ -80,7 +80,7 @@ export default class CarParks extends Component {
   };
   
   render() {
-    const { visibleCarParks: data, isLoading, searchText } = this.state;
+    const { visibleCarParks: visibleCarParks, isLoading, searchText } = this.state;
     return (
       //this.props.route.oldProps.navigation.navigate('MetaData')
       <View>
@@ -90,7 +90,7 @@ export default class CarParks extends Component {
           {isLoading ? <ActivityIndicator size="large"/> : (
             <FlatList 
               style={styles.list}
-              data={data}
+              data={visibleCarParks}
               keyExtractor={ item => item.car_park_id.toString()}
               ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader(searchText)}
