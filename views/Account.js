@@ -53,7 +53,7 @@ export default class Account extends Component {
         <Appbar.Header style={styles.Appbar}>
           <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
         </Appbar.Header>
-        <ScrollView style={styles.scrollViewPadding}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.header}>
               <Image style={styles.avatar}
                 source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
@@ -130,6 +130,15 @@ export default class Account extends Component {
               title="Profile Picture"
               right={() => <Text>Female 2</Text>}
             />
+            <List.Item 
+              titleStyle={styles.signOutText}
+              title="Remove Account"
+              onPress={()=> {
+                storage.remove('userLocal');
+                storage.remove('userAPI');
+                this.props.route.oldProps.navigation.navigate('Login');
+                }
+            }/>
             <Divider/>
             <List.Subheader>Application Settings</List.Subheader>
             <List.Item 
@@ -155,6 +164,9 @@ export default class Account extends Component {
 }
   
 const styles = StyleSheet.create({
+  contentContainer: {
+    paddingBottom: 100
+  },
   Appbar: {
       backgroundColor: '#EB3349',
   },
@@ -186,19 +198,7 @@ const styles = StyleSheet.create({
     fontSize:14,
     color:"#fff",
   },
-  scrollViewPadding:{
-    marginBottom:100,
-  },
   signOutText:{
-    color:"#ff0000",
-  },
-  alertBox:{
-    backgroundColor: "#ffffff",
-    padding:15,
-  },
-  inputs:{
-    padding:10,
-    borderBottomWidth: 1,
     color:"#ff0000",
   },
 });

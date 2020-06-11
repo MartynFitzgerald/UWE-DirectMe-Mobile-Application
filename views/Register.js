@@ -77,7 +77,7 @@ export default class RegisterScreen extends Component {
             <TextInput style={styles.inputs}
                 placeholder="Re-enter Password"
                 secureTextEntry={true}
-                onChangeText={(reEnterPassword) => this.setState({rereEnterPasswordpassword})}
+                onChangeText={(reEnterPassword) => this.setState({reEnterPassword})}
                 underlineColorAndroid='transparent'/>
           </View>
 

@@ -21,6 +21,32 @@ export default class MetaData extends Component {
     console.log([tempUser]);
   };
 
+  changeUserValues = () => {
+    switch ( this.props.value ) {
+      case 'fName': case 'lName':
+        console.log(`Fname Lname`);
+        return <TextInput style={styles.inputs}
+          placeholder={this.props.example}
+          keyboardType="default"
+          onChangeText={(value) => this.setState({value})}
+          underlineColorAndroid='transparent'/>; 
+    case 'email_address':
+      console.log(`email_address`);
+      return <TextInput style={styles.inputs}
+        placeholder={this.props.example}
+        keyboardType="email-address"
+        onChangeText={(value) => this.setState({value})}
+        underlineColorAndroid='transparent'/>; 
+    case 'phone_number':
+      console.log(`phone_number`);
+      return <TextInput style={styles.inputs}
+        placeholder={this.props.example}
+        keyboardType="phone-pad"
+        onChangeText={(value) => this.setState({value})}
+        underlineColorAndroid='transparent'/>; 
+    }
+  };
+
   render() {
     const { value } = this.state;
     return (
@@ -28,17 +54,11 @@ export default class MetaData extends Component {
         <Title>Modify {this.props.title}</Title>
           <Text style={{textAlign: 'center'}}>Insert you're new {this.props.title.toLowerCase()} below and press submit.</Text>
           <View style={(styles.inputContainer)}>
-            <TextInput style={styles.inputs}
-              placeholder={this.props.example}
-              keyboardType="default"
-              onChangeText={(value) => this.setState({value})}
-              underlineColorAndroid='transparent'/>
+          {this.changeUserValues}
           </View>
           <TouchableOpacity style={[styles.buttonContainer, styles.buttons]} 
             onPress={async () => {
               //Validate User Inputs
-              console.log(this.props.value);
-              console.log(value);
               switch ( this.props.value ) {
                 case 'fName': case 'lName':
                   if (!validation.validate_name(value)) {
