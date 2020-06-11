@@ -127,6 +127,7 @@ export default class RegisterScreen extends Component {
                   email_address: emailAddress,
                   password: hash({password: `D1rectMeSa1t${password}2020`}), // Using Encryption To Store Password
                   phone_number: phoneNumber,
+                  profile_picture: 'male1',
                 };
                 //Insert into API.
                 apiMethods.insert(`USER`, userArray).catch((error) => {console.log(error)});

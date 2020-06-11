@@ -135,7 +135,12 @@ export default class Account extends Component {
             <List.Item 
               titleStyle={styles.signOutText}
               title="Sign Out"
-              />
+              onPress={()=> {
+                storage.remove('userLocal');
+                storage.remove('userAPI');
+                this.props.route.oldProps.navigation.navigate('Login');
+                }
+            }/>
         </List.Section>
         </ScrollView>
 
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
     color:"#fff",
   },
   scrollViewPadding:{
-    marginBottom:60,
+    marginBottom:100,
   },
   signOutText:{
     color:"#ff0000",

@@ -13,3 +13,9 @@ exports.get = async function(name) {
     return JSON.parse(data);
   }).catch((error) => console.error(error));
 };
+/* 
+  A function that removes information stored using the name inputs.
+*/
+exports.remove = async function(name) {
+  await AsyncStorage.removeItem(`@DirectMe:${name}`).catch((error) => console.error(error));
+};
