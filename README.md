@@ -7,12 +7,18 @@ This component...
 ## Editors
 * Martyn Fitzgerald - 16025948
 
-## Finite State Diagram
+## State Transition Diagram
+
+This is a diagram that shows the key of the state transition.
+
+<div align="center">
+![State TransitionKey](./git_screenshots/State_Key.jpg)
+</div>
 
 This is a diagram that shows how the system shall be used.
 
 <div align="center">
-![Finite State Diagram PNG](Finite State Diagram.jpeg)
+![State Transition Diagram](./git_screenshots/DirectMe_Mobile.png)
 </div>
 
 ## Software Used

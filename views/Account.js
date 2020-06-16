@@ -134,6 +134,7 @@ export default class Account extends Component {
               titleStyle={styles.signOutText}
               title="Remove Account"
               onPress={()=> {
+                //TODO: Remove data from database
                 storage.remove('userLocal');
                 storage.remove('userAPI');
                 this.props.route.oldProps.navigation.navigate('Login');
