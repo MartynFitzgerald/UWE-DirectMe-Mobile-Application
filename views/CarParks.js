@@ -11,7 +11,6 @@ const MetaDataComponent = <MetaData/>;
 export default class CarParks extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       visibleCarParks: [],
       isLoading: true,

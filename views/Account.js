@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, ScrollView, Slider, Linking, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, Slider, Linking, Button, TextInput, ActivityIndicator } from 'react-native';
 import { List, Appbar, Text, Divider, Switch  } from 'react-native-paper';
 import Overlay from 'react-native-modal-overlay';
 
@@ -17,6 +17,17 @@ export default class Account extends Component {
       selectedExample: '',
       selectedType: '',
       isModalVisible: false,
+      profilePictures: [
+        {id:'avatar1.png', name:'Avatar 1', image: require('../assets/profilePictures/avatar1.png')}, 
+        {id:'avatar2.png', name:'Avatar 2', image: require('../assets/profilePictures/avatar2.png')}, 
+        {id:'avatar3.png', name:'Avatar 3', image: require('../assets/profilePictures/avatar3.png')}, 
+        {id:'avatar4.png', name:'Avatar 4', image: require('../assets/profilePictures/avatar4.png')}, 
+        {id:'avatar5.png', name:'Avatar 5',  image: require('../assets/profilePictures/avatar5.png')}, 
+        {id:'avatar6.png', name:'Avatar 6',  image: require('../assets/profilePictures/avatar6.png')}, 
+        {id:'avatar7.png', name:'Avatar 7', image: require('../assets/profilePictures/avatar7.png')}, 
+        {id:'avatar8.png', name:'Avatar 8',  image: require('../assets/profilePictures/avatar8.png')}, 
+        {id:'avatar9.png', name:'Avatar 9',  image: require('../assets/profilePictures/avatar9.png')},  
+      ],
     };
   }
   componentDidMount() {
@@ -24,7 +35,7 @@ export default class Account extends Component {
     storage.get(`userLocal`)
      .then((user) => {
       this.setState({ user: user[0] });
-     });
+     })
   };
 
   componentWillUnmount(){
@@ -48,7 +59,21 @@ export default class Account extends Component {
   };
 
   render() {
-    const { user, isModalVisible, selectedValue, selectedTitle, selectedExample, selectedType } = this.state;
+    const { user, isModalVisible, selectedValue, selectedTitle, selectedExample, selectedType, profilePictures } = this.state;
+    
+    //Getting the profile picture from storage or setting a default.
+    var profileID = (user.profile_picture <= 0 ||  user.profile_picture == undefined) ? `avatar1.png` : `${user.profile_picture}`;
+    var profilePicture = require(`../assets/profilePictures/avatar1.png`);
+    var pictureName = `Avatar 1`;
+    //Loop through profilePictures array of profile pictures.
+    for(var i = 0; i <= profilePictures.length; i++){
+      if(profilePictures[i].id == profileID){
+        profilePicture = profilePictures[i].image;
+        pictureName = profilePictures[i].name;
+        break;
+      }
+    }
+
     return (
       <View style={styles.container}>
         <Appbar.Header style={styles.Appbar}>
@@ -56,8 +81,7 @@ export default class Account extends Component {
         </Appbar.Header>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.header}>
-              <Image style={styles.avatar}
-                source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
+              <Image style={styles.avatar} source={profilePicture}/>
               <Text style={styles.name}>{user.fName} {user.lName} </Text>
               <Text style={styles.userInfo}>{user.email_address}</Text>
               <Text style={styles.userInfo}>Bristol, UK </Text>
@@ -133,8 +157,15 @@ export default class Account extends Component {
             }/>
             <List.Item
               title="Profile Picture"
-              right={() => <Text>Female 2</Text>}
-            />
+              right={() => <Text>{pictureName}</Text>}
+              onPress={()=> {
+                this.toggleModal();
+                this.setState({selectedValue: 'profile_picture'});
+                this.setState({selectedTitle: 'Profile Picture'});
+                this.setState({selectedExample: ''});
+                this.setState({selectedType: ''});
+                }
+            }/>
             <List.Item 
               titleStyle={styles.signOutText}
               title="Remove Account"
@@ -161,7 +192,7 @@ export default class Account extends Component {
 
         <View style={{flex: 1}}>
           <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
-            <Modal user={user} value={selectedValue} title={selectedTitle} example={selectedExample} type={selectedType} toggleModal={this.toggleModal}/>
+            <Modal user={user} value={selectedValue} title={selectedTitle} example={selectedExample} type={selectedType} toggleModal={this.toggleModal} profilePictures={profilePictures}/>
           </Overlay>
         </View>
       </View>
