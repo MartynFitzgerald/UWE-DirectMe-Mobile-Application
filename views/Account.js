@@ -15,6 +15,7 @@ export default class Account extends Component {
       selectedValue: '',
       selectedTitle: '',
       selectedExample: '',
+      selectedType: '',
       isModalVisible: false,
     };
   }
@@ -47,7 +48,7 @@ export default class Account extends Component {
   };
 
   render() {
-    const { user, isModalVisible, selectedValue, selectedTitle, selectedExample } = this.state;
+    const { user, isModalVisible, selectedValue, selectedTitle, selectedExample, selectedType } = this.state;
     return (
       <View style={styles.container}>
         <Appbar.Header style={styles.Appbar}>
@@ -94,6 +95,7 @@ export default class Account extends Component {
                 this.setState({selectedValue: 'fName'});
                 this.setState({selectedTitle: 'First Name'});
                 this.setState({selectedExample: 'E.g. Martyn'});
+                this.setState({selectedType: 'default'});
                 }
             }/>
             <List.Item
@@ -104,6 +106,7 @@ export default class Account extends Component {
                 this.setState({selectedValue: 'lName'});
                 this.setState({selectedTitle: 'Last Name'});
                 this.setState({selectedExample: 'E.g. Fitzgerald'});
+                this.setState({selectedType: 'default'});
                 }
             }/>
             <List.Item
@@ -114,6 +117,7 @@ export default class Account extends Component {
                 this.setState({selectedValue: 'email_address'});
                 this.setState({selectedTitle: 'Email Address'});
                 this.setState({selectedExample: 'E.g. martyn2.fitzgerald@live.uwe.ac.uk'});
+                this.setState({selectedType: 'email-address'});
                 }
             }/>
             <List.Item
@@ -124,6 +128,7 @@ export default class Account extends Component {
                 this.setState({selectedValue: 'phone_number'});
                 this.setState({selectedTitle: 'Phone Number'});
                 this.setState({selectedExample: 'E.g. 07145234561'});
+                this.setState({selectedType: 'phone-pad'});
                 }
             }/>
             <List.Item
@@ -156,7 +161,7 @@ export default class Account extends Component {
 
         <View style={{flex: 1}}>
           <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
-            <Modal user={user} value={selectedValue} title={selectedTitle} example={selectedExample} toggleModal={this.toggleModal}/>
+            <Modal user={user} value={selectedValue} title={selectedTitle} example={selectedExample} type={selectedType} toggleModal={this.toggleModal}/>
           </Overlay>
         </View>
       </View>
