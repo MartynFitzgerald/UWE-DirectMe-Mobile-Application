@@ -84,7 +84,11 @@ export default class MetaData extends Component {
           >
             <Text>Submit</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}>
+          <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
+            onPress={() => {
+              this.props.toggleModal();
+            }}
+          >
             <Text>Go Back</Text>
           </TouchableOpacity>
       </View>

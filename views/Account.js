@@ -156,7 +156,7 @@ export default class Account extends Component {
 
         <View style={{flex: 1}}>
           <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
-            <Modal user={user} value={selectedValue} title={selectedTitle} example={selectedExample}/>
+            <Modal user={user} value={selectedValue} title={selectedTitle} example={selectedExample} toggleModal={this.toggleModal}/>
           </Overlay>
         </View>
       </View>
