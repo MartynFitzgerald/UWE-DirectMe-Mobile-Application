@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'reac
 import { LinearGradient } from 'expo-linear-gradient';
 import { v1 as uuidv1 } from 'react-native-uuid';
 import hash from 'object-hash';
+
 import validation from '../controllers/validation';
 import apiMethods from '../models/apiMethods';
 

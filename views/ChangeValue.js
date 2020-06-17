@@ -22,11 +22,13 @@ export default class Overlay extends Component {
   };
 
   renderItem = ({item, index}) => {
+    //If item is empty then send back a simple return to stop lots of touchable slots with no pictures.
     if (item.empty === true) {
-      return <View style={[styles.item, styles.itemInvisible]} />;
+      return;
     }
+    //Get the dimensions of the application window and divide it by a number of columns predefined.
     var itemDimension = Dimensions.get('window').width / this.state.numColumns;
-
+    //Return each option on the load of the view.
     return (
       <TouchableOpacity style={[styles.item, {height: itemDimension}]} onPress={() => {this.changeUserValues('profile_picture', item.id), this.props.toggleModal()}}>
         <Image style={{height:itemDimension - 2, width:itemDimension - 2}, styles.avatar} source={item.image}/> 
@@ -52,7 +54,7 @@ export default class Overlay extends Component {
       return (
         <View style={styles.alertBox}>
           <Title>Modify {this.props.title}</Title>
-            <Text style={{textAlign: 'center'}}>Select you're new {this.props.title.toLowerCase()} below and press submit.</Text>
+            <Text style={{textAlign: 'center'}}>Select you're new {this.props.title.toLowerCase()} below.</Text>
             <FlatList
               style={styles.list}
               data={this.formatRow(this.props.profilePictures, numColumns)}
@@ -64,8 +66,7 @@ export default class Overlay extends Component {
             <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
               onPress={() => {
                 this.props.toggleModal();
-              }}
-            >
+            }}>
               <Text>Go Back</Text>
             </TouchableOpacity> 
         </View>

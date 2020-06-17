@@ -56,7 +56,7 @@ export default class History extends Component {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingBottom: 100
+    paddingBottom: 100,
   },
   Appbar: {
       backgroundColor: '#EB3349',

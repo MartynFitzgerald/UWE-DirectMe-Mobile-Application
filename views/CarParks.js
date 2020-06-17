@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator, FlatList } from 'react-native';
 import { List, Text, Appbar } from 'react-native-paper';
 import { SearchBar, Divider } from 'react-native-elements';
+import Overlay from 'react-native-modal-overlay';
+
 import apiMethods from '../models/apiMethods';
 import storage from '../models/storage';
-import MetaData from './ChangeValue';
-
-const MetaDataComponent = <MetaData/>;
+import Modal from './MetaData.js';
 
 export default class CarParks extends Component {
   constructor(props) {
@@ -15,6 +15,8 @@ export default class CarParks extends Component {
       visibleCarParks: [],
       isLoading: true,
       searchText: '',
+      isModalVisible: false,
+      carPark: [],
     };
     this.carParks = [];
   }
@@ -57,6 +59,10 @@ export default class CarParks extends Component {
       });
   }
 
+  toggleModal = () => {
+    this.setState({isModalVisible: !this.state.isModalVisible});
+  };
+
   searchFunction = searchText => {  
     this.setState({ searchText });
     const newData = this.carParks.filter(item => {      
@@ -82,7 +88,7 @@ export default class CarParks extends Component {
   };
   
   render() {
-    const { visibleCarParks, isLoading, searchText } = this.state;
+    const { visibleCarParks, isLoading, searchText, isModalVisible, carPark} = this.state;
     return (
       //this.props.route.oldProps.navigation.navigate('MetaData')
       <View>
@@ -91,7 +97,7 @@ export default class CarParks extends Component {
         </Appbar.Header>
           {isLoading ? <ActivityIndicator size="large"/> : (
             <FlatList 
-              style={styles.list}
+              style={styles.contentContainer}
               data={visibleCarParks}
               keyExtractor={ item => item.car_park_id.toString()}
               ItemSeparatorComponent={this.renderSeparator}
@@ -99,50 +105,38 @@ export default class CarParks extends Component {
               ListEmptyComponent={this.renderEmptyContainer()}
               renderItem={({ item }) => (
                 <List.Item
-                  title={item.name}
+                  title={item.name.replace("Bristol ", "")}
                   description={item.address}
                   left={() => <List.Icon color="#4285F4" icon="parking" />}
                   right={() => <List.Icon icon="chevron-right" />} 
-                  onPress={() => <MetaDataComponent/>}//this.props.route.oldProps.navigation.navigate('Login')
-                />
+                  onPress={()=> {
+                    this.setState({carPark: item});
+                    this.toggleModal();
+                    }
+                }/>
               )}
             />
           )}
+        <View style={{flex: 1}}>
+          <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
+            <Modal carPark={JSON.stringify(carPark)} toggleModal={this.toggleModal}/>
+          </Overlay>
+        </View>
       </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
-  list: {
+  contentContainer: {
       width: '100%',
-      height: '100%',
+      height: '89%',
   },
   Appbar: {
       backgroundColor: '#EB3349',
   },
   AppbarTitle: {
     alignItems: 'center',
-  },
-  paid: {
-    textAlignVertical: 'center',
-    textAlign: 'center', 
-    paddingHorizontal: 10,
-    borderRadius:10,
-    maxHeight:30, 
-    top:12.5,
-    backgroundColor: '#2FD63C',
-    fontWeight: 'bold',
-  },
-  unpaid: {
-    textAlignVertical: 'center',
-    textAlign: 'center', 
-    paddingHorizontal: 10,
-    borderRadius:10,
-    maxHeight:30, 
-    top:12.5,
-    backgroundColor: '#E71212',
-    fontWeight: 'bold',
   },
   emptyResult: {
     padding: 10,

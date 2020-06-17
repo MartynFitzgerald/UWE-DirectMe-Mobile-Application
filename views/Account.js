@@ -94,7 +94,7 @@ export default class Account extends Component {
           />
           <List.Item
             title="Radius"
-            right={() => <Text>{user.radius}</Text>}
+            right={() => <Text style={styles.rightText} >{user.radius}</Text>}
           />
           <Slider
             step={1}
@@ -113,57 +113,68 @@ export default class Account extends Component {
             <List.Subheader>User Information</List.Subheader>
             <List.Item
               title="First Name"
-              right={() => <Text>{user.fName}</Text>}
+              right={() => <Text style={styles.rightText} >{user.fName}</Text>}
               onPress={()=> {
-                this.toggleModal();
                 this.setState({selectedValue: 'fName'});
                 this.setState({selectedTitle: 'First Name'});
                 this.setState({selectedExample: 'E.g. Martyn'});
                 this.setState({selectedType: 'default'});
+                this.toggleModal();
                 }
             }/>
             <List.Item
               title="Last Name"
-              right={() => <Text>{user.lName}</Text>}
+              right={() => <Text style={styles.rightText} >{user.lName}</Text>}
               onPress={()=> {
-                this.toggleModal();
                 this.setState({selectedValue: 'lName'});
                 this.setState({selectedTitle: 'Last Name'});
                 this.setState({selectedExample: 'E.g. Fitzgerald'});
                 this.setState({selectedType: 'default'});
+                this.toggleModal();
                 }
             }/>
             <List.Item
               title="Email"
-              right={() => <Text>{user.email_address}</Text>}
+              right={() => <Text style={styles.rightText} >{user.email_address}</Text>}
               onPress={()=> {
-                this.toggleModal();
                 this.setState({selectedValue: 'email_address'});
                 this.setState({selectedTitle: 'Email Address'});
                 this.setState({selectedExample: 'E.g. martyn2.fitzgerald@live.uwe.ac.uk'});
                 this.setState({selectedType: 'email-address'});
+                this.toggleModal();
                 }
             }/>
             <List.Item
               title="Phone Number"
-              right={() => <Text>{user.phone_number}</Text>}
+              right={() => <Text style={styles.rightText} >{user.phone_number}</Text>}
               onPress={()=> {
-                this.toggleModal();
                 this.setState({selectedValue: 'phone_number'});
                 this.setState({selectedTitle: 'Phone Number'});
                 this.setState({selectedExample: 'E.g. 07145234561'});
                 this.setState({selectedType: 'phone-pad'});
+                this.toggleModal();
                 }
             }/>
             <List.Item
               title="Profile Picture"
-              right={() => <Text>{pictureName}</Text>}
+              right={() => <Text style={styles.rightText} >{pictureName}</Text>}
               onPress={()=> {
-                this.toggleModal();
                 this.setState({selectedValue: 'profile_picture'});
                 this.setState({selectedTitle: 'Profile Picture'});
                 this.setState({selectedExample: ''});
                 this.setState({selectedType: ''});
+                this.toggleModal();
+                }
+            }/>
+            <Divider/>
+            <List.Subheader>Account Settings</List.Subheader>
+            <List.Item 
+              titleStyle={styles.signOutText}
+              title="Sign Out"
+              onPress={()=> {
+                storage.remove('userLocal');
+                storage.remove('userAPI');
+                this.props.route.oldProps.navigation.navigate('Login');
                 }
             }/>
             <List.Item 
@@ -171,17 +182,6 @@ export default class Account extends Component {
               title="Remove Account"
               onPress={()=> {
                 //TODO: Remove data from database
-                storage.remove('userLocal');
-                storage.remove('userAPI');
-                this.props.route.oldProps.navigation.navigate('Login');
-                }
-            }/>
-            <Divider/>
-            <List.Subheader>Application Settings</List.Subheader>
-            <List.Item 
-              titleStyle={styles.signOutText}
-              title="Sign Out"
-              onPress={()=> {
                 storage.remove('userLocal');
                 storage.remove('userAPI');
                 this.props.route.oldProps.navigation.navigate('Login');
@@ -234,6 +234,9 @@ const styles = StyleSheet.create({
     width:'100%',
     fontSize:14,
     color:"#fff",
+  },
+  rightText: {
+    textAlignVertical: 'center',
   },
   signOutText:{
     color:"#ff0000",
