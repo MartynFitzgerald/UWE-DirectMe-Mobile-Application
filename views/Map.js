@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import { SearchBar } from 'react-native-elements';

@@ -39,7 +39,7 @@ export default class History extends Component {
             <Divider/>
             <List.Item
               title="Contact Email:"
-              right={() => <Text style={styles.rightText, styles.EmailText} onPress={() => Linking.openURL('mailto:martyn2.fitzgerald@live.uwe.ac.uk') } >martyn2.fitzgerald@live.uwe.ac.uk</Text>}
+              right={() => <Text style={styles.rightText, styles.emailText} onPress={() => Linking.openURL('mailto:martyn2.fitzgerald@live.uwe.ac.uk') } >martyn2.fitzgerald@live.uwe.ac.uk</Text>}
             />
             <Divider/>
             <List.Item
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     marginTop: 15,
   },
-  EmailText: {
+  emailText: {
     textAlignVertical: 'center',
     color: '#0000EE',
     textDecorationLine: 'underline'

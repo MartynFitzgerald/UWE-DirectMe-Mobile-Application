@@ -221,31 +221,6 @@ const styles = StyleSheet.create({
   buttons: {
     backgroundColor: '#FFFFFF'
   },
-  facebookButton: {
-    backgroundColor: "#3b5998"
-  },
-  googleButton: {
-    backgroundColor: "#FFFFFF"
-  },
-  loginText: {
-    marginLeft: 5,
-    color: 'white'
-  },
-  googleText: {
-    marginLeft: 5,
-    color: '#B2B2B2'
-  },
-  restoreButtonContainer:{
-    width:250,
-    marginLeft:30,
-    marginBottom:15,
-    alignItems: 'flex-end'
-  },
-  socialButtonContent:{
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   logo:{
     margin:50,
     width:369,

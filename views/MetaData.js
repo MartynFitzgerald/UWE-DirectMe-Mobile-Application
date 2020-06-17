@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { List, Divider, Title, Paragraph } from 'react-native-paper';
+import { List, Divider } from 'react-native-paper';
 import MapView, { Marker } from 'react-native-maps';
 import Moment from 'moment';
 

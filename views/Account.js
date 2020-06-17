@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, ScrollView, Slider, Linking, Button, TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, Slider, Linking } from 'react-native';
 import { List, Appbar, Text, Divider, Switch  } from 'react-native-paper';
 import Overlay from 'react-native-modal-overlay';
 
