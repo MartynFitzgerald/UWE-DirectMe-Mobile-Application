@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import { SearchBar } from 'react-native-elements';
@@ -22,7 +22,7 @@ export default class Map extends Component {
         return (
           <View style={styles.mapContainer}>
             <Appbar.Header style={styles.Appbar}>
-              <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+              <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
             </Appbar.Header>
             <SearchBar
                 placeholder="Search Here..."
@@ -74,6 +74,8 @@ const styles = StyleSheet.create({
     },
     AppbarTitle: {
       alignItems: 'center',
+      fontFamily: 'Pacifico',
+      fontSize: 30,
     },
     outerBox: {
       padding: 0,

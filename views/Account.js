@@ -77,7 +77,7 @@ export default class Account extends Component {
     return (
       <View style={styles.container}>
         <Appbar.Header style={styles.Appbar}>
-          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
         </Appbar.Header>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.header}>
@@ -209,6 +209,8 @@ const styles = StyleSheet.create({
   },
   AppbarTitle: {
     alignItems: 'center',
+    fontFamily: 'Pacifico',
+    fontSize: 30,
   },
   header:{
     backgroundColor: "#4285F4",

@@ -74,7 +74,7 @@ export default class LoginScreen extends Component {
         </View>
     
         <TouchableOpacity style={styles.restoreButtonContainer}>
-            <Text>Forgot Password?</Text>
+            <Text style={{fontFamily: 'Pacifico'}}>Forgot Password?</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}    

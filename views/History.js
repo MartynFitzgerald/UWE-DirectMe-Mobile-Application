@@ -7,7 +7,7 @@ export default class History extends Component {
     return (
       <View>
         <Appbar.Header style={styles.Appbar}>
-          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+            <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
         </Appbar.Header>
         <ScrollView>
           <List.Section style={styles.list}>
@@ -107,6 +107,8 @@ const styles = StyleSheet.create({
   },
   AppbarTitle: {
     alignItems: 'center',
+    fontFamily: 'Pacifico',
+    fontSize: 30,
   },
   paid: {
     textAlignVertical: 'center',

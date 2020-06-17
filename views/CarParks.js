@@ -90,10 +90,9 @@ export default class CarParks extends Component {
   render() {
     const { visibleCarParks, isLoading, searchText, isModalVisible, carPark} = this.state;
     return (
-      //this.props.route.oldProps.navigation.navigate('MetaData')
       <View>
         <Appbar.Header style={styles.Appbar}>
-          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle}/>
+          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
         </Appbar.Header>
           {isLoading ? <ActivityIndicator size="large"/> : (
             <FlatList 
@@ -137,6 +136,8 @@ const styles = StyleSheet.create({
   },
   AppbarTitle: {
     alignItems: 'center',
+    fontFamily: 'Pacifico',
+    fontSize: 30,
   },
   emptyResult: {
     padding: 10,
