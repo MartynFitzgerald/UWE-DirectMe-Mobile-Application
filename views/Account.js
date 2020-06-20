@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, ScrollView, Slider, Linking } from 'react-native';
 import { List, Appbar, Text, Divider, Switch  } from 'react-native-paper';
 import Overlay from 'react-native-modal-overlay';
+import * as Location from 'expo-location';
 
 import Modal from './ChangeValue.js';
 import storage from '../models/storage';
@@ -28,6 +29,7 @@ export default class Account extends Component {
         {id:'avatar8.png', name:'Avatar 8',  image: require('../assets/profilePictures/avatar8.png')}, 
         {id:'avatar9.png', name:'Avatar 9',  image: require('../assets/profilePictures/avatar9.png')},  
       ],
+      country: '',
     };
   }
   componentDidMount() {
@@ -35,12 +37,32 @@ export default class Account extends Component {
     storage.get(`userLocal`)
      .then((user) => {
       this.setState({ user: user[0] });
-     })
+     });
+     this.getUserLocation();
   };
 
   componentWillUnmount(){
     //Check if user has moved to another screen, to update information in API.
     checkStorage.checkChange();
+  };
+  
+  getUserLocation = async () => {
+    try {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      } else {
+        //Get user's location
+        let location = await Location.getCurrentPositionAsync({});
+        //Get user's string location e.g. UK.
+        let usersTextLocation = await Location.reverseGeocodeAsync({latitude: location.coords.latitude, longitude: location.coords.longitude});
+        //Store users current country.
+        await this.setState({country: usersTextLocation[0].country});
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   toggleModal = () => {
@@ -59,7 +81,7 @@ export default class Account extends Component {
   };
 
   render() {
-    const { user, isModalVisible, selectedValue, selectedTitle, selectedExample, selectedType, profilePictures } = this.state;
+    const { user, isModalVisible, selectedValue, selectedTitle, selectedExample, selectedType, profilePictures, country } = this.state;
     
     //Getting the profile picture from storage or setting a default.
     var profileID = (user.profile_picture <= 0 ||  user.profile_picture == undefined) ? `avatar1.png` : `${user.profile_picture}`;
@@ -84,7 +106,7 @@ export default class Account extends Component {
               <Image style={styles.avatar} source={profilePicture}/>
               <Text style={styles.name}>{user.fName} {user.lName} </Text>
               <Text style={styles.userInfo}>{user.email_address}</Text>
-              <Text style={styles.userInfo}>Bristol, UK </Text>
+              <Text style={styles.userInfo}>{country}</Text>
           </View>
           <List.Section style={styles.list}>
             <List.Subheader>General Settings</List.Subheader>

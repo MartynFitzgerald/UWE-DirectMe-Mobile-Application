@@ -29,7 +29,7 @@ export default class CarParks extends Component {
         storage.set(`carParks`, carParks);
         this.setState({ visibleCarParks: carParks });
         this.carParks = carParks;   
-      })
+      });
   };
   
   componentDidMount() {
@@ -94,28 +94,28 @@ export default class CarParks extends Component {
         <Appbar.Header style={styles.Appbar}>
           <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
         </Appbar.Header>
-          {isLoading ? <ActivityIndicator size="large"/> : (
-            <FlatList 
-              style={styles.contentContainer}
-              data={visibleCarParks}
-              keyExtractor={ item => item.car_park_id.toString()}
-              ItemSeparatorComponent={this.renderSeparator}
-              ListHeaderComponent={this.renderHeader(searchText)}
-              ListEmptyComponent={this.renderEmptyContainer()}
-              renderItem={({ item }) => (
-                <List.Item
-                  title={item.name.replace("Bristol ", "")}
-                  description={item.address}
-                  left={() => <List.Icon color="#4285F4" icon="parking" />}
-                  right={() => <List.Icon icon="chevron-right" />} 
-                  onPress={()=> {
-                    this.setState({carPark: item});
-                    this.toggleModal();
-                    }
-                }/>
-              )}
-            />
-          )}
+        {isLoading ? <ActivityIndicator size="large"/> : (
+          <FlatList 
+            style={styles.contentContainer}
+            data={visibleCarParks}
+            keyExtractor={ item => item.car_park_id.toString()}
+            ItemSeparatorComponent={this.renderSeparator}
+            ListHeaderComponent={this.renderHeader(searchText)}
+            ListEmptyComponent={this.renderEmptyContainer()}
+            renderItem={({ item }) => (
+              <List.Item
+                title={item.name.replace("Bristol ", "")}
+                description={item.address}
+                left={() => <List.Icon color="#4285F4" icon="parking" />}
+                right={() => <List.Icon icon="chevron-right" />} 
+                onPress={()=> {
+                  this.setState({carPark: item});
+                  this.toggleModal();
+                  }
+              }/>
+            )}
+          />
+        )}
         <View style={{flex: 1}}>
           <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
             <Modal carPark={JSON.stringify(carPark)} toggleModal={this.toggleModal}/>
