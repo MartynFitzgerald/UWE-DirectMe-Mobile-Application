@@ -80,11 +80,25 @@ export default class LoginScreen extends Component {
         <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}    
           onPress={async () => {
             if (!validation.validate_email(emailAddress)) {
-              alert(`The email provided is invalid, please try again.`);
+              //Output alert to aware user of invalid email address input.
+              Alert.alert(
+                "Invalid Input",
+                `Unfortunately the email address provided is invalid, please make sure you insert a correct email address and try again.`,
+                [
+                  { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                ],
+              );
               return;
             }
             if (!validation.validate_password(password)) {
-              alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
+              //Output alert to aware user of invalid password input.
+              Alert.alert(
+                "Invalid Input",
+                `Unfortunately the password provided is invalid, please make sure you insert a password that contain one uppercase, three lowercase, one number, and 8-12 characters and try again.`,
+                [
+                  { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                ],
+              );
               return;
             }
             //Get User Data From API.
@@ -98,7 +112,14 @@ export default class LoginScreen extends Component {
                 this.props.navigation.navigate('NavigationBar'),
               );
             } else {
-              alert(`Failed to log in! Please check the credentials submitted.`);
+              //Output alert to aware user of invalid password input.
+              Alert.alert(
+                "Invalid Credentials",
+                `Unfortunately the credentials provided are not known , please check the credentials submitted. and try again.`,
+                [
+                  { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                ],
+              );
             }
             return;
           }}

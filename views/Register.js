@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { v1 as uuidv1 } from 'react-native-uuid';
 import hash from 'object-hash';
@@ -86,37 +86,82 @@ export default class RegisterScreen extends Component {
             onPress={async () => {
               //Validate User Inputs
               if (!validation.validate_name(fName)) {
-                alert(`The first name provided is invalid, please try again.`);
+                //Output alert to aware user of invalid first name input.
+                Alert.alert(
+                  "Invalid Input",
+                  `Unfortunately the first name provided is invalid, please make sure you insert a correct name and try again.`,
+                  [
+                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                  ],
+                );
                 return;
               }
               if (!validation.validate_name(lName)) {
-                alert(`The last name provided is invalid, please try again.`);
+                //Output alert to aware user of invalid last name input.
+                Alert.alert(
+                  "Invalid Input",
+                  `Unfortunately the last name provided is invalid, please make sure you insert a correct name and try again.`,
+                  [
+                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                  ],
+                );
                 return;
               }
               if (!validation.validate_email(emailAddress)) {
-                alert(`The email provided is invalid, please try again.`);
+                //Output alert to aware user of invalid email address input.
+                Alert.alert(
+                  "Invalid Input",
+                  `Unfortunately the email address provided is invalid, please make sure you insert a correct email address and try again.`,
+                  [
+                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                  ],
+                );
                 return;
               }
               if (!validation.validate_phoneNumber(phoneNumber)) {
-                alert(`The phone number provided is invalid, please try again.`);
+                //Output alert to aware user of invalid phone number input.
+                Alert.alert(
+                  "Invalid Input",
+                  `Unfortunately the phone number provided is invalid, please make sure you insert a correct phone number and try again.`,
+                  [
+                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                  ],
+                );
                 return;
               }
               if (!validation.validate_password(password)) {
-                alert(`The password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
-                return;
-              }
-              if (!validation.validate_password(reEnterPassword)) {
-                alert(`The re-enter password provided needs to contain one uppercase, three lowercase, one number, and 8-12 characters overall. Please try again.`);
+                //Output alert to aware user of invalid password input.
+                Alert.alert(
+                  "Invalid Input",
+                  `Unfortunately the password provided is invalid, please make sure you insert a password that contain one uppercase, three lowercase, one number, and 8-12 characters and try again.`,
+                  [
+                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                  ],
+                );
                 return;
               }
               if (password != reEnterPassword) {
-                alert(`The password and re-enter password provided are not the same. Please try again.`);
+                //Output alert to aware user of invalid re-enter input.
+                Alert.alert(
+                  "Invalid Input",
+                  `Unfortunately the re-enter password provided is invalid, please make sure you insert the same password previously provided and try again.`,
+                  [
+                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                  ],
+                );
                 return;
               }
               
               //Check email is not already registered.
               if(await apiMethods.read(`USER/${emailAddress}`)[0]) {
-                alert(`The email address is already registered! Please try to login.`);
+                //Output alert to aware user of invalid re-enter input.
+                Alert.alert(
+                  "Email Already Registered",
+                  `Unfortunately this email address is already registered, please make sure you insert a unique email address and try again.`,
+                  [
+                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                  ],
+                );
                 this.props.navigation.navigate('Login');
                 return;
               } else {
@@ -132,7 +177,14 @@ export default class RegisterScreen extends Component {
                 };
                 //Insert into API.
                 apiMethods.insert(`USER`, userArray).catch((error) => {console.log(error)});
-                alert(`You've registered to DirectMe! Please try to login.`);
+                //Output alert to aware user of their registration.
+                Alert.alert(
+                  "Congratulations You've Registered",
+                  `You've registered to DirectMe, Please try to login.`,
+                  [
+                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                  ],
+                );
                 this.props.navigation.navigate('Login');
               }
             }}

@@ -3,8 +3,9 @@ import { StyleSheet, View, Image, ScrollView, Slider, Linking } from 'react-nati
 import { List, Appbar, Text, Divider, Switch  } from 'react-native-paper';
 import Overlay from 'react-native-modal-overlay';
 import * as Location from 'expo-location';
-
-import Modal from './ChangeValue.js';
+//Import views.
+import ChangeValue from './ChangeValue.js';
+//Import functions.
 import storage from '../models/storage';
 import checkStorage from '../controllers/checkStorage';
 
@@ -33,12 +34,13 @@ export default class Account extends Component {
     };
   }
   componentDidMount() {
-    //Retrieve User Data From Local Storage.
+    //Retrieve user data from local storage.
     storage.get(`userLocal`)
-     .then((user) => {
+    .then((user) => {
       this.setState({ user: user[0] });
-     });
-     this.getUserLocation();
+    });
+    //Fetch user's location from GPS.
+    this.getUserLocation();
   };
 
   componentWillUnmount(){
@@ -214,7 +216,7 @@ export default class Account extends Component {
 
         <View style={{flex: 1}}>
           <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
-            <Modal user={user} value={selectedValue} title={selectedTitle} example={selectedExample} type={selectedType} toggleModal={this.toggleModal} profilePictures={profilePictures}/>
+            <ChangeValue user={user} value={selectedValue} title={selectedTitle} example={selectedExample} type={selectedType} toggleModal={this.toggleModal} profilePictures={profilePictures}/>
           </Overlay>
         </View>
       </View>
