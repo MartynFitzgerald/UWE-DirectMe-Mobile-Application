@@ -3,11 +3,14 @@ import { StyleSheet, View, Image, ScrollView, Slider, Linking } from 'react-nati
 import { List, Appbar, Text, Divider, Switch  } from 'react-native-paper';
 import Overlay from 'react-native-modal-overlay';
 import * as Location from 'expo-location';
+
+//Import styles.
+import { styles } from '../styles/General';
 //Import views.
 import ChangeValue from './ChangeValue.js';
 //Import functions.
-import storage from '../models/storage';
-import checkStorage from '../controllers/checkStorage';
+import storage from '../models/Storage';
+import checkStorage from '../controllers/CheckStorage';
 
 export default class Account extends Component {
   constructor(props) {
@@ -99,11 +102,11 @@ export default class Account extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Appbar.Header style={styles.Appbar}>
-          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
+      <View>
+        <Appbar.Header style={styles.appBar}>
+          <Appbar.Content title={this.props.route.tabTitle} style={styles.appBarTitle} titleStyle={styles.appBarTitle}/>
         </Appbar.Header>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
           <View style={styles.header}>
               <Image style={styles.avatar} source={profilePicture}/>
               <Text style={styles.name}>{user.fName} {user.lName} </Text>
@@ -118,7 +121,7 @@ export default class Account extends Component {
           />
           <List.Item
             title="Radius"
-            right={() => <Text style={styles.rightText} >{user.radius}</Text>}
+            right={() => <Text style={styles.centerVerticalText} >{user.radius}</Text>}
           />
           <Slider
             step={1}
@@ -137,7 +140,7 @@ export default class Account extends Component {
             <List.Subheader>User Information</List.Subheader>
             <List.Item
               title="First Name"
-              right={() => <Text style={styles.rightText} >{user.fName}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{user.fName}</Text>}
               onPress={()=> {
                 this.setState({selectedValue: 'fName'});
                 this.setState({selectedTitle: 'First Name'});
@@ -148,7 +151,7 @@ export default class Account extends Component {
             }/>
             <List.Item
               title="Last Name"
-              right={() => <Text style={styles.rightText} >{user.lName}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{user.lName}</Text>}
               onPress={()=> {
                 this.setState({selectedValue: 'lName'});
                 this.setState({selectedTitle: 'Last Name'});
@@ -159,7 +162,7 @@ export default class Account extends Component {
             }/>
             <List.Item
               title="Email"
-              right={() => <Text style={styles.rightText} >{user.email_address}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{user.email_address}</Text>}
               onPress={()=> {
                 this.setState({selectedValue: 'email_address'});
                 this.setState({selectedTitle: 'Email Address'});
@@ -170,7 +173,7 @@ export default class Account extends Component {
             }/>
             <List.Item
               title="Phone Number"
-              right={() => <Text style={styles.rightText} >{user.phone_number}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{user.phone_number}</Text>}
               onPress={()=> {
                 this.setState({selectedValue: 'phone_number'});
                 this.setState({selectedTitle: 'Phone Number'});
@@ -181,7 +184,7 @@ export default class Account extends Component {
             }/>
             <List.Item
               title="Profile Picture"
-              right={() => <Text style={styles.rightText} >{pictureName}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{pictureName}</Text>}
               onPress={()=> {
                 this.setState({selectedValue: 'profile_picture'});
                 this.setState({selectedTitle: 'Profile Picture'});
@@ -193,7 +196,7 @@ export default class Account extends Component {
             <Divider/>
             <List.Subheader>Account Settings</List.Subheader>
             <List.Item 
-              titleStyle={styles.signOutText}
+              titleStyle={styles.redText}
               title="Sign Out"
               onPress={()=> {
                 storage.remove('userLocal');
@@ -202,7 +205,7 @@ export default class Account extends Component {
                 }
             }/>
             <List.Item 
-              titleStyle={styles.signOutText}
+              titleStyle={styles.redText}
               title="Remove Account"
               onPress={()=> {
                 //TODO: Remove data from database
@@ -222,49 +225,4 @@ export default class Account extends Component {
       </View>
     );
   }
-}
-  
-const styles = StyleSheet.create({
-  contentContainer: {
-    paddingBottom: 100
-  },
-  Appbar: {
-      backgroundColor: '#EB3349',
-  },
-  AppbarTitle: {
-    alignItems: 'center',
-    fontFamily: 'Pacifico',
-    fontSize: 30,
-  },
-  header:{
-    backgroundColor: "#4285F4",
-    padding:15,
-    alignItems: 'center',
-  },
-  avatar: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    borderWidth: 4,
-    borderColor: "#fff",
-    marginBottom:10,
-  },
-  name:{
-    textAlign: 'center', 
-    fontSize:22,
-    color:"#fff",
-    fontWeight:'bold',
-  },
-  userInfo:{
-    textAlign: 'center', 
-    width:'100%',
-    fontSize:14,
-    color:"#fff",
-  },
-  rightText: {
-    textAlignVertical: 'center',
-  },
-  signOutText:{
-    color:"#ff0000",
-  },
-});
+};

@@ -12,7 +12,7 @@
 |                the best car park location.
 |                
 *===========================================================================*/
-import apiMethods from '../models/apiMethods';
+import apiMethods from '../models/ApiMethods';
 
 /* 
   This function is to request car parks from the DirectMe 

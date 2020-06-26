@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {View, TouchableOpacity, Alert} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { Appbar, List } from 'react-native-paper';
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import * as Location from 'expo-location';
- 
+
+//Import styles.
+import { styles } from '../styles/General';
 //Import functions.
-import storage from '../models/storage';
-import algorithm from '../controllers/algorithm';
+import storage from '../models/Storage';
+import algorithm from '../controllers/Algorithm';
 //Google directions API key.
 //const GOOGLE_API_KEY = '';
 const GOOGLE_API_KEY = 'AIzaSyCu6_DCGV4g7LT66nIHrWaRu0dteV1lFeY';
@@ -137,11 +139,11 @@ export default class Map extends Component {
     };
 
     render() {
-      const { search, userLatitude, userLongitude, mapRegionLatitude, mapRegionLongitude } = this.state;
+      const { search, mapRegionLatitude, mapRegionLongitude } = this.state;
       return (
-          <View style={styles.mapContainer}>
-            <Appbar.Header style={styles.Appbar}>
-              <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
+          <View style={styles.list}>
+            <Appbar.Header style={styles.appBar}>
+              <Appbar.Content title={this.props.route.tabTitle} style={styles.appBarTitle} titleStyle={styles.appBarTitle}/>
             </Appbar.Header>
             <View styles={styles.searchButton} >
             <SearchBar
@@ -149,7 +151,7 @@ export default class Map extends Component {
                 onChangeText={this.updateSearch}
                 value={search}
                 containerStyle={styles.outerBox} 
-                inputContainerStyle={styles.searchBox} 
+                inputContainerStyle={styles.mapSearchBox} 
                 searchIcon={false}
                 lightTheme 
             />
@@ -164,7 +166,7 @@ export default class Map extends Component {
             //Either "google" for GoogleMaps, otherwise null or undefined to use the native map framework (MapKit in iOS and GoogleMaps in android).
             provider={"google"} // remove if not using Google Maps
             //Style of the map itself
-            style={styles.map}
+            style={{flex: 1}}
             //The initial region to be displayed by the map 
             initialRegion={{
                 latitude: mapRegionLatitude,
@@ -189,44 +191,3 @@ export default class Map extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    mapContainer: {
-        width: '100%',
-        height: '100%',
-    },
-    map: {
-        flex: 1,
-    },
-    Appbar: {
-        backgroundColor: '#EB3349',
-    },
-    AppbarTitle: {
-      alignItems: 'center',
-      fontFamily: 'Pacifico',
-      fontSize: 30,
-    },
-    outerBox: {
-      padding: 0,
-      margin: 0,
-    },
-    searchBox: {
-      width: '85%',
-      marginTop: -1,
-      height: 55,
-      borderRadius: 0,
-    },
-    searchButton: {
-      backgroundColor: '#bec6cf',
-      width: '15%',
-      marginLeft: '85%',
-      height: 55,
-      position: 'absolute',
-    },
-    searchButtonText: {
-      color: '#007aff', // #86939e
-    },
-    appContainer: {
-        flex: 1,
-    },
-});

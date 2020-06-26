@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { List, Appbar, Text, Divider } from 'react-native-paper';
+
+//Import styles.
+import { styles } from '../styles/General';
 
 export default class History extends Component {
   render() {
     return (
       <View>
-        <Appbar.Header style={styles.Appbar}>
-            <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
+        <Appbar.Header style={styles.appBar}>
+            <Appbar.Content title={this.props.route.tabTitle} style={styles.appBarTitle} titleStyle={styles.appBarTitle}/>
         </Appbar.Header>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
           <List.Section style={styles.list}>
             <List.Subheader>17th September 2019</List.Subheader>
             <List.Item
@@ -96,38 +99,3 @@ export default class History extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  list: {
-      width: '100%',
-      height: '100%',
-  },
-  Appbar: {
-      backgroundColor: '#EB3349',
-  },
-  AppbarTitle: {
-    alignItems: 'center',
-    fontFamily: 'Pacifico',
-    fontSize: 30,
-  },
-  paid: {
-    textAlignVertical: 'center',
-    textAlign: 'center', 
-    paddingHorizontal: 10,
-    borderRadius:10,
-    maxHeight:30, 
-    top:12.5,
-    backgroundColor: '#2FD63C',
-    fontWeight: 'bold',
-  },
-  unpaid: {
-    textAlignVertical: 'center',
-    textAlign: 'center', 
-    paddingHorizontal: 10,
-    borderRadius:10,
-    maxHeight:30, 
-    top:12.5,
-    backgroundColor: '#E71212',
-    fontWeight: 'bold',
-  },
-});  

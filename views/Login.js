@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Image, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import validation from '../controllers/validation';
-import apiMethods from '../models/apiMethods';
-import storage from '../models/storage';
 import * as Location from 'expo-location';
 import hash from 'object-hash';
+
+//Import styles.
+import { styles } from '../styles/General';
+//Import functions.
+import storage from '../models/Storage';
+import validation from '../controllers/Validation';
+import apiMethods from '../models/ApiMethods';
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -77,7 +81,7 @@ export default class LoginScreen extends Component {
             <Text style={{fontFamily: 'Pacifico'}}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}    
+        <TouchableOpacity style={[styles.buttonContainer]}    
           onPress={async () => {
             if (!validation.validate_email(emailAddress)) {
               //Output alert to aware user of invalid email address input.
@@ -127,13 +131,13 @@ export default class LoginScreen extends Component {
           <Text>Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
+        <TouchableOpacity style={[styles.buttonContainer]}
           onPress={() => this.props.navigation.navigate('Register')}
         >
             <Text>Register</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.facebookButton]}
+        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.facebookColor]}
           onPress={() => {
             alert('You tapped the Facebook button!');
           }}
@@ -144,7 +148,7 @@ export default class LoginScreen extends Component {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.googleButton]}
+        <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.googleColor]}
           onPress={() => {
             alert('You tapped the Google button!');
           }}
@@ -158,106 +162,3 @@ export default class LoginScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  LinearGradient: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%',
-  },
-  inputContainer: {
-      borderBottomColor: '#F5FCFF',
-      backgroundColor: '#FFFFFF',
-      borderBottomWidth: 1,
-      width:300,
-      height:50,
-      marginBottom:15,
-      flexDirection: 'row',
-      alignItems:'center'
-  },
-  inputs:{
-      height:45,
-      borderBottomColor: '#FFFFFF',
-      textAlign: 'center',
-      flex:1
-  },
-  icon:{
-    width:30,
-    height:30
-  },
-  buttonContainer: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    borderColor: '#000000',
-    borderWidth: .5,
-    height:50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:250,
-    borderRadius:30
-  },
-  buttonContainerSocialAccount: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    height:50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:250
-  },
-  buttons: {
-    backgroundColor: '#FFFFFF'
-  },
-  facebookButton: {
-    backgroundColor: "#3b5998"
-  },
-  googleButton: {
-    backgroundColor: "#FFFFFF"
-  },
-  loginText: {
-    marginLeft: 5,
-    color: 'white'
-  },
-  googleText: {
-    marginLeft: 5,
-    color: '#B2B2B2'
-  },
-  restoreButtonContainer:{
-    width:250,
-    marginLeft:30,
-    marginBottom:15,
-    alignItems: 'flex-end'
-  },
-  socialButtonContent:{
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo:{
-    margin:50,
-    width:369,
-    height:82
-  }
-});

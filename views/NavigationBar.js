@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BottomNavigation } from 'react-native-paper';
 
-import checkStorage from '../controllers/checkStorage';
+//Import functions.
+import checkStorage from '../controllers/CheckStorage';
 
 import Information from './Information';
 import CarParks from './CarParks';

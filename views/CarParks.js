@@ -4,9 +4,14 @@ import { List, Text, Appbar } from 'react-native-paper';
 import { SearchBar, Divider } from 'react-native-elements';
 import Overlay from 'react-native-modal-overlay';
 
-import apiMethods from '../models/apiMethods';
-import storage from '../models/storage';
-import Modal from './MetaData.js';
+//Import styles.
+import { styles } from '../styles/General';
+//Import views.
+import Modal from './MetaData';
+//Import functions.
+import storage from '../models/Storage';
+import apiMethods from '../models/ApiMethods';
+
 
 export default class CarParks extends Component {
   constructor(props) {
@@ -91,12 +96,12 @@ export default class CarParks extends Component {
     const { visibleCarParks, isLoading, searchText, isModalVisible, carPark} = this.state;
     return (
       <View>
-        <Appbar.Header style={styles.Appbar}>
-          <Appbar.Content title={this.props.route.tabTitle} style={styles.AppbarTitle} titleStyle={styles.AppbarTitle}/>
+        <Appbar.Header style={styles.appBar}>
+          <Appbar.Content title={this.props.route.tabTitle} style={styles.appBarTitle} titleStyle={styles.appBarTitle}/>
         </Appbar.Header>
         {isLoading ? <ActivityIndicator size="large"/> : (
           <FlatList 
-            style={styles.contentContainer}
+            style={{ height: '89%' }}
             data={visibleCarParks}
             keyExtractor={ item => item.car_park_id.toString()}
             ItemSeparatorComponent={this.renderSeparator}
@@ -116,7 +121,7 @@ export default class CarParks extends Component {
             )}
           />
         )}
-        <View style={{flex: 1}}>
+        <View>
           <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
             <Modal carPark={JSON.stringify(carPark)} toggleModal={this.toggleModal}/>
           </Overlay>
@@ -125,33 +130,3 @@ export default class CarParks extends Component {
     );
   }
 };
-
-const styles = StyleSheet.create({
-  contentContainer: {
-      width: '100%',
-      height: '89%',
-  },
-  Appbar: {
-      backgroundColor: '#EB3349',
-  },
-  AppbarTitle: {
-    alignItems: 'center',
-    fontFamily: 'Pacifico',
-    fontSize: 30,
-  },
-  emptyResult: {
-    padding: 10,
-    textAlignVertical: 'center',
-    textAlign: 'center', 
-  },
-  outerBox: {
-    padding: 0,
-    margin: 0,
-  },
-  searchBox: {
-    width: "100%",
-    marginTop: -1,
-    height: 55,
-    borderRadius: 0,
-  },
-});  

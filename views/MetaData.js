@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { List, Divider } from 'react-native-paper';
 import MapView, { Marker } from 'react-native-maps';
 import Moment from 'moment';
+
+//Import styles.
+import { styles } from '../styles/General';
 
 export default class Overlay extends Component {
   constructor(props) {
@@ -11,7 +14,6 @@ export default class Overlay extends Component {
     };
     this.carPark = JSON.parse(this.props.carPark);
   }
-
 
   render() {
     const { carPark} = this;
@@ -48,39 +50,39 @@ export default class Overlay extends Component {
           />
         </MapView>
         <View style={styles.viewOverallText}>
-          <List.Section style={styles.list}>
+          <List.Section style={{width: '100%'}}>
             <List.Item
               title="Name:"
-              right={() => <Text style={styles.rightText} >{carPark.name.replace("Bristol ", "")}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{carPark.name.replace("Bristol ", "")}</Text>}
             />
             <Divider/>
             <List.Item
               title="Address:"
-              right={() => <Text style={styles.rightText} >{carPark.address}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{carPark.address}</Text>}
             />
             <Divider/>
             <List.Item
               title="Latitude:"
-              right={() => <Text style={styles.rightText} >{carPark.latitude}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{carPark.latitude}</Text>}
             />
             <Divider/>
             <List.Item
               title="Longitude:"
-              right={() => <Text style={styles.rightText} >{carPark.longitude}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{carPark.longitude}</Text>}
             />
             <Divider/>
             <List.Item
               title="Last Updated:"
-              right={() => <Text style={styles.rightText} >{Moment(carPark.last_updated_at).format('MMMM Do YYYY')}</Text>}
+              right={() => <Text style={styles.centerVerticalText} >{Moment(carPark.last_updated_at).format('MMMM Do YYYY')}</Text>}
             />
             <Divider/>
           </List.Section>
 
-          <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}>
+          <TouchableOpacity style={[styles.buttonContainerMetadata]}>
             <Text>DirectMe</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
+          <TouchableOpacity style={[styles.buttonContainerMetadata]}
             onPress={() => {
               this.props.toggleModal();
           }}>
@@ -90,51 +92,4 @@ export default class Overlay extends Component {
       </View>
     );
   }
-}
-
-const styles = StyleSheet.create({
-  viewOverall:{
-    minHeight:700,
-    maxHeight:700,
-  },
-  viewOverallText:{
-    alignItems: 'center',
-  },
-  map: {
-      flex: 1,
-      marginTop: -15,
-      minWidth:372,
-      maxWidth:372,
-      minHeight:300,
-      maxHeight:300,
-  },
-  list: {
-      width: '100%',
-  },
-  rightText: {
-    textAlignVertical: 'center',
-  },
-  buttonContainer: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    borderColor: '#000000',
-    borderWidth: .5,
-    height:50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop:10,
-    marginBottom:10,
-    width:250,
-    borderRadius:30,
-  },
-  buttons: {
-    backgroundColor: '#FFFFFF',
-  },
-});
+};

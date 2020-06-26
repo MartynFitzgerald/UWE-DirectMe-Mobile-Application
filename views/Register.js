@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { v1 as uuidv1 } from 'react-native-uuid';
 import hash from 'object-hash';
 
-import validation from '../controllers/validation';
-import apiMethods from '../models/apiMethods';
+//Import styles.
+import { styles } from '../styles/General';
+//Import functions.
+import validation from '../controllers/Validation';
+import apiMethods from '../models/ApiMethods';
 
 export default class RegisterScreen extends Component {
   constructor(props) {
@@ -82,7 +85,7 @@ export default class RegisterScreen extends Component {
                 underlineColorAndroid='transparent'/>
           </View>
 
-          <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
+          <TouchableOpacity style={[styles.buttonContainer]}
             onPress={async () => {
               //Validate User Inputs
               if (!validation.validate_name(fName)) {
@@ -192,7 +195,7 @@ export default class RegisterScreen extends Component {
             <Text>Register</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.buttonContainer, styles.buttons]}
+          <TouchableOpacity style={[styles.buttonContainer]}
             onPress={() => this.props.navigation.navigate('Login')}
           >
             <Text>Go Back</Text>
@@ -201,81 +204,3 @@ export default class RegisterScreen extends Component {
     );
   }
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  LinearGradient: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%',
-  },
-  inputContainer: {
-    borderBottomColor: '#F5FCFF',
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    width:300,
-    height:50,
-    marginBottom:15,
-    flexDirection: 'row',
-    alignItems:'center'
-  },
-  inputs:{
-    height:45,
-    borderBottomColor: '#FFFFFF',
-    textAlign: 'center',
-    flex:1
-  },
-  icon:{
-    width:30,
-    height:30
-  },
-  buttonContainer: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    borderColor: '#000000',
-    borderWidth: .5,
-    height:50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:250,
-    borderRadius:30
-  },
-  buttonContainerSocialAccount: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    height:50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:250
-  },
-  buttons: {
-    backgroundColor: '#FFFFFF'
-  },
-  logo:{
-    margin:50,
-    width:369,
-    height:82
-  },
-});

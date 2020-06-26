@@ -12,8 +12,8 @@
 |                if there is any changes.
 |                
 *===========================================================================*/
-import storage from '../models/storage';
-import apiMethods from '../models/apiMethods';
+import storage from '../models/Storage';
+import apiMethods from '../models/ApiMethods';
 /* 
   A function that checks if the user locally stored has been modified.
 */
