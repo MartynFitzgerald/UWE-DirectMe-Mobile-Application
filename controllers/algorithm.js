@@ -15,21 +15,38 @@
 import apiMethods from '../models/ApiMethods';
 
 /* 
-  This function is to request car parks from the DirectMe 
+  This function is to request car parks from the DirectMe API.
 */
 async function fetchCarParks(latitude, longitude, radius){
     //Fetch Car Parks From DirectMe's API.
     return await apiMethods.read(`CARPARK/LAT/${latitude}/LONG/${longitude}/RADIUS/${radius}`);
 }
-
 /* 
   A function that calculates the best location for the user to go to.
 */
 exports.findBestLocation = async function(latitude, longitude, radius) {
     var carParks = await fetchCarParks(latitude, longitude, radius);
-
-    //Find a car park with best reviews
-    console.log(carParks);
-
-    return carParks[0];
+    if (!carParks) {
+      return;
+    } else {
+      //Store closest car park currently
+      var bestCarPark = carParks[0];
+      //Find a car park with best reviews
+      for(var i = 0; i < carParks.length; i++){
+        //Work out the overall amount and rating of internal and external reviews.
+        var overallAmount = carParks[i].external_amount_of_ratings + carParks[i].internal_amount_of_ratings;
+        var overallRating = Number(((carParks[i].external_rating * carParks[i].external_amount_of_ratings) + (carParks[i].internal_rating * carParks[i].internal_amount_of_ratings)) / overallAmount).toFixed(1);
+        //Ignore if on the first loop through.
+        if (i > 0) {
+          //Check if this car park is better than the one stored.
+          if ((bestCarPark.overallRating < overallRating) || (bestCarPark.overallRating == overallRating && bestCarPark.overallAmount < overallAmount)) {
+            bestCarPark = carParks[i];
+          }
+        }
+        //Store values inside the array of car park to view in next loop.
+        carParks[i].overallAmount = overallAmount;
+        carParks[i].overallRating = overallRating;
+      }
+      return bestCarPark;
+    }
 };
