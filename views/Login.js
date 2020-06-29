@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Image, Keyboard, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import hash from 'object-hash';
@@ -91,6 +91,7 @@ export default class LoginScreen extends Component {
                 [
                   { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                 ],
+                { cancelable: true }
               );
               return;
             }
@@ -102,11 +103,25 @@ export default class LoginScreen extends Component {
                 [
                   { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                 ],
+                { cancelable: true }
               );
               return;
             }
             //Get User Data From API.
             var user_data = await apiMethods.read(`USER/${emailAddress}`);
+            //Check if any result has been returned.
+            if (!user_data[0]) {
+              //Output alert to aware user of account not registered.
+              Alert.alert(
+                "Invalid Credentials",
+                `Unfortunately the credentials provided are not known , please check the credentials submitted. and try again.`,
+                [
+                  { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                ],
+                { cancelable: true }
+              );
+              return;
+            }
             //Check credential.
             if(user_data[0].email_address == emailAddress && user_data[0].password == hash({password: `D1rectMeSa1t${password}2020`}))
             {
@@ -123,6 +138,7 @@ export default class LoginScreen extends Component {
                 [
                   { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                 ],
+                { cancelable: true }
               );
             }
             return;

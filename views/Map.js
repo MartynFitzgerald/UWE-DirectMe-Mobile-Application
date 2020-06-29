@@ -88,6 +88,7 @@ export default class Map extends Component {
           [
             { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
           ],
+          { cancelable: true }
         );
         //Return since user hasn't finished inputting their search.
         return;
@@ -112,26 +113,27 @@ export default class Map extends Component {
             [
               { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
             ],
+            { cancelable: true }
           );
         }
       }
     };
 
     renderCancel() {
-      const { userLatitude, userLongitude, carPark } = this.state;
+      const { userLatitude, userLongitude, carPark, carParkLatitude, carParkLongitude } = this.state;
       if (carPark) {
         return (
           <View>
             <MapViewDirections 
               mode="DRIVING" 
               origin={{latitude: userLatitude, longitude: userLongitude}}
-              destination={`Cabot Circus, UK`}
+              destination={{latitude: carParkLatitude, longitude: carParkLongitude}}
               apikey={GOOGLE_API_KEY} 
               strokeWidth={3} 
               strokeColor="#EB3349" 
               timePrecision="now"
             />
-            <Marker coordinate={{latitude:51.4584948,longitude:-2.5853424}}/>
+            <Marker coordinate={{latitude:carParkLatitude,longitude:carParkLongitude}}/>
           </View>
         );
       }

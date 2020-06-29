@@ -96,6 +96,7 @@ export default class RegisterScreen extends Component {
                   [
                     { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                   ],
+                  { cancelable: true }
                 );
                 return;
               }
@@ -107,6 +108,7 @@ export default class RegisterScreen extends Component {
                   [
                     { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                   ],
+                  { cancelable: true }
                 );
                 return;
               }
@@ -118,6 +120,7 @@ export default class RegisterScreen extends Component {
                   [
                     { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                   ],
+                  { cancelable: true }
                 );
                 return;
               }
@@ -129,6 +132,7 @@ export default class RegisterScreen extends Component {
                   [
                     { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                   ],
+                  { cancelable: true }
                 );
                 return;
               }
@@ -140,6 +144,7 @@ export default class RegisterScreen extends Component {
                   [
                     { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                   ],
+                  { cancelable: true }
                 );
                 return;
               }
@@ -151,6 +156,7 @@ export default class RegisterScreen extends Component {
                   [
                     { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                   ],
+                  { cancelable: true }
                 );
                 return;
               }
@@ -164,6 +170,7 @@ export default class RegisterScreen extends Component {
                   [
                     { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                   ],
+                  { cancelable: true }
                 );
                 this.props.navigation.navigate('Login');
                 return;
@@ -187,6 +194,7 @@ export default class RegisterScreen extends Component {
                   [
                     { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                   ],
+                  { cancelable: true }
                 );
                 this.props.navigation.navigate('Login');
               }
