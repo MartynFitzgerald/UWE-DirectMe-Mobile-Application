@@ -26,6 +26,7 @@ export default class Map extends Component {
         search: '',
         minSearchLength: 10,
 
+        user: [],
         userLatitude: 0,
         userLongitude: 0,
 
@@ -40,7 +41,6 @@ export default class Map extends Component {
         carParkAmountRating: 0,
         carPark: false,
 
-        user: [],
         isModalVisible: false,
       };
       this.map = null;
@@ -57,7 +57,6 @@ export default class Map extends Component {
     };
 
     getUserLocation = async () => {
-      const { mapRegionLatitude, mapRegionLongitude } = this.state;
       try {
         let { status } = await Location.requestPermissionsAsync();
         if (status !== 'granted') {
@@ -70,7 +69,7 @@ export default class Map extends Component {
           await this.setState({userLongitude: location.coords.longitude});
           
           //Change map's region to the user's location.
-          this.map.animateToRegion({latitude: location.coords.latitude,longitude: location.coords.longitude,latitudeDelta: 0.2,longitudeDelta: 0.2,}, 1000)
+          this.map.animateToRegion({latitude: location.coords.latitude,longitude: location.coords.longitude,latitudeDelta: 0.2,longitudeDelta: 0.2,}, 1000);
         }
       } catch (error) {
         console.error(error);
@@ -78,7 +77,7 @@ export default class Map extends Component {
     };
 
     makeRequest = async () => {
-      const { search, minSearchLength, user, geoLatitude, geoLongitude } = this.state;
+      const { search, minSearchLength, user, userLatitude, userLongitude } = this.state;
     
       if (search.length < minSearchLength) {
         //Output alert to aware user of invalid search input.
@@ -99,7 +98,7 @@ export default class Map extends Component {
         var chosenCarPark = await algorithm.findBestLocation(geoLocation[0].latitude, geoLocation[0].longitude, user.radius);
         //Double check if there is any car parks returned.
         if (chosenCarPark){
-          //Store car park information.
+          //Store car park information to be used at a later point.
           this.setState({carParkName: chosenCarPark.name});
           this.setState({carParkAddress: chosenCarPark.address});
           this.setState({carParkLatitude: chosenCarPark.latitude});
@@ -108,6 +107,11 @@ export default class Map extends Component {
           this.setState({carParkAmountRating: chosenCarPark.overallAmount});
           this.setState({carPark: true});
           this.setState({isModalVisible: true});
+          //Find the middle point of the car park's location and user's location to set region.
+          midpointLatitude = (chosenCarPark.latitude + userLatitude) / 2;
+          midpointLongitude = (chosenCarPark.longitude + userLongitude) / 2;
+          //Change map's region to the user's location.
+          this.map.animateToRegion({latitude: midpointLatitude,longitude: midpointLongitude,latitudeDelta: 0.2,longitudeDelta: 0.2,}, 1000);
         } else {
           //Output alert to aware user of no car parks available.
           Alert.alert(
@@ -123,20 +127,26 @@ export default class Map extends Component {
     };
 
     renderDirections() {
-      const { userLatitude, userLongitude, carPark, carParkLatitude, carParkLongitude } = this.state;
+      const { userLatitude, userLongitude, carPark, carParkLatitude, carParkLongitude, carParkName } = this.state;
       if (carPark) {
         return (
           <View>
             <MapViewDirections 
-              mode="DRIVING" 
+              mode='DRIVING' 
               origin={{latitude: userLatitude, longitude: userLongitude}}
               destination={{latitude: carParkLatitude, longitude: carParkLongitude}}
               apikey={GOOGLE_API_KEY} 
               strokeWidth={3} 
-              strokeColor="#EB3349" 
-              timePrecision="now"
+              strokeColor='#EB3349'
+              timePrecision='now'
+              optimizeWaypoints={true}
+              timePrecision='now'
             />
-            <Marker coordinate={{latitude:carParkLatitude,longitude:carParkLongitude}}/>
+            <Marker 
+              title={carParkName}
+              coordinate={{latitude:carParkLatitude,longitude:carParkLongitude}} 
+              tracksViewChanges={false}
+            />
           </View>
         );
       }
