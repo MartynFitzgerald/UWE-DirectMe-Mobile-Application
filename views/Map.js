@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import {View, TouchableOpacity, Alert} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { Appbar, List } from 'react-native-paper';
+import Overlay from 'react-native-modal-overlay';
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import * as Location from 'expo-location';
 
 //Import styles.
 import { styles } from '../styles/General';
+//Import views.
+import Directions from './Directions.js';
 //Import functions.
 import storage from '../models/Storage';
 import algorithm from '../controllers/Algorithm';
@@ -33,9 +36,12 @@ export default class Map extends Component {
         carParkAddress: '',
         carParkLatitude: 0,
         carParkLongitude: 0,
+        carParkRating: 0,
+        carParkAmountRating: 0,
         carPark: false,
 
         user: [],
+        isModalVisible: false,
       };
     }
 
@@ -100,11 +106,14 @@ export default class Map extends Component {
         //Double check if there is any car parks returned.
         if (chosenCarPark){
           //Store car park information.
-          await this.setState({carParkName: chosenCarPark.name});
-          await this.setState({carParkAddress: chosenCarPark.address});
-          await this.setState({carParkLatitude: chosenCarPark.latitude});
-          await this.setState({carParkLongitude: chosenCarPark.longitude});
-          await this.setState({carPark: true});
+          this.setState({carParkName: chosenCarPark.name});
+          this.setState({carParkAddress: chosenCarPark.address});
+          this.setState({carParkLatitude: chosenCarPark.latitude});
+          this.setState({carParkLongitude: chosenCarPark.longitude});
+          this.setState({carParkRating: chosenCarPark.overallRating});
+          this.setState({carParkAmountRating: chosenCarPark.overallAmount});
+          this.setState({carPark: true});
+          this.setState({isModalVisible: true});
         } else {
           //Output alert to aware user of no car parks available.
           Alert.alert(
@@ -119,7 +128,7 @@ export default class Map extends Component {
       }
     };
 
-    renderCancel() {
+    renderDirections() {
       const { userLatitude, userLongitude, carPark, carParkLatitude, carParkLongitude } = this.state;
       if (carPark) {
         return (
@@ -140,8 +149,12 @@ export default class Map extends Component {
       return;
     };
 
+    toggleModal = () => {
+      this.setState({isModalVisible: !this.state.isModalVisible});
+    };
+
     render() {
-      const { search, mapRegionLatitude, mapRegionLongitude } = this.state;
+      const { search, mapRegionLatitude, mapRegionLongitude, isModalVisible, carParkName, carParkAddress, carParkRating, carParkAmountRating } = this.state;
       return (
           <View style={styles.list}>
             <Appbar.Header style={styles.appBar}>
@@ -187,8 +200,13 @@ export default class Map extends Component {
             //If false the user won't be able to adjust the camera’s pitch angle.
             pitchEnabled={false}
             >
-            {this.renderCancel()}
+            {this.renderDirections()}
             </MapView>
+            <View>
+              <Overlay visible={isModalVisible} onClose={this.toggleModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0)', }} childrenWrapperStyle={{borderRadius: 5,bottom: -230}}>
+                <Directions title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} toggleModal={this.toggleModal}/>
+              </Overlay>
+            </View>
           </View>
         );
     }

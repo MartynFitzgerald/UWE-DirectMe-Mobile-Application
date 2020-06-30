@@ -15,7 +15,7 @@
 import { StyleSheet} from 'react-native';
 
 export const button = {
-  shadowColor: "#000",
+  shadowColor: '#000000',
   shadowOffset: {
     width: 0,
     height: 2,
@@ -94,6 +94,11 @@ export const styles = StyleSheet.create({
   alertBox:{
     backgroundColor: "#ffffff",
     padding:10,
+    alignItems: 'center',
+  },
+  directionBox:{
+    backgroundColor: "#ffffff",
+    padding:5,
     alignItems: 'center',
   },
   paid: {
@@ -238,7 +243,15 @@ export const styles = StyleSheet.create({
     borderWidth: .5,
     borderRadius:30,
   },
-
+  smallButtonContainer: {
+    ...button,
+    margin:10,
+    width:150,
+    height: 30,
+    backgroundColor: '#FFFFFF',
+    borderWidth: .5,
+    borderRadius:30,
+  },
   buttonContainer: {
     ...button,
     marginBottom:20,

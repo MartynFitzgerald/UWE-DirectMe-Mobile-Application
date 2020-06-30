@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, ScrollView, Slider, Linking } from 'react-native';
+import { View, Image, ScrollView, Slider, Linking } from 'react-native';
 import { List, Appbar, Text, Divider, Switch  } from 'react-native-paper';
 import Overlay from 'react-native-modal-overlay';
 import * as Location from 'expo-location';
