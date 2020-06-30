@@ -39,9 +39,10 @@ export default class Map extends Component {
         carParkLongitude: 0,
         carParkRating: 0,
         carParkAmountRating: 0,
-        carPark: false,
 
-        isModalVisible: false,
+        isUserCameraLinkedVisible: false,
+        isCarParkMapShapesVisible: false,
+        isCarParkInfoVisible: true,
       };
       this.map = null;
     }
@@ -105,13 +106,13 @@ export default class Map extends Component {
           this.setState({carParkLongitude: chosenCarPark.longitude});
           this.setState({carParkRating: chosenCarPark.overallRating});
           this.setState({carParkAmountRating: chosenCarPark.overallAmount});
-          this.setState({carPark: true});
-          this.setState({isModalVisible: true});
+          this.setState({isCarParkMapShapesVisible: true});
+          this.setState({isCarParkInfoVisible: true});
           //Find the middle point of the car park's location and user's location to set region.
           midpointLatitude = (chosenCarPark.latitude + userLatitude) / 2;
           midpointLongitude = (chosenCarPark.longitude + userLongitude) / 2;
           //Change map's region to the user's location.
-          this.map.animateToRegion({latitude: midpointLatitude,longitude: midpointLongitude,latitudeDelta: 0.2,longitudeDelta: 0.2,}, 1000);
+          this.map.animateToRegion({latitude: midpointLatitude,longitude: midpointLongitude,latitudeDelta: 0.2,longitudeDelta: 0.2}, 1000);
         } else {
           //Output alert to aware user of no car parks available.
           Alert.alert(
@@ -127,8 +128,8 @@ export default class Map extends Component {
     };
 
     renderDirections() {
-      const { userLatitude, userLongitude, carPark, carParkLatitude, carParkLongitude, carParkName } = this.state;
-      if (carPark) {
+      const { userLatitude, userLongitude, isCarParkMapShapesVisible, carParkLatitude, carParkLongitude, carParkName } = this.state;
+      if (isCarParkMapShapesVisible) {
         return (
           <View>
             <MapViewDirections 
@@ -139,8 +140,19 @@ export default class Map extends Component {
               strokeWidth={3} 
               strokeColor='#EB3349'
               timePrecision='now'
-              optimizeWaypoints={true}
+              optimizeWaypoints={false} //Cost more to use
               timePrecision='now'
+              onStart={(params) => {
+                console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
+              }}
+              onReady={result => {
+                console.log(`Distance: ${result.distance} km`)
+                console.log(`Duration: ${result.duration} min.`)
+                console.log(result);
+              }}
+              onError={(errorMessage) => {
+                // console.log('GOT AN ERROR');
+              }}
             />
             <Marker 
               title={carParkName}
@@ -152,17 +164,38 @@ export default class Map extends Component {
       }
       return;
     };
+    setCameraPosition = () => {
+      const { userLatitude, userLongitude } = this.state;
+      this.map.animateCamera({
+        center: {
+          latitude: userLatitude,
+          longitude: userLongitude,
+        },
+        heading: 180,
+        altitude: 200,
+        zoom: 17,
+      });
+    }
+
+    navigate = () => {
+      const { isCarParkInfoVisible, isUserCameraLinkedVisible } = this.state;
+      this.setState({isUserCameraLinkedVisible: true});
+      this.setState({isCarParkInfoVisible: false});
+      this.setCameraPosition();
+    };
+
     
     updateSearch = async (search) => {
       this.setState({ search });
     };
 
     toggleModal = () => {
-      this.setState({isModalVisible: !this.state.isModalVisible});
+      this.setState({isCarParkInfoVisible: !this.state.isCarParkInfoVisible});
+      this.setState({isCarParkMapShapesVisible: !this.state.isCarParkMapShapesVisible});
     };
 
     render() {
-      const { search, mapRegionLatitude, mapRegionLongitude, isModalVisible, carParkName, carParkAddress, carParkRating, carParkAmountRating } = this.state;
+      const { search, mapRegionLatitude, mapRegionLongitude, isCarParkInfoVisible, carParkName, carParkAddress, carParkRating, carParkAmountRating, isUserCameraLinkedVisible } = this.state;
       return (
           <View style={styles.list}>
             <Appbar.Header style={styles.appBar}>
@@ -209,11 +242,16 @@ export default class Map extends Component {
             maxZoomLevel={20}
             //If false the user won't be able to adjust the camera’s pitch angle.
             pitchEnabled={false}
+            showsTraffic={false}
+            showsBuildings={false}
+            showsIndoors={false}
+            showsCompass={false}
+            followUserLocation={isUserCameraLinkedVisible}
             >
             {this.renderDirections()}
             </MapView>
-            <Overlay visible={isModalVisible} onClose={this.toggleModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0)'}} childrenWrapperStyle={{borderRadius: 5,bottom: -230}}>
-              <Directions title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} toggleModal={this.toggleModal}/>
+            <Overlay visible={isCarParkInfoVisible} onClose={this.toggleModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0)'}} childrenWrapperStyle={{borderRadius: 5,bottom: -230}}>
+              <Directions title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} toggleModal={this.toggleModal} navigate={this.navigate}/>
             </Overlay>
           </View>
         );

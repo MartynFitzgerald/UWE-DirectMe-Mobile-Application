@@ -21,7 +21,7 @@ export default class Overlay extends Component {
             <TouchableOpacity style={[styles.smallButtonContainer]} onPress={this.props.toggleModal}>
               <Text>Go Back</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.smallButtonContainer]}>
+            <TouchableOpacity style={[styles.smallButtonContainer]} onPress={this.props.navigate}>
               <Text>DirectMe</Text>
             </TouchableOpacity>
           </View>
