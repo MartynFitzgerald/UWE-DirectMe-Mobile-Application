@@ -121,11 +121,9 @@ export default class CarParks extends Component {
             )}
           />
         )}
-        <View>
-          <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
-            <Modal carPark={JSON.stringify(carPark)} toggleModal={this.toggleModal}/>
-          </Overlay>
-        </View>
+        <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
+          <Modal carPark={JSON.stringify(carPark)} toggleModal={this.toggleModal}/>
+        </Overlay>
       </View>
     );
   }

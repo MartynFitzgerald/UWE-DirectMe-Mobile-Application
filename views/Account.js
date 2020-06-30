@@ -214,14 +214,11 @@ export default class Account extends Component {
                 this.props.route.oldProps.navigation.navigate('Login');
                 }
             }/>
-        </List.Section>
+          </List.Section>
         </ScrollView>
-
-        <View style={{flex: 1}}>
-          <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
-            <ChangeValue user={user} value={selectedValue} title={selectedTitle} example={selectedExample} type={selectedType} toggleModal={this.toggleModal} profilePictures={profilePictures}/>
-          </Overlay>
-        </View>
+        <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
+          <ChangeValue user={user} value={selectedValue} title={selectedTitle} example={selectedExample} type={selectedType} toggleModal={this.toggleModal} profilePictures={profilePictures}/>
+        </Overlay>
       </View>
     );
   }

@@ -43,6 +43,7 @@ export default class Map extends Component {
         user: [],
         isModalVisible: false,
       };
+      this.map = null;
     }
 
     componentDidMount() {
@@ -67,20 +68,13 @@ export default class Map extends Component {
           //Store users location
           await this.setState({userLatitude: location.coords.latitude});
           await this.setState({userLongitude: location.coords.longitude});
-  
-          if (mapRegionLatitude == 51.46 && mapRegionLongitude == -2.60)
-          {
-            await this.setState({mapRegionLatitude: location.coords.latitude});
-            await this.setState({mapRegionLongitude: location.coords.longitude});
-          }
+          
+          //Change map's region to the user's location.
+          this.map.animateToRegion({latitude: location.coords.latitude,longitude: location.coords.longitude,latitudeDelta: 0.2,longitudeDelta: 0.2,}, 1000)
         }
       } catch (error) {
         console.error(error);
       }
-    };
-    
-    updateSearch = async (search) => {
-      this.setState({ search });
     };
 
     makeRequest = async () => {
@@ -148,6 +142,10 @@ export default class Map extends Component {
       }
       return;
     };
+    
+    updateSearch = async (search) => {
+      this.setState({ search });
+    };
 
     toggleModal = () => {
       this.setState({isModalVisible: !this.state.isModalVisible});
@@ -178,6 +176,8 @@ export default class Map extends Component {
             </TouchableOpacity>
            </View>
             <MapView
+            //Reference to allow changes programmatically.
+            ref={(map) => { this.map = map; }}
             //Either "google" for GoogleMaps, otherwise null or undefined to use the native map framework (MapKit in iOS and GoogleMaps in android).
             provider={"google"} // remove if not using Google Maps
             //Style of the map itself
@@ -202,11 +202,9 @@ export default class Map extends Component {
             >
             {this.renderDirections()}
             </MapView>
-            <View>
-              <Overlay visible={isModalVisible} onClose={this.toggleModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0)', }} childrenWrapperStyle={{borderRadius: 5,bottom: -230}}>
-                <Directions title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} toggleModal={this.toggleModal}/>
-              </Overlay>
-            </View>
+            <Overlay visible={isModalVisible} onClose={this.toggleModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0)'}} childrenWrapperStyle={{borderRadius: 5,bottom: -230}}>
+              <Directions title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} toggleModal={this.toggleModal}/>
+            </Overlay>
           </View>
         );
     }
