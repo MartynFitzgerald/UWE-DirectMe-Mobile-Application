@@ -5,18 +5,36 @@ import MapView, { Marker } from 'react-native-maps';
 import Moment from 'moment';
 
 //Import styles.
-import { styles } from '../styles/General';
+import style from '../styles/General';
+import schemes from '../styles/ColourSchemes';
 
 export default class Overlay extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
+      styles: {},
     };
     this.carPark = JSON.parse(this.props.carPark);
   }
 
+
+  componentDidMount() {
+    this.setStyle();
+  };
+
+  setStyle = async () => {
+    try {
+      var scheme = await schemes.colours();
+      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
+     } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
     const { carPark} = this;
+    const { styles } = this.state;
     return (
       <View style={styles.viewOverall}>
         <MapView

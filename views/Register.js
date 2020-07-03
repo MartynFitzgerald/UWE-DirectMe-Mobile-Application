@@ -5,7 +5,8 @@ import { v1 as uuidv1 } from 'react-native-uuid';
 import hash from 'object-hash';
 
 //Import styles.
-import { styles } from '../styles/General';
+import style from '../styles/General';
+import schemes from '../styles/ColourSchemes';
 //Import functions.
 import validation from '../controllers/Validation';
 import apiMethods from '../models/ApiMethods';
@@ -15,6 +16,7 @@ export default class RegisterScreen extends Component {
     super(props);
 
     this.state = {
+      styles: {},
       fName: '',
       lName: '',
       emailAddress: '',
@@ -23,9 +25,22 @@ export default class RegisterScreen extends Component {
       reEnterPassword: ''
     };
   }
+
+  componentDidMount() {
+    this.setStyle();
+  };
+
+  setStyle = async () => {
+    try {
+      var scheme = await schemes.colours();
+      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
+     } catch (error) {
+      console.error(error);
+    }
+  };
   
   render() {
-    const { fName, lName, emailAddress, phoneNumber, password, reEnterPassword } = this.state;
+    const { styles, fName, lName, emailAddress, phoneNumber, password, reEnterPassword } = this.state;
     return (
         <View style={styles.container}>
           <LinearGradient
@@ -183,7 +198,10 @@ export default class RegisterScreen extends Component {
                   email_address: emailAddress,
                   password: hash({password: `D1rectMeSa1t${password}2020`}), // Using Encryption To Store Password
                   phone_number: phoneNumber,
+                  darkmode: 0,
+                  radius: 1500,
                   profile_picture: 'male1',
+                  scheme: 'Normal',
                 };
                 //Insert into API.
                 apiMethods.insert(`USER`, userArray).catch((error) => {console.log(error)});

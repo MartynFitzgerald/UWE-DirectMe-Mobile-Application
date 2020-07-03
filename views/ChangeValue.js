@@ -3,7 +3,8 @@ import { View, TouchableOpacity, Text, TextInput, FlatList, Image, Dimensions } 
 import { Title } from 'react-native-paper';
 
 //Import styles.
-import { styles } from '../styles/General';
+import style from '../styles/General';
+import schemes from '../styles/ColourSchemes';
 //Import functions.
 import storage from '../models/Storage';
 import validation from '../controllers/Validation';
@@ -11,11 +12,26 @@ import validation from '../controllers/Validation';
 export default class Overlay extends Component {
   constructor(props) {
     super(props);
+    
     this.state = {
+      styles: {},
       value: '',
       numColumns:2,
     };
   }
+
+  componentDidMount() {
+    this.setStyle();
+  };
+
+  setStyle = async () => {
+    try {
+      var scheme = await schemes.colours();
+      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
+     } catch (error) {
+      console.error(error);
+    }
+  };
 
   changeUserValues = async (keyText, value) => {
     var tempUser = this.props.user;
@@ -37,7 +53,7 @@ export default class Overlay extends Component {
         <Image style={{height:itemDimension - 2, width:itemDimension - 2}, styles.avatar} source={item.image}/> 
       </TouchableOpacity>
     );
-  }
+  };
   
   formatRow = (data, numColumns) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
@@ -47,11 +63,10 @@ export default class Overlay extends Component {
       numberOfElementsLastRow++;
     }
     return data;
-  }
-
+  };
 
   render() {
-  const { value, numColumns } = this.state;
+  const { styles, value, numColumns } = this.state;
   switch ( this.props.value ) {
     case 'profile_picture':
       return (

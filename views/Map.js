@@ -8,21 +8,23 @@ import MapViewDirections from 'react-native-maps-directions';
 import * as Location from 'expo-location';
 
 //Import styles.
-import { styles } from '../styles/General';
+import style from '../styles/General';
+import schemes from '../styles/ColourSchemes';
 //Import views.
 import Directions from './Directions.js';
 //Import functions.
 import storage from '../models/Storage';
 import algorithm from '../controllers/Algorithm';
 //Google directions API key.
-//const GOOGLE_API_KEY = '';
-const GOOGLE_API_KEY = 'AIzaSyCu6_DCGV4g7LT66nIHrWaRu0dteV1lFeY';
+const GOOGLE_API_KEY = '';
+//const GOOGLE_API_KEY = 'AIzaSyCu6_DCGV4g7LT66nIHrWaRu0dteV1lFeY';
 
 export default class Map extends Component {
     constructor(props) {
       super(props);
   
       this.state = {
+        styles: {},
         search: '',
         minSearchLength: 10,
 
@@ -42,12 +44,13 @@ export default class Map extends Component {
 
         isUserCameraLinkedVisible: false,
         isCarParkMapShapesVisible: false,
-        isCarParkInfoVisible: true,
+        isCarParkInfoVisible: false,
       };
       this.map = null;
     }
 
     componentDidMount() {
+      this.setStyle();
       //Retrieve user data from local storage.
       storage.get(`userLocal`)
        .then((user) => {
@@ -55,6 +58,15 @@ export default class Map extends Component {
        });
        //Fetch user's location from GPS.
       this.getUserLocation();
+    };
+
+    setStyle = async () => {
+      try {
+        var scheme = await schemes.colours();
+        this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     getUserLocation = async () => {
@@ -70,7 +82,9 @@ export default class Map extends Component {
           await this.setState({userLongitude: location.coords.longitude});
           
           //Change map's region to the user's location.
-          this.map.animateToRegion({latitude: location.coords.latitude,longitude: location.coords.longitude,latitudeDelta: 0.2,longitudeDelta: 0.2,}, 1000);
+          if (location.coords.latitude && location.coords.longitude){
+            this.map.animateToRegion({latitude: location.coords.latitude,longitude: location.coords.longitude,latitudeDelta: 0.2,longitudeDelta: 0.2,}, 1000);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -112,7 +126,9 @@ export default class Map extends Component {
           midpointLatitude = (chosenCarPark.latitude + userLatitude) / 2;
           midpointLongitude = (chosenCarPark.longitude + userLongitude) / 2;
           //Change map's region to the user's location.
-          this.map.animateToRegion({latitude: midpointLatitude,longitude: midpointLongitude,latitudeDelta: 0.2,longitudeDelta: 0.2}, 1000);
+          if (midpointLatitude && midpointLongitude){
+            this.map.animateToRegion({latitude: midpointLatitude,longitude: midpointLongitude,latitudeDelta: 0.2,longitudeDelta: 0.2}, 1000);
+          }
         } else {
           //Output alert to aware user of no car parks available.
           Alert.alert(
@@ -128,7 +144,7 @@ export default class Map extends Component {
     };
 
     renderDirections() {
-      const { userLatitude, userLongitude, isCarParkMapShapesVisible, carParkLatitude, carParkLongitude, carParkName } = this.state;
+      const { styles, userLatitude, userLongitude, isCarParkMapShapesVisible, carParkLatitude, carParkLongitude, carParkName } = this.state;
       if (isCarParkMapShapesVisible) {
         return (
           <View>
@@ -195,7 +211,7 @@ export default class Map extends Component {
     };
 
     render() {
-      const { search, mapRegionLatitude, mapRegionLongitude, isCarParkInfoVisible, carParkName, carParkAddress, carParkRating, carParkAmountRating, isUserCameraLinkedVisible } = this.state;
+      const { styles, search, mapRegionLatitude, mapRegionLongitude, isCarParkInfoVisible, carParkName, carParkAddress, carParkRating, carParkAmountRating, isUserCameraLinkedVisible } = this.state;
       return (
           <View style={styles.list}>
             <Appbar.Header style={styles.appBar}>

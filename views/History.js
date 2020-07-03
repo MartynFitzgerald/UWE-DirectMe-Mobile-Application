@@ -3,10 +3,34 @@ import { View, ScrollView } from 'react-native';
 import { List, Appbar, Text, Divider } from 'react-native-paper';
 
 //Import styles.
-import { styles } from '../styles/General';
+import style from '../styles/General';
+import schemes from '../styles/ColourSchemes';
+
 
 export default class History extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      styles: {},
+    };
+  }
+
+  componentDidMount() {
+    this.setStyle();
+  };
+
+  setStyle = async () => {
+    try {
+      var scheme = await schemes.colours();
+      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
+     } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
+    const { styles } = this.state;
     return (
       <View>
         <Appbar.Header style={styles.appBar}>

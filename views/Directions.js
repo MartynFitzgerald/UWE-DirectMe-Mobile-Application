@@ -4,14 +4,32 @@ import { Rating } from 'react-native-elements';
 import { Title } from 'react-native-paper';
 
 //Import styles.
-import { styles } from '../styles/General';
+import style from '../styles/General';
+import schemes from '../styles/ColourSchemes';
 
 export default class Overlay extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      styles: {},
+    };
   }
 
+  componentDidMount() {
+    this.setStyle();
+  };
+
+  setStyle = async () => {
+    try {
+      var scheme = await schemes.colours();
+      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
+     } catch (error) {
+      console.error(error);
+    }
+  };
   render() {
+    const { styles } = this.state;
     return (
       <View style={styles.directBox}>
         <Title style={{textAlign: 'center'}}>{this.props.title ? this.props.title : 'Title Unknown'}</Title>

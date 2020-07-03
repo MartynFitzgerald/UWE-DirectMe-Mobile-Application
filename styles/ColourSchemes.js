@@ -12,42 +12,66 @@
 |                the best car park location.
 |                
 *===========================================================================*/
-export const normalScheme = {
-  colors: {
-    desire: '#EB3349',
-    orangeSoda: '#F45C43',
-    sandstorm: '#F4CB42',
-    lightGrey: '#CCCCCC',
-    white: '#FFFFFF',
-  },
+//Import functions.
+import storage from '../models/Storage';
+
+exports.colours = async function() {
+    //Retrieve user data from local storage.
+    var user = await storage.get(`userLocal`)
+    if (user){
+      if (user.scheme == "Normal"){
+        if (!user.darkmode) { 
+          return normalScheme;
+        } else {
+          return darkModeScheme;
+        }
+      } else if (user.scheme == "Protanopia") {
+        return protanopiaScheme;
+      } else if (user.scheme == "Deuteranopia") {
+        return deuteranopiaScheme;
+      } else if (user.scheme == "Tritanopia") {
+        return tritanopiaScheme;
+      } 
+    }
+    return normalScheme; //Return normal scheme if all are undefined.
 }
 
-export const protanopiaScheme = {
-  colors: {
-    desire: '#8B8369',
-    orangeSoda: '#A1945B',
-    sandstorm: '#E9D14C',
-    lightGrey: '#CFCBCB',
-    white: '#FFFAFA',
-  },
+const normalScheme = {
+  desire: '#EB3349',
+  orangeSoda: '#F45C43',
+  sandstorm: '#F4CB42',
+  lightGrey: '#CCCCCC',
+  white: '#FFFFFF',
 }
 
-export const deuteranopiaScheme = {
-  colors: {
-    desire: '#A07D46',
-    orangeSoda: '#B68D42',
-    sandstorm: '#FFC867',
-    lightGrey: '#DEC6CD',
-    white: '#FFE8EF',
-  },
+const darkModeScheme = {
+  desire: '#121212',
+  orangeSoda: '#121212',
+  sandstorm: '#121212',
+  lightGrey: '#EB3349',
+  white: '#121212',
 }
 
-export const tritanopiaScheme = {
-  colors: {
-    desire: '#EB4042',
-    orangeSoda: '#F56166',
-    sandstorm: '#FFC1CE',
-    lightGrey: '#CECAD9',
-    white: '#F4F0FF',
-  },
+const protanopiaScheme = {
+  desire: '#8B8369',
+  orangeSoda: '#A1945B',
+  sandstorm: '#E9D14C',
+  lightGrey: '#CFCBCB',
+  white: '#FFFAFA',
+}
+
+const deuteranopiaScheme = {
+  desire: '#A07D46',
+  orangeSoda: '#B68D42',
+  sandstorm: '#FFC867',
+  lightGrey: '#DEC6CD',
+  white: '#FFE8EF',
+}
+
+const tritanopiaScheme = {
+  desire: '#EB4042',
+  orangeSoda: '#F56166',
+  sandstorm: '#FFC1CE',
+  lightGrey: '#CECAD9',
+  white: '#F4F0FF',
 }

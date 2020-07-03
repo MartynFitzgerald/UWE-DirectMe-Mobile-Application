@@ -5,7 +5,8 @@ import Overlay from 'react-native-modal-overlay';
 import * as Location from 'expo-location';
 
 //Import styles.
-import { styles } from '../styles/General';
+import style from '../styles/General';
+import schemes from '../styles/ColourSchemes';
 //Import views.
 import ChangeValue from './ChangeValue.js';
 //Import functions.
@@ -15,7 +16,9 @@ import checkStorage from '../controllers/CheckStorage';
 export default class Account extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
+      styles: {},
       user: [],
       selectedValue: '',
       selectedTitle: '',
@@ -37,6 +40,7 @@ export default class Account extends Component {
     };
   }
   componentDidMount() {
+    this.setStyle();
     //Retrieve user data from local storage.
     storage.get(`userLocal`)
     .then((user) => {
@@ -44,6 +48,15 @@ export default class Account extends Component {
     });
     //Fetch user's location from GPS.
     this.getUserLocation();
+  };
+
+  setStyle = async () => {
+    try {
+      var scheme = await schemes.colours();
+      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
+     } catch (error) {
+      console.error(error);
+    }
   };
 
   componentWillUnmount(){
@@ -86,7 +99,7 @@ export default class Account extends Component {
   };
 
   render() {
-    const { user, isModalVisible, selectedValue, selectedTitle, selectedExample, selectedType, profilePictures, country } = this.state;
+    const { styles, user, isModalVisible, selectedValue, selectedTitle, selectedExample, selectedType, profilePictures, country } = this.state;
     
     //Getting the profile picture from storage or setting a default.
     var profileID = (user.profile_picture <= 0 ||  user.profile_picture == undefined) ? `avatar1.png` : `${user.profile_picture}`;
@@ -190,6 +203,17 @@ export default class Account extends Component {
                 this.setState({selectedTitle: 'Profile Picture'});
                 this.setState({selectedExample: ''});
                 this.setState({selectedType: ''});
+                this.toggleModal();
+                }
+            }/>
+            <List.Item
+              title="Colour Accessibility"
+              right={() => <Text style={styles.centerVerticalText} >{user.schema}</Text>}
+              onPress={()=> {
+                this.setState({selectedValue: 'schema'});
+                this.setState({selectedTitle: 'Colour Scheme'});
+                this.setState({selectedExample: 'E.g. 07145234561'});
+                this.setState({selectedType: 'phone-pad'});
                 this.toggleModal();
                 }
             }/>

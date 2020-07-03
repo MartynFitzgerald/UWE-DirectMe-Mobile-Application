@@ -5,7 +5,8 @@ import * as Location from 'expo-location';
 import hash from 'object-hash';
 
 //Import styles.
-import { styles } from '../styles/General';
+import style from '../styles/General';
+import schemes from '../styles/ColourSchemes';
 //Import functions.
 import storage from '../models/Storage';
 import validation from '../controllers/Validation';
@@ -16,12 +17,14 @@ export default class LoginScreen extends Component {
     super(props);
 
     this.state = {
+      styles: {},
       emailAddress: 'martynfitzzz2014@gmail.com', // TODO: Remove values on launch
       password: 'Password!123' // TODO: Remove values on launch
     };
   }
 
   componentDidMount() {
+    this.setStyle();
     this.locationRequest();
     storage.get(`userLocal`)
     .then((user) => {
@@ -30,8 +33,18 @@ export default class LoginScreen extends Component {
         this.props.navigation.navigate('NavigationBar');
       } 
     });
+  };
 
-  }
+  setStyle = async () => {
+    try {
+      var scheme = await schemes.colours();
+      //console.log(scheme);
+      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
+      //console.log(style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   locationRequest = async () => {
     try {
@@ -49,7 +62,7 @@ export default class LoginScreen extends Component {
 
 
   render() {
-    const { emailAddress, password } = this.state;
+    const { styles, emailAddress, password } = this.state;
     return (
       <View style={styles.container}>
         <LinearGradient
