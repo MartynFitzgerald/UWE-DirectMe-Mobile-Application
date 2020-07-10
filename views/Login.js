@@ -17,11 +17,22 @@ export default class LoginScreen extends Component {
     super(props);
 
     this.state = {
+      colors: {},
       styles: {},
       emailAddress: 'martynfitzzz2014@gmail.com', // TODO: Remove values on launch
       password: 'Password!123' // TODO: Remove values on launch
     };
   }
+
+  setStyle = async () => {
+    try {
+      var scheme = await schemes.colours();
+      this.setState({ colors: scheme });
+      this.setState({ styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white, scheme.blue) });
+     } catch (error) {
+      console.error(error);
+    }
+  };
 
   componentDidMount() {
     this.setStyle();
@@ -30,20 +41,9 @@ export default class LoginScreen extends Component {
     .then((user) => {
       if (user != undefined || user != null) {
         Keyboard.dismiss();
-        this.props.navigation.navigate('NavigationBar');
+        this.props.navigation.navigate('NavigationBar', {setStyle: () => this.setStyle, styles: this.state.styles, colors: this.state.colors});
       } 
     });
-  };
-
-  setStyle = async () => {
-    try {
-      var scheme = await schemes.colours();
-      //console.log(scheme);
-      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
-      //console.log(style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white));
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   locationRequest = async () => {
@@ -62,7 +62,7 @@ export default class LoginScreen extends Component {
 
 
   render() {
-    const { styles, emailAddress, password } = this.state;
+    const { styles, colors, emailAddress, password } = this.state;
     return (
       <View style={styles.container}>
         <LinearGradient
@@ -127,7 +127,7 @@ export default class LoginScreen extends Component {
               //Output alert to aware user of account not registered.
               Alert.alert(
                 "Invalid Credentials",
-                `Unfortunately the credentials provided are not known , please check the credentials submitted. and try again.`,
+                `Unfortunately the credentials provided are not known, please check the credentials submitted. and try again.`,
                 [
                   { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                 ],
@@ -141,13 +141,13 @@ export default class LoginScreen extends Component {
               await storage.set(`userAPI`, user_data);
               await storage.set(`userLocal`, user_data).then(
                 Keyboard.dismiss(),
-                this.props.navigation.navigate('NavigationBar'),
+                this.props.navigation.navigate('NavigationBar', {styles: this.state.styles, colors: this.state.colors}),
               );
             } else {
               //Output alert to aware user of invalid password input.
               Alert.alert(
                 "Invalid Credentials",
-                `Unfortunately the credentials provided are not known , please check the credentials submitted. and try again.`,
+                `Unfortunately the credentials provided are not known, please check the credentials submitted. and try again.`,
                 [
                   { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
                 ],
@@ -157,18 +157,26 @@ export default class LoginScreen extends Component {
             return;
           }}
         >
-          <Text>Login</Text>
+          <Text style={[styles.centerVerticalText, styles.lightGreyText]}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainer]}
-          onPress={() => this.props.navigation.navigate('Register')}
+          onPress={() => this.props.navigation.navigate('Register', {styles: this.state.styles, colors: this.state.colors})}
         >
-            <Text>Register</Text>
+            <Text style={[styles.centerVerticalText, styles.lightGreyText]}>Register</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.facebookColor]}
           onPress={() => {
-            alert('You tapped the Facebook button!');
+            //Output alert to aware user that this function is soon to be implemented.
+            Alert.alert(
+              "Facebook Login is Unavailable",
+              `Unfortunately this feature is temporary disabled, please check again at a later point.`,
+              [
+                { text: 'Go Back', onPress: () => console.log('Go Back Pressed') },
+              ],
+              { cancelable: true }
+            );
           }}
         >
           <View style={styles.socialButtonContent}>
@@ -179,7 +187,15 @@ export default class LoginScreen extends Component {
 
         <TouchableOpacity style={[styles.buttonContainerSocialAccount, styles.googleColor]}
           onPress={() => {
-            alert('You tapped the Google button!');
+            //Output alert to aware user that this function is soon to be implemented.
+            Alert.alert(
+              "Google Login is Unavailable",
+              `Unfortunately this feature is temporary disabled, please check again at a later point.`,
+              [
+                { text: 'Go Back', onPress: () => console.log('Go Back Pressed') },
+              ],
+              { cancelable: true }
+            );
           }}
         >
           <View style={styles.socialButtonContent}>

@@ -3,10 +3,6 @@ import { View, ActivityIndicator, FlatList } from 'react-native';
 import { List, Text, Appbar } from 'react-native-paper';
 import { SearchBar, Divider } from 'react-native-elements';
 import Overlay from 'react-native-modal-overlay';
-
-//Import styles.
-import style from '../styles/General';
-import schemes from '../styles/ColourSchemes';
 //Import views.
 import Modal from './MetaData';
 //Import functions.
@@ -19,7 +15,6 @@ export default class CarParks extends Component {
     super(props);
 
     this.state = {
-      styles: {},
       visibleCarParks: [],
       isLoading: true,
       searchText: '',
@@ -30,7 +25,6 @@ export default class CarParks extends Component {
   }
   
   componentDidMount() {
-    this.setStyle();
     //Check storage if the car parks are stored.
     storage.get(`carParks`)
       .then((localCarParks) => {
@@ -55,15 +49,6 @@ export default class CarParks extends Component {
       .finally(() => {
         this.setState({ isLoading: false });
       });
-  };
-
-  setStyle = async () => {
-    try {
-      var scheme = await schemes.colours();
-      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
-     } catch (error) {
-      console.error(error);
-    }
   };
   
   fetchCarParks = () => {
@@ -94,30 +79,34 @@ export default class CarParks extends Component {
   };
 
   renderHeader = (searchText) => {
-    const { styles } = this.state;
-    return <SearchBar placeholder="Search Here..." value={searchText} onChangeText={this.searchFunction} containerStyle={styles.outerBox} inputContainerStyle={styles.searchBox} lightTheme  />;
+    const { styles } = this.props.route;
+    return <SearchBar placeholder="Search Here..." value={searchText} onChangeText={this.searchFunction} containerStyle={styles.containerStyleSearchBar} inputContainerStyle={[styles.searchBox, styles.white]} lightTheme  />;
   };
 
   renderSeparator = () => {
-    const { styles } = this.state;
-    return <Divider style={{ backgroundColor: '#CCCCCC' }} />; 
+    const { styles } = this.props.route;
+    return <Divider style={styles.lightGrey} />; 
   };
 
   renderEmptyContainer = () => {
-    const { styles } = this.state;
+    const { styles } = this.props.route;
     return <Text style={styles.emptyResult} >No Result Found</Text>; 
   };
   
   render() {
-    const { styles, visibleCarParks, isLoading, searchText, isModalVisible, carPark} = this.state;
-    return (
-      <View>
-        <Appbar.Header style={styles.appBar}>
-          <Appbar.Content title={this.props.route.tabTitle} style={styles.appBarTitle} titleStyle={styles.appBarTitle}/>
-        </Appbar.Header>
-        {isLoading ? <ActivityIndicator size="large"/> : (
+    const { route } = this.props;
+    const { styles, colors } = this.props.route;
+    const { visibleCarParks, isLoading, searchText, isModalVisible, carPark } = this.state;
+      if (isLoading) {
+        return <ActivityIndicator size="large"/>
+       } else { 
+        return (
+        <View>
+          <Appbar.Header style={styles.desire}>
+            <Appbar.Content title={route.tabTitle} style={[styles.appBarTitle, colors.desire]} titleStyle={[styles.appBarTitle, styles.whiteText]}/>
+          </Appbar.Header>
           <FlatList 
-            style={{ height: '89%' }}
+            style={[styles.flatList, styles.white]}
             data={visibleCarParks}
             keyExtractor={ item => item.car_park_id.toString()}
             ItemSeparatorComponent={this.renderSeparator}
@@ -125,22 +114,23 @@ export default class CarParks extends Component {
             ListEmptyComponent={this.renderEmptyContainer()}
             renderItem={({ item }) => (
               <List.Item
+                titleStyle={styles.lightGreyText}
+                descriptionStyle={styles.lightGreyText}
                 title={item.name.replace("Bristol ", "")}
                 description={item.address}
-                left={() => <List.Icon color="#4285F4" icon="parking" />}
-                right={() => <List.Icon icon="chevron-right" />} 
+                left={() => <List.Icon color={"#4285F4"} icon="parking" />}
+                right={() => <List.Icon color={colors.lightGrey} icon="chevron-right" />} 
                 onPress={()=> {
                   this.setState({carPark: item});
                   this.toggleModal();
                   }
               }/>
-            )}
-          />
-        )}
-        <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={{borderRadius: 5}} closeOnTouchOutside>
-          <Modal carPark={JSON.stringify(carPark)} toggleModal={this.toggleModal}/>
+          )}/>
+          <Overlay visible={isModalVisible} onClose={this.toggleModal} animationDuration={20} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}} childrenWrapperStyle={[styles.innerContainerOverlay, styles.white]} closeOnTouchOutside>
+            <Modal colors={colors} styles={styles} carPark={JSON.stringify(carPark)} toggleModal={this.toggleModal}/>
         </Overlay>
-      </View>
-    );
+        </View>
+      )
+    }
   }
 };

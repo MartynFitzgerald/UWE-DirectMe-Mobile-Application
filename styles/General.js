@@ -15,7 +15,6 @@
 import { StyleSheet} from 'react-native';
 
 const button = {
-  shadowColor: '#000000',
   shadowOffset: {
     width: 0,
     height: 2,
@@ -23,7 +22,6 @@ const button = {
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
   elevation: 5,
-  borderColor: '#000000',
   height:50,
   flexDirection: 'row',
   justifyContent: 'center',
@@ -31,8 +29,32 @@ const button = {
   width:250,
 };
 
-exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
+exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white, blue) {
   return StyleSheet.create({
+    desire: {
+        backgroundColor: desire,
+    },
+    lightGreyText: {
+      color: lightGrey,
+    },
+    lightGrey: {
+      backgroundColor: lightGrey,
+    },
+    white: {
+      backgroundColor: white,
+    },
+    whiteText: {
+      color: white,
+    },
+    innerContainerOverlay: {
+      borderRadius: 5,
+    },
+    scrollView: {
+      paddingBottom: 100,
+    },
+    flatList: {
+      height: '89%',
+    },
     mapSearchBox: {
       width: '85%',
       marginTop: -1,
@@ -41,16 +63,14 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
     },
     searchButton: {
       backgroundColor: '#bec6cf',
+      marginTop: .4,
       width: '15%',
       marginLeft: '85%',
       height: 55,
       position: 'absolute',
     },
-    searchButtonText: {
-      color: '#007aff', // #86939e
-    },
     header:{
-      backgroundColor: "#4285F4",
+      backgroundColor: blue,
       padding:15,
       alignItems: 'center',
     },
@@ -74,7 +94,7 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
       textAlignVertical: 'center',
       textAlign: 'center', 
     },
-    outerBox: {
+    containerStyleSearchBar: {
       padding: 0,
       margin: 0,
     },
@@ -122,9 +142,6 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
       backgroundColor: '#E71212',
       fontWeight: 'bold',
     },
-    appBar: {
-        backgroundColor: '#EB3349',
-    },
     appBarTitle: {
       alignItems: 'center',
       fontFamily: 'Pacifico',
@@ -151,6 +168,7 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
       textDecorationLine: 'underline'
     },
     viewOverall:{
+      backgroundColor: white,
       minHeight:700,
       maxHeight:700,
     },
@@ -207,7 +225,7 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
       height: '100%',
     },
     inputContainerAccount: {
-      borderColor: '#CCCCCC',
+      borderColor: lightGrey,
       backgroundColor: white,
       borderWidth: 1,
       width:300,
@@ -238,6 +256,8 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
     },
     buttonContainerMetadata: {
       ...button,
+      borderColor: lightGrey,
+      shadowColor: lightGrey,
       marginTop:10,
       marginBottom:10,
       backgroundColor: white,
@@ -246,15 +266,19 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
     },
     smallButtonContainer: {
       ...button,
+      borderColor: lightGrey,
+      shadowColor: lightGrey,
       margin:10,
       width:150,
       height: 30,
-      backgroundColor: white,
+      backgroundColor: lightGrey,
       borderWidth: .5,
       borderRadius:30,
     },
     buttonContainer: {
       ...button,
+      borderColor: lightGrey,
+      shadowColor: lightGrey,
       marginBottom:20,
       backgroundColor: white,
       borderWidth: .5,
@@ -262,6 +286,8 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white) {
     },
     buttonContainerSocialAccount: {
       ...button,
+      borderColor: '#000000',
+      shadowColor: '#000000',
       elevation: 5,
       marginBottom:20,
     },

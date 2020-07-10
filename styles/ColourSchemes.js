@@ -19,37 +19,44 @@ exports.colours = async function() {
     //Retrieve user data from local storage.
     var user = await storage.get(`userLocal`)
     if (user){
-      if (user.scheme == "Normal"){
-        if (!user.darkmode) { 
+      if (user[0].scheme == "None"){
+        if (!user[0].darkmode) { 
           return normalScheme;
         } else {
           return darkModeScheme;
         }
-      } else if (user.scheme == "Protanopia") {
+      } else if (user[0].scheme == "Protanopia") {
         return protanopiaScheme;
-      } else if (user.scheme == "Deuteranopia") {
+      } else if (user[0].scheme == "Deuteranopia") {
         return deuteranopiaScheme;
-      } else if (user.scheme == "Tritanopia") {
+      } else if (user[0].scheme == "Tritanopia") {
         return tritanopiaScheme;
       } 
     }
-    return normalScheme; //Return normal scheme if all are undefined.
+    //Return normal scheme if all are undefined.
+    return normalScheme; 
 }
 
 const normalScheme = {
   desire: '#EB3349',
   orangeSoda: '#F45C43',
   sandstorm: '#F4CB42',
-  lightGrey: '#CCCCCC',
+  lightGrey: '#000000',
   white: '#FFFFFF',
+  blue: '#4285F4',
+  map: [],
+  logo: require('../assets/LogoRed.png'),
 }
 
 const darkModeScheme = {
-  desire: '#121212',
-  orangeSoda: '#121212',
-  sandstorm: '#121212',
-  lightGrey: '#EB3349',
-  white: '#121212',
+  desire: '#EB3349',
+  orangeSoda: '#F45C43',
+  sandstorm: '#F4CB42',
+  lightGrey: '#FFFFFF',
+  white: '#3A3A3A',
+  blue: '#7a7a7a',
+  map: require('../styles/map/Darkmode'),
+  logo: require('../assets/Logo.png'),
 }
 
 const protanopiaScheme = {
@@ -58,6 +65,9 @@ const protanopiaScheme = {
   sandstorm: '#E9D14C',
   lightGrey: '#CFCBCB',
   white: '#FFFAFA',
+  blue: '#4285F4',
+  map: [],
+  logo: require('../assets/LogoRed.png'),
 }
 
 const deuteranopiaScheme = {
@@ -66,6 +76,9 @@ const deuteranopiaScheme = {
   sandstorm: '#FFC867',
   lightGrey: '#DEC6CD',
   white: '#FFE8EF',
+  blue: '#0090f0',
+  map: [],
+  logo: require('../assets/LogoRed.png'),
 }
 
 const tritanopiaScheme = {
@@ -74,4 +87,7 @@ const tritanopiaScheme = {
   sandstorm: '#FFC1CE',
   lightGrey: '#CECAD9',
   white: '#F4F0FF',
+  blue: '#009ba5',
+  map: [],
+  logo: require('../assets/LogoRed.png'),
 }

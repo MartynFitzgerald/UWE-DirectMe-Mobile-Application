@@ -4,9 +4,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { v1 as uuidv1 } from 'react-native-uuid';
 import hash from 'object-hash';
 
-//Import styles.
-import style from '../styles/General';
-import schemes from '../styles/ColourSchemes';
 //Import functions.
 import validation from '../controllers/Validation';
 import apiMethods from '../models/ApiMethods';
@@ -16,7 +13,6 @@ export default class RegisterScreen extends Component {
     super(props);
 
     this.state = {
-      styles: {},
       fName: '',
       lName: '',
       emailAddress: '',
@@ -25,22 +21,10 @@ export default class RegisterScreen extends Component {
       reEnterPassword: ''
     };
   }
-
-  componentDidMount() {
-    this.setStyle();
-  };
-
-  setStyle = async () => {
-    try {
-      var scheme = await schemes.colours();
-      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
-     } catch (error) {
-      console.error(error);
-    }
-  };
   
   render() {
-    const { styles, fName, lName, emailAddress, phoneNumber, password, reEnterPassword } = this.state;
+    const { styles } = this.props.route.params;
+    const { fName, lName, emailAddress, phoneNumber, password, reEnterPassword } = this.state;
     return (
         <View style={styles.container}>
           <LinearGradient
@@ -201,7 +185,7 @@ export default class RegisterScreen extends Component {
                   darkmode: 0,
                   radius: 1500,
                   profile_picture: 'male1',
-                  scheme: 'Normal',
+                  scheme: 'None',
                 };
                 //Insert into API.
                 apiMethods.insert(`USER`, userArray).catch((error) => {console.log(error)});
@@ -218,13 +202,13 @@ export default class RegisterScreen extends Component {
               }
             }}
           >
-            <Text>Register</Text>
+            <Text style={[styles.centerVerticalText, styles.lightGreyText]}>Register</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.buttonContainer]}
             onPress={() => this.props.navigation.navigate('Login')}
           >
-            <Text>Go Back</Text>
+            <Text style={[styles.centerVerticalText, styles.lightGreyText]}>Go Back</Text>
           </TouchableOpacity>
         </View>
     );

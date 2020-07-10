@@ -2,77 +2,61 @@ import React, { Component } from 'react';
 import { View, ScrollView, Image, Linking  } from 'react-native';
 import { List, Divider, Text, Paragraph, Appbar } from 'react-native-paper';
 
-//Import styles.
-import style from '../styles/General';
-import schemes from '../styles/ColourSchemes';
 
 export default class History extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      styles: {},
-    };
   }
 
-  componentDidMount() {
-    this.setStyle();
-  };
-
-  setStyle = async () => {
-    try {
-      var scheme = await schemes.colours();
-      this.setState({styles: style.fetchStyle(scheme.desire, scheme.orangeSoda, scheme.sandstorm, scheme.lightGrey, scheme.white)});
-     } catch (error) {
-      console.error(error);
-    }
-  };
-
   render() {
-    const { styles } = this.state;
+    const { route } = this.props;
+    const { styles, colors } = this.props.route;
     return (
       <View>
-        <Appbar.Header style={styles.appBar}>
-            <Appbar.Content title={this.props.route.tabTitle} style={styles.appBarTitle} titleStyle={styles.appBarTitle}/>
+        <Appbar.Header style={styles.desire}>
+            <Appbar.Content title={route.tabTitle} style={styles.appBarTitle} titleStyle={[styles.appBarTitle, styles.whiteText]}/>
         </Appbar.Header>
-        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+        <ScrollView contentContainerStyle={[styles.scrollView, styles.white]}>
           <Image
             style={styles.logoInformation}
-            source={require('../assets/LogoRed.png')}
+            source={colors.logo}
             resizeMode="stretch"
           />
           <List.Section style={styles.list}>
-            <Divider/>
-            <List.Subheader>About Us</List.Subheader>
-            <Paragraph style={styles.informationText}>The focus behind this final year computing project is to make parking easier, and dynamic for the user. The idea works by using the external data that will be displayed in our application programming interface (API) which will be combined with the user’s information that has been specified previously in the application. This information will then be inserted into an algorithm that will determine what is the best location to park their vehicle within a radius of the postcode, geo-location, or street name given.</Paragraph>
-            <Divider/>
-            <List.Subheader>Hou To Use</List.Subheader>
-            <Paragraph style={styles.informationText}>• Allow DirectMe To Have Location Permissions</Paragraph>
-            <Paragraph style={styles.informationText}>• Select Map Icon In The Bottom Navigation</Paragraph>
-            <Paragraph style={styles.informationText}>• Enter Location In The Search Bar</Paragraph>
-            <Paragraph style={styles.informationText}>• Accept Car Park Displayed</Paragraph>
-            <Paragraph style={styles.informationText}>• Follow Directs Through The Maps, Enjoy Your Journey</Paragraph>
-            <Paragraph style={styles.informationText}>• Select How Long Your Stay Will Be</Paragraph>
-            <Paragraph style={styles.informationText}>• Enter Car Registration</Paragraph>
-            <Paragraph style={styles.informationText}>• Pay For The Stay Car Park</Paragraph>
-            <Paragraph style={styles.informationText}>• Give A Review OF The Car</Paragraph>
-            <Paragraph style={styles.informationText}>• Select The Rating And Add Feedback</Paragraph>
-            <Divider/>
+            <Divider style={styles.lightGrey}/>
+            <List.Subheader style={styles.lightGreyText} >About Us</List.Subheader>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>The focus behind this final year computing project is to make parking easier, and dynamic for the user. The idea works by using the external data that will be displayed in our application programming interface (API) which will be combined with the user’s information that has been specified previously in the application. This information will then be inserted into an algorithm that will determine what is the best location to park their vehicle within a radius of the postcode, geo-location, or street name given.</Paragraph>
+            <Divider style={[styles.lightGrey, {marginTop: 20}]}/>
+            <List.Subheader style={styles.lightGreyText} >Hou To Use</List.Subheader>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Allow DirectMe To Have Location Permissions</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Select Map Icon In The Bottom Navigation</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Enter Location In The Search Bar</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Accept Car Park Displayed</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Follow Directs Through The Maps, Enjoy Your Journey</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Select How Long Your Stay Will Be</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Enter Car Registration</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Pay For The Stay Car Park</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Give A Review OF The Car</Paragraph>
+            <Paragraph style={[styles.informationText, styles.lightGreyText]}>• Select The Rating And Add Feedback</Paragraph>
+            <Divider style={[styles.lightGrey, {marginTop: 20}]}/>
             <List.Item
+              titleStyle={styles.lightGreyText}
               title="Author:"
-              right={() => <Text style={styles.centerVerticalText} >Martyn Fitzgerald</Text>}
+              right={() => <Text style={[styles.centerVerticalText, styles.lightGreyText]} >Martyn Fitzgerald</Text>}
             />
-            <Divider/>
+            <Divider style={styles.lightGrey}/>
             <List.Item
+              titleStyle={styles.lightGreyText}
               title="Contact Email:"
-              right={() => <Text style={styles.centerVerticalText, styles.emailText} onPress={() => Linking.openURL('mailto:martyn2.fitzgerald@live.uwe.ac.uk') } >martyn2.fitzgerald@live.uwe.ac.uk</Text>}
+              right={() => <Text style={[styles.centerVerticalText, styles.emailText, styles.lightGreyText]} onPress={() => Linking.openURL('mailto:martyn2.fitzgerald@live.uwe.ac.uk') } >martyn2.fitzgerald@live.uwe.ac.uk</Text>}
             />
-            <Divider/>
+            <Divider style={styles.lightGrey}/>
             <List.Item
+              titleStyle={styles.lightGreyText}
               title="Application Version:"
-              right={() => <Text style={styles.centerVerticalText} >1.0.0</Text>}
+              right={() => <Text style={[styles.centerVerticalText, styles.lightGreyText]} >1.0.0</Text>}
             />
-            <Divider/>
+            <Divider style={styles.lightGrey}/>
           </List.Section>
         </ScrollView>
       </View>
