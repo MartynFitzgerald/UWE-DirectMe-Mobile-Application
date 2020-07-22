@@ -12,13 +12,15 @@
 |                
 *===========================================================================*/
 const endpointAWS = `http://directme-api.eu-west-2.elasticbeanstalk.com/`;
+//API key for the DirectMe's API.
+var apiKey = 'a92c0620-ac2a-11ea-bc8d-67c1927ee7f3';
 /* 
   A function that requests certain types of data from API depending on item string inputted
   declaring what table to gather the data from.
 */
 exports.read = async function(item) {
   try {
-    return fetch(`${endpointAWS}API/${item}/`).then((response) => response.json()).then((result) => {
+    return fetch(`${endpointAWS}API/${apiKey}/${item}/`).then((response) => response.json()).then((result) => {
       return result.result;
     });
   } catch (error) {
@@ -40,7 +42,7 @@ exports.insert = async function(item, data) {
       },
       body: JSON.stringify(data)
     }
-    return fetch(`${endpointAWS}API/${item}/`, header).then((response) => response.json()).then((result) => {
+    return fetch(`${endpointAWS}API/${apiKey}/${item}/`, header).then((response) => response.json()).then((result) => {
       return result;
     });
   } catch (error) {
@@ -62,7 +64,7 @@ exports.update = async function(item, data) {
       },
       body: JSON.stringify(data)
     }
-    return fetch(`${endpointAWS}API/${item}/`, header).then((response) => response.json()).then((result) => {
+    return fetch(`${endpointAWS}API/${apiKey}/${item}/`, header).then((response) => response.json()).then((result) => {
       return result;
     });
   } catch (error) {
