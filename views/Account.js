@@ -81,7 +81,6 @@ export default class Account extends Component {
     
     //Set style if they user changes it.
     if (keyText == 'darkmode' || keyText == 'scheme'){
-      console.log(route.setStyle());
       await route.setStyle();
     }
   };

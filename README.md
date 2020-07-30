@@ -28,7 +28,7 @@ This is a diagram that shows how the system shall be used.
 * Expo CLI (Command Line Utility)
 * Lucidchart
 
-## Setup Enviroment (Windows)
+## Setup Environment (Windows)
 
 1. If testing Android device, connect to the computer through a USB cable.
 2. Install Git (https://gitforwindows.org/).
@@ -47,7 +47,7 @@ npm install -g expo-cli
 ```bash
 git clone https://gitlab.uwe.ac.uk/m4-fitzgerald/Parking-Application-Mobile-Prototype.git
 ```
-2. Move into the folder of the reporsitory.
+2. Move into the folder of the repository.
 ```bash
 cd Parking-Application-Mobile-Prototype
 ```
