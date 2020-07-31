@@ -36,6 +36,9 @@ export default class Map extends Component {
       carParkRating: 0,
       carParkAmountRating: 0,
 
+      distance: 0,
+      duration: 0,
+
       isUserCameraLinkedVisible: false,
       isCarParkMapShapesVisible: false,
       isCarParkInfoVisible: false,
@@ -129,6 +132,7 @@ export default class Map extends Component {
   };
 
   renderDirections() {
+    const { colors } = this.props.route;
     const { userLatitude, userLongitude, isCarParkMapShapesVisible, carParkLatitude, carParkLongitude, carParkName } = this.state;
     if (isCarParkMapShapesVisible) {
       return (
@@ -139,7 +143,7 @@ export default class Map extends Component {
             destination={{latitude: carParkLatitude, longitude: carParkLongitude}}
             apikey={GOOGLE_API_KEY} 
             strokeWidth={3} 
-            strokeColor='#EB3349'
+            strokeColor={colors.orangeSoda}
             timePrecision='now'
             optimizeWaypoints={false} //Cost more to use
             timePrecision='now'
@@ -149,6 +153,8 @@ export default class Map extends Component {
             onReady={(result) => {
               console.log(`Distance: ${result.distance} km`)
               console.log(`Duration: ${result.duration} min.`)
+              this.setState({distance: result.distance});
+              this.setState({duration: result.duration});
               //console.log(result);
             }}
             onError={(errorMessage) => {
@@ -197,7 +203,7 @@ export default class Map extends Component {
   render() {
     const { route } = this.props;
     const { styles, colors } = this.props.route;
-    const { search, mapRegionLatitude, mapRegionLongitude, isCarParkInfoVisible, carParkName, carParkAddress, carParkRating, carParkAmountRating, isUserCameraLinkedVisible } = this.state;
+    const { search, mapRegionLatitude, mapRegionLongitude, isCarParkInfoVisible, carParkName, carParkAddress, carParkRating, carParkAmountRating, isUserCameraLinkedVisible, distance, duration } = this.state;
     return (
       <View style={styles.list}>
         <Appbar.Header style={styles.desire}>
@@ -264,7 +270,7 @@ export default class Map extends Component {
         {this.renderDirections()}
         </MapView>
         <Overlay visible={isCarParkInfoVisible} onClose={this.toggleModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0)'}} childrenWrapperStyle={{borderRadius: 5,bottom: -230}}>
-          <Directions styles={styles} title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} toggleModal={this.toggleModal} navigate={this.navigate}/>
+          <Directions styles={styles} title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} distance={distance} duration={duration} toggleModal={this.toggleModal} navigate={this.navigate}/>
         </Overlay>
       </View>
     );
