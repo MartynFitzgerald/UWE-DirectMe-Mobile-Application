@@ -271,7 +271,7 @@ exports.fetchStyle = function(desire, orangeSoda, sandstorm, lightGrey, white, b
       margin:10,
       width:150,
       height: 30,
-      backgroundColor: lightGrey,
+      backgroundColor: white,
       borderWidth: .5,
       borderRadius:30,
     },

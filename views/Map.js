@@ -9,10 +9,10 @@ import * as Location from 'expo-location';
 //Import views.
 import Directions from './Directions.js';
 //Import functions.
+import storage from '../models/Storage';
 import algorithm from '../controllers/Algorithm';
 //Google directions API key.
-const GOOGLE_API_KEY = '';
-//const GOOGLE_API_KEY = 'AIzaSyCu6_DCGV4g7LT66nIHrWaRu0dteV1lFeY';
+const GOOGLE_API_KEY = 'AIzaSyCu6_DCGV4g7LT66nIHrWaRu0dteV1lFeY';
 
 export default class Map extends Component {
   constructor(props) {
@@ -42,6 +42,17 @@ export default class Map extends Component {
     };
     this.map = null;
   }
+
+  componentDidMount() {
+    //Retrieve user data from local storage.
+    storage.get(`userLocal`)
+     .then((user) => {
+      this.setState({ user: user[0] });
+     });
+     //Fetch user's location from GPS.
+    this.getUserLocation();
+  };
+
 
   getUserLocation = async () => {
     try {
@@ -138,7 +149,7 @@ export default class Map extends Component {
             onReady={(result) => {
               console.log(`Distance: ${result.distance} km`)
               console.log(`Duration: ${result.duration} min.`)
-              console.log(result);
+              //console.log(result);
             }}
             onError={(errorMessage) => {
               // console.log('GOT AN ERROR');
@@ -168,7 +179,6 @@ export default class Map extends Component {
   }
 
   navigate = () => {
-    const { isCarParkInfoVisible, isUserCameraLinkedVisible } = this.state;
     this.setState({isUserCameraLinkedVisible: true});
     this.setState({isCarParkInfoVisible: false});
     this.setCameraPosition();
