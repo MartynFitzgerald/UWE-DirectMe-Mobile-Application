@@ -33,7 +33,7 @@ export default class History extends Component {
           storage.get(`historyTimeStamp`)
           .then((timeStamp) => {
             //Check the data when these car parks were stored.
-            if((new Date().getDate() - new Date(timeStamp).getDate() >= 1)) {
+            if((new Date().getMinutes() - new Date(timeStamp).getMinutes() >= 1)) {
               //Fetch Car Parks From API.
               this.fetchHistory(user);
             } else {
@@ -62,7 +62,7 @@ export default class History extends Component {
         apiMethods.read(`CARPARK`, history[i].car_park_id)
         .then((carPark) => {
           userHistory.push(carPark[0]);
-          if (i <= history.length){
+          if (i <= history.length) {
             storage.set(`historyTimeStamp`, new Date());
             storage.set(`history`, userHistory);
             this.setState({ visibleHistory: userHistory });

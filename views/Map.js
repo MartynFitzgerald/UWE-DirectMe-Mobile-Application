@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import {View, TouchableOpacity, Alert} from 'react-native';
+import { View, TouchableOpacity, Alert } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { Appbar, List } from 'react-native-paper';
 import Overlay from 'react-native-modal-overlay';
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import * as Location from 'expo-location';
+import { v1 as uuidv1 } from 'react-native-uuid';
 //Import views.
 import Directions from './Directions.js';
+import Payment from './Payment.js';
+import PaymentSuccessful from './PaymentSuccessful.js';
+import Review from './Review.js';
 //Import functions.
+//Import functions.
+import apiMethods from '../models/ApiMethods';
 import storage from '../models/Storage';
 import algorithm from '../controllers/Algorithm';
 //Google directions API key.
@@ -29,6 +35,7 @@ export default class Map extends Component {
       mapRegionLatitude: 51.46,
       mapRegionLongitude: -2.60,
 
+      carParkID: '',
       carParkName: '',
       carParkAddress: '',
       carParkLatitude: 0,
@@ -39,9 +46,16 @@ export default class Map extends Component {
       distance: 0,
       duration: 0,
 
+      hours: 1,
+      rating: 3,
+      review: '',
+
       isUserCameraLinkedVisible: false,
       isCarParkMapShapesVisible: false,
       isCarParkInfoVisible: false,
+      isCarParkPaymentVisible: false,
+      isCarParkPaymentSuccessfulVisible: false,
+      isCarParkReviewVisible: false,
     };
     this.map = null;
   }
@@ -71,7 +85,7 @@ export default class Map extends Component {
         
         //Change map's region to the user's location.
         if (location.coords.latitude != null && location.coords.longitude != null){
-          this.map.animateToRegion({latitude: location.coords.latitude || mapRegionLatitude, longitude: location.coords.longitude || mapRegionLongitude, latitudeDelta: 0.2, longitudeDelta: 0.2,}, 1000);
+          this.map.animateToRegion({latitude: location.coords.latitude || mapRegionLatitude, longitude: location.coords.longitude || mapRegionLongitude, latitudeDelta: 0.2, longitudeDelta: 0.2,}, 3000);
         }
       }
     } catch (error) {
@@ -102,6 +116,7 @@ export default class Map extends Component {
       //Double check if there is any car parks returned.
       if (chosenCarPark){
         //Store car park information to be used at a later point.
+        this.setState({carParkID: chosenCarPark.car_park_id});
         this.setState({carParkName: chosenCarPark.name});
         this.setState({carParkAddress: chosenCarPark.address});
         this.setState({carParkLatitude: chosenCarPark.latitude});
@@ -115,7 +130,7 @@ export default class Map extends Component {
         midpointLongitude = (chosenCarPark.longitude + userLongitude) / 2;
         //Change map's region to the user's location.
         if (midpointLatitude && midpointLongitude){
-          this.map.animateToRegion({latitude: midpointLatitude,longitude: midpointLongitude,latitudeDelta: 0.2,longitudeDelta: 0.2}, 1000);
+          this.map.animateToRegion({latitude: midpointLatitude,longitude: midpointLongitude,latitudeDelta: 0.2,longitudeDelta: 0.2}, 3000);
         }
       } else {
         //Output alert to aware user of no car parks available.
@@ -142,23 +157,20 @@ export default class Map extends Component {
             origin={{latitude: userLatitude, longitude: userLongitude}}
             destination={{latitude: carParkLatitude, longitude: carParkLongitude}}
             apikey={GOOGLE_API_KEY} 
-            strokeWidth={3} 
+            strokeWidth={4} 
             strokeColor={colors.orangeSoda}
             timePrecision='now'
             optimizeWaypoints={false} //Cost more to use
             timePrecision='now'
             onStart={(params) => {
-              console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
+              console.log(`Started routing between "${params.origin}" to "${params.destination}"`);
             }}
             onReady={(result) => {
-              console.log(`Distance: ${result.distance} km`)
-              console.log(`Duration: ${result.duration} min.`)
               this.setState({distance: result.distance});
               this.setState({duration: result.duration});
-              //console.log(result);
             }}
-            onError={(errorMessage) => {
-              // console.log('GOT AN ERROR');
+            onError={(error) => {
+              console.error('ERROR: ', error);
             }}
           />
           <Marker 
@@ -171,6 +183,7 @@ export default class Map extends Component {
     }
     return;
   };
+
   setCameraPosition = () => {
     const { userLatitude, userLongitude } = this.state;
     this.map.animateCamera({
@@ -188,22 +201,88 @@ export default class Map extends Component {
     this.setState({isUserCameraLinkedVisible: true});
     this.setState({isCarParkInfoVisible: false});
     this.setCameraPosition();
+    this.checkLocation();
   };
 
-  
+  checkLocation = () => {
+    const { isCarParkPaymentVisible, userLatitude, userLongitude, carParkLatitude, carParkLongitude } = this.state;
+    if (isCarParkPaymentVisible == false) {
+      let distance = (Math.sqrt(Math.pow(69.1 * (carParkLatitude - userLatitude), 2) + Math.pow(69.1 * (userLongitude - carParkLongitude) * Math.cos(carParkLatitude / 57.3), 2)) * 1609.344);
+      console.log(distance);
+
+
+      if (distance == 0.1){
+        this.setState({isCarParkPaymentVisible: true});
+      }
+      else {
+        setTimeout(this.checkLocation, 30000);
+      }
+    }
+  };
+
+  pay = () => {
+    this.setState({isCarParkPaymentVisible: false});
+    this.setState({isCarParkPaymentSuccessfulVisible: true});
+  };
+
+  review = () => {
+    this.setState({isCarParkPaymentSuccessfulVisible: false});
+    this.setState({isCarParkReviewVisible: true});
+  };
+
+  submit = (rating, review) => {
+    const { user, carParkID } = this.state;
+    //Create data array to submit to API.
+    var reviewArray = {
+      review_id: uuidv1(),
+      description: review,
+      rating: rating,
+      car_park_id: carParkID,
+      user_id: user.user_id,
+    };
+    //Insert into API.
+    apiMethods.insert(`REVIEW`, reviewArray).catch((error) => {console.log(error)});
+
+    this.toggleReviewModal();
+  };
+
+
   updateSearch = async (search) => {
     this.setState({ search });
   };
 
-  toggleModal = () => {
+  toggleCarparkModal = () => {
     this.setState({isCarParkInfoVisible: !this.state.isCarParkInfoVisible});
     this.setState({isCarParkMapShapesVisible: !this.state.isCarParkMapShapesVisible});
+    this.reset();
+  };
+
+  togglePaymentModal = () => {
+    this.setState({isCarParkPaymentVisible: !this.state.isCarParkPaymentVisible});
+    this.reset();
+  };
+
+  togglePaymentSuccessfulModal = () => {
+    this.setState({isCarParkPaymentSuccessfulVisible: !this.state.isCarParkPaymentSuccessfulVisible});
+    this.reset();
+  };
+
+  toggleReviewModal = () => {
+    this.setState({isCarParkReviewVisible: !this.state.isCarParkReviewVisible});
+    this.reset();
+  };
+
+  reset = () => {
+    const { userLatitude, userLongitude } = this.state;
+    this.setState({isUserCameraLinkedVisible: false});
+    this.setState({isCarParkMapShapesVisible: !this.state.isCarParkMapShapesVisible});
+    this.map.animateToRegion({latitude: userLatitude,longitude: userLongitude,latitudeDelta: 0.2,longitudeDelta: 0.2}, 3000);
   };
 
   render() {
     const { route } = this.props;
     const { styles, colors } = this.props.route;
-    const { search, mapRegionLatitude, mapRegionLongitude, isCarParkInfoVisible, carParkName, carParkAddress, carParkRating, carParkAmountRating, isUserCameraLinkedVisible, distance, duration } = this.state;
+    const { search, user, mapRegionLatitude, mapRegionLongitude, isCarParkInfoVisible, carParkID, carParkName, carParkAddress, carParkRating, carParkAmountRating, isUserCameraLinkedVisible, distance, duration, isCarParkPaymentVisible, hours, isCarParkPaymentSuccessfulVisible, isCarParkReviewVisible, review, rating } = this.state;
     return (
       <View style={styles.list}>
         <Appbar.Header style={styles.desire}>
@@ -269,8 +348,17 @@ export default class Map extends Component {
         >
         {this.renderDirections()}
         </MapView>
-        <Overlay visible={isCarParkInfoVisible} onClose={this.toggleModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0)'}} childrenWrapperStyle={{borderRadius: 5,bottom: -230}}>
-          <Directions styles={styles} title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} distance={distance} duration={duration} toggleModal={this.toggleModal} navigate={this.navigate}/>
+        <Overlay visible={isCarParkInfoVisible} onClose={this.toggleCarparkModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0)'}} childrenWrapperStyle={[{borderRadius: 5,bottom: -230}, styles.white]} closeOnTouchOutside>
+          <Directions styles={styles} id={carParkID} userID={user.user_id} title={carParkName} address={carParkAddress} rating={carParkRating} amountOfRating={carParkAmountRating} distance={distance} duration={duration} toggleModal={this.toggleCarparkModal} navigate={this.navigate}/>
+        </Overlay>
+        <Overlay visible={isCarParkPaymentVisible} onClose={this.togglePaymentModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}  childrenWrapperStyle={[styles.innerContainerOverlay, styles.white]} >
+          <Payment styles={styles} title={carParkName} hours={hours} setHours={(hours) => (this.setState({ hours: hours }))} toggleModal={this.togglePaymentModal} pay={this.pay}/>
+        </Overlay>
+        <Overlay visible={isCarParkPaymentSuccessfulVisible} onClose={this.togglePaymentSuccessfulModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}  childrenWrapperStyle={[styles.innerContainerOverlay, styles.white]} >
+          <PaymentSuccessful styles={styles} title={carParkName} hours={hours} toggleModal={this.togglePaymentSuccessfulModal} review={this.review}/>
+        </Overlay>
+        <Overlay visible={isCarParkReviewVisible} onClose={this.toggleReviewModal} animationType="zoomIn" animationDuration={500} containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}  childrenWrapperStyle={[styles.innerContainerOverlay, styles.white]} >
+          <Review styles={styles} title={carParkName} hours={hours} review={review} setReview={(review) => (this.setState({ review: review }))} rating={rating} setRating={(rating) => (this.setState({ rating: rating }))} toggleModal={this.toggleReviewModal} submit={this.submit}/>
         </Overlay>
       </View>
     );

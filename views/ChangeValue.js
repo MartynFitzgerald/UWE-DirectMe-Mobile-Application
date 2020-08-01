@@ -95,7 +95,7 @@ export default class Overlay extends Component {
         <View style={styles.alertBox}>
           <Title style={[styles.centerVerticalText, styles.lightGreyText]} >Modify {title}</Title>
             <Text style={[styles.centerVerticalText, styles.lightGreyText]} >Insert you're new {title.toLowerCase()} below and press submit.</Text>
-            <View style={(styles.inputContainerAccount)}>
+            <View style={styles.inputContainerAccount}>
             <TextInput style={styles.inputs}
               placeholder={example}
               keyboardType={type}
