@@ -12,7 +12,9 @@
 |                storage.
 |                
 *===========================================================================*/
-import { AsyncStorage } from 'react-native';
+import {
+  AsyncStorage
+} from 'react-native';
 /* 
   A function that stores information using the name and data inputs.
 */

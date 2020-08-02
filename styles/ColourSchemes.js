@@ -14,32 +14,30 @@
 *===========================================================================*/
 //Import functions.
 import storage from '../models/Storage';
-
 /*
   This function checks what option the user has selected.
 */
 exports.colours = async function() {
-    //Retrieve user data from local storage.
-    var user = await storage.get(`userLocal`)
-    if (user){
-      if (user[0].scheme == "None"){
-        if (!user[0].darkmode) { 
-          return normalScheme;
-        } else {
-          return darkModeScheme;
-        }
-      } else if (user[0].scheme == "Protanopia") {
-        return protanopiaScheme;
-      } else if (user[0].scheme == "Deuteranopia") {
-        return deuteranopiaScheme;
-      } else if (user[0].scheme == "Tritanopia") {
-        return tritanopiaScheme;
-      } 
+  //Retrieve user data from local storage.
+  var user = await storage.get(`userLocal`)
+  if (user) {
+    if (user[0].scheme == "None") {
+      if (!user[0].darkmode) {
+        return normalScheme;
+      } else {
+        return darkModeScheme;
+      }
+    } else if (user[0].scheme == "Protanopia") {
+      return protanopiaScheme;
+    } else if (user[0].scheme == "Deuteranopia") {
+      return deuteranopiaScheme;
+    } else if (user[0].scheme == "Tritanopia") {
+      return tritanopiaScheme;
     }
-    //Return normal scheme if all are undefined.
-    return normalScheme; 
+  }
+  //Return normal scheme if all are undefined.
+  return normalScheme;
 }
-
 const normalScheme = {
   desire: '#EB3349',
   orangeSoda: '#F45C43',
@@ -50,7 +48,6 @@ const normalScheme = {
   map: [],
   logo: require('../assets/LogoRed.png'),
 }
-
 const darkModeScheme = {
   desire: '#EB3349',
   orangeSoda: '#F45C43',
@@ -61,7 +58,6 @@ const darkModeScheme = {
   map: require('../styles/map/Darkmode'),
   logo: require('../assets/Logo.png'),
 }
-
 const protanopiaScheme = {
   desire: '#8B8369',
   orangeSoda: '#A1945B',
@@ -72,7 +68,6 @@ const protanopiaScheme = {
   map: [],
   logo: require('../assets/LogoRed.png'),
 }
-
 const deuteranopiaScheme = {
   desire: '#A07D46',
   orangeSoda: '#B68D42',
@@ -83,7 +78,6 @@ const deuteranopiaScheme = {
   map: [],
   logo: require('../assets/LogoRed.png'),
 }
-
 const tritanopiaScheme = {
   desire: '#EB4042',
   orangeSoda: '#F56166',

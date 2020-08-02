@@ -18,7 +18,7 @@ var apiKey = 'a92c0620-ac2a-11ea-bc8d-67c1927ee7f3';
   A function that requests certain types of data from API depending on item string inputted
   declaring what table to gather the data from.
 */
-exports.read = async function(item, data="") {
+exports.read = async function(item, data = "") {
   try {
     return fetch(`${endpointAWS}API/${apiKey}/${item}/${data}`).then((response) => response.json()).then((result) => {
       return result.result;

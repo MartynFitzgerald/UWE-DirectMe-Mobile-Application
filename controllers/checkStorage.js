@@ -22,7 +22,7 @@ exports.checkChange = async function() {
   var userLocal = await storage.get(`userLocal`);
   var userAPI = await storage.get(`userAPI`);
   //Check if it isn't the same to the API version.
-  if(JSON.stringify(userLocal[0]) !== JSON.stringify(userAPI[0])) {
+  if (JSON.stringify(userLocal[0]) !== JSON.stringify(userAPI[0])) {
     //Update the user information on the API.
     await apiMethods.update(`USER`, userLocal[0]);
     //Update the user information on the local storage of the API version.
