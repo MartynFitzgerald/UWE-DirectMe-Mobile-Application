@@ -2,7 +2,7 @@
 
 The focus behind this final year computing project is to make parking easier, and dynamic for the user. The idea works by using the external data that will be displayed in our application programming interface (API) which will be combined with the user’s information that has been specified previously in the application. This information will then be inserted into an algorithm that will determine what is the best location to park their vehicle within a radius of the postcode, geo-location, or street name given.
 
-This component...
+This component is a mobile application that will be developed for Android and iOS devices to allow easier production of this service. This service will allow users to customize their information on their accounts, perform searches on car parks, review a car park, and receive directions to a car park’s location.
 
 ## Editors
 * Martyn Fitzgerald - 16025948
@@ -59,7 +59,7 @@ npm install
 ```bash
 npm start -c
 ```
-5. If, Expo CLI doesn't open automatically, open a internet browser and search 'localhost:19002'.
+5. If, Expo CLI does not open automatically, open an internet browser and search 'localhost:19002'.
 6. Once on the Expo CLI wait for console to output 'Tunnel ready'.
 7. Select the option 'Local' on the type connection.
-8. Press 'Run on Android device/emulator' or 'Run on IOS simulator'
+8. Press 'Run on Android device/emulator' or 'Run on IOS simulator'.
