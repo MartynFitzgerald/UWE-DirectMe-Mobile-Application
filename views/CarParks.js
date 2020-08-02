@@ -1,3 +1,16 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  CarParks.js  
+|  Description:  This is the file that holds the class of the car parks view.
+|                
+*===========================================================================*/
 import React, { Component } from 'react';
 import { View, ActivityIndicator, FlatList } from 'react-native';
 import { List, Text, Appbar } from 'react-native-paper';
@@ -8,7 +21,6 @@ import Modal from './MetaData';
 //Import functions.
 import storage from '../models/Storage';
 import apiMethods from '../models/ApiMethods';
-
 
 export default class CarParks extends Component {
   constructor(props) {

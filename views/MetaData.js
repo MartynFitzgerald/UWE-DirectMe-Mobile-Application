@@ -1,3 +1,16 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  MetaData.js  
+|  Description:  This is the file that holds the class of the metadata view.
+|                
+*===========================================================================*/
 import React, { Component } from 'react';
 import { View, TouchableOpacity, ActivityIndicator, Text } from 'react-native';
 import { List, Divider } from 'react-native-paper';

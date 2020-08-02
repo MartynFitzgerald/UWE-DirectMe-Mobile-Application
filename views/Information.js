@@ -1,3 +1,16 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  Information.js  
+|  Description:  This is the file that holds the class of the information view.
+|                
+*===========================================================================*/
 import React, { Component } from 'react';
 import { View, ScrollView, Image, Linking  } from 'react-native';
 import { List, Divider, Text, Paragraph, Appbar } from 'react-native-paper';

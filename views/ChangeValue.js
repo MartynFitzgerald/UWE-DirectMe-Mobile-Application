@@ -1,3 +1,16 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  ChangeValue.js  
+|  Description:  This is the file that holds the class of the change value view.
+|                
+*===========================================================================*/
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, TextInput, FlatList, Image, Dimensions, Picker } from 'react-native';
 import { Title } from 'react-native-paper';

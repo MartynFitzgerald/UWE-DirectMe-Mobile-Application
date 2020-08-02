@@ -1,9 +1,21 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  Login.js  
+|  Description:  This is the file that holds the class of the login view.
+|                
+*===========================================================================*/
 import React, { Component } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Image, Keyboard, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import hash from 'object-hash';
-
 //Import styles.
 import style from '../styles/General';
 import schemes from '../styles/ColourSchemes';
@@ -23,7 +35,6 @@ export default class LoginScreen extends Component {
       password: 'Password!123' // TODO: Remove values on launch
     };
   }
-
   setStyle = async () => {
     try {
       var scheme = await schemes.colours();
@@ -33,34 +44,28 @@ export default class LoginScreen extends Component {
       console.error(error);
     }
   };
-
   componentDidMount() {
+    const { styles, colors} = this.state;
     this.setStyle();
     this.locationRequest();
     storage.get(`userLocal`)
     .then((user) => {
       if (user != undefined || user != null) {
         Keyboard.dismiss();
-        this.props.navigation.navigate('NavigationBar', {setStyle: () => this.setStyle, styles: this.state.styles, colors: this.state.colors});
+        this.props.navigation.navigate('NavigationBar', {setStyle: () => this.setStyle, styles: styles, colors: colors});
       } 
     });
   };
-
   locationRequest = async () => {
     try {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
       }
-      //Get Location
-      //let location = await Location.getCurrentPositionAsync({});
-      //console.log(location);
     } catch (error) {
       console.error(error);
     }
   };
-
-
   render() {
     const { styles, colors, emailAddress, password } = this.state;
     return (
@@ -141,7 +146,7 @@ export default class LoginScreen extends Component {
               await storage.set(`userAPI`, user_data);
               await storage.set(`userLocal`, user_data).then(
                 Keyboard.dismiss(),
-                this.props.navigation.navigate('NavigationBar', {styles: this.state.styles, colors: this.state.colors}),
+                this.props.navigation.navigate('NavigationBar', {styles: styles, colors: colors}),
               );
             } else {
               //Output alert to aware user of invalid password input.
@@ -155,13 +160,12 @@ export default class LoginScreen extends Component {
               );
             }
             return;
-          }}
-        >
+        }}>
           <Text style={[styles.centerVerticalText, styles.lightGreyText]}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.buttonContainer]}
-          onPress={() => this.props.navigation.navigate('Register', {styles: this.state.styles, colors: this.state.colors})}
+          onPress={() => this.props.navigation.navigate('Register', {styles: styles, colors: colors})}
         >
             <Text style={[styles.centerVerticalText, styles.lightGreyText]}>Register</Text>
         </TouchableOpacity>

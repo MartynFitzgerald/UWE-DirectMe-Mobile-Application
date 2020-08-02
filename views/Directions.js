@@ -1,3 +1,16 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  Directions.js  
+|  Description:  This is the file that holds the class of the directions view.
+|                
+*===========================================================================*/
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Rating } from 'react-native-elements';

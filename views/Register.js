@@ -1,3 +1,16 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  Register.js  
+|  Description:  This is the file that holds the class of the register view.
+|                
+*===========================================================================*/
 import React, { Component } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -194,7 +207,7 @@ export default class RegisterScreen extends Component {
                   "Congratulations You've Registered",
                   `You've registered to DirectMe, Please try to login.`,
                   [
-                    { text: 'Try Again', onPress: () => console.log('Try Again Pressed') },
+                    { text: 'Close', onPress: () => console.log('Close Pressed') },
                   ],
                   { cancelable: true }
                 );

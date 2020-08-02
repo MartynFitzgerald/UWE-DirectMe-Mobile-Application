@@ -1,3 +1,17 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  Storage.js  
+|  Description:  This is the file that holds all the functionality to the local
+|                storage.
+|                
+*===========================================================================*/
 import { AsyncStorage } from 'react-native';
 /* 
   A function that stores information using the name and data inputs.

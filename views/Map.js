@@ -1,3 +1,16 @@
+/*=============================================================================
+|      Editors:  Martyn Fitzgerald - 16025948
+|
+|  Module Code:  UFCFR4-45-3
+| Module Title:  Computing Project
+|
+|   Instructor:  Paul Raynor
+|     Due Date:  23/04/2020 Extended Till 03/08/2020
+|
+|    File Name:  map.js  
+|  Description:  This is the file that holds the class of the map view.
+|                
+*===========================================================================*/
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Alert } from 'react-native';
 import { SearchBar } from 'react-native-elements';
@@ -95,7 +108,7 @@ export default class Map extends Component {
 
   makeRequest = async () => {
     const { search, minSearchLength, user, userLatitude, userLongitude } = this.state;
-  
+
     if (search.length < minSearchLength) {
       //Output alert to aware user of invalid search input.
       Alert.alert(
@@ -197,25 +210,25 @@ export default class Map extends Component {
     });
   }
 
-  navigate = () => {
-    this.setState({isUserCameraLinkedVisible: true});
-    this.setState({isCarParkInfoVisible: false});
-    this.setCameraPosition();
-    this.checkLocation();
-  };
-
   checkLocation = () => {
     const { isCarParkPaymentVisible, userLatitude, userLongitude, carParkLatitude, carParkLongitude } = this.state;
     if (isCarParkPaymentVisible == false) {
       let distance = (Math.sqrt(Math.pow(69.1 * (carParkLatitude - userLatitude), 2) + Math.pow(69.1 * (userLongitude - carParkLongitude) * Math.cos(carParkLatitude / 57.3), 2)) * 1609.344);
 
-      if (distance <= 50){
+      if (distance <= 50000){
         this.setState({isCarParkPaymentVisible: true});
       }
       else {
         setTimeout(this.checkLocation, 30000);
       }
     }
+  };
+
+  navigate = () => {
+    this.setState({isUserCameraLinkedVisible: true});
+    this.setState({isCarParkInfoVisible: false});
+    this.setCameraPosition();
+    this.checkLocation();
   };
 
   pay = () => {
