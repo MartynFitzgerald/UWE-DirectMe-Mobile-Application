@@ -215,7 +215,7 @@ export default class Map extends Component {
     if (isCarParkPaymentVisible == false) {
       let distance = (Math.sqrt(Math.pow(69.1 * (carParkLatitude - userLatitude), 2) + Math.pow(69.1 * (userLongitude - carParkLongitude) * Math.cos(carParkLatitude / 57.3), 2)) * 1609.344);
 
-      if (distance <= 50000){
+      if (distance <= 50){
         this.setState({isCarParkPaymentVisible: true});
       }
       else {
