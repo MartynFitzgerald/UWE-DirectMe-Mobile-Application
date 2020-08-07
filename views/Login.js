@@ -31,8 +31,8 @@ export default class LoginScreen extends Component {
     this.state = {
       colors: {},
       styles: {},
-      emailAddress: 'martynfitzzz2014@gmail.com', // TODO: Remove values on launch
-      password: 'Password!123' // TODO: Remove values on launch
+      emailAddress: '', 
+      password: ''
     };
   }
   setStyle = async () => {

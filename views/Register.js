@@ -197,7 +197,7 @@ export default class RegisterScreen extends Component {
                   phone_number: phoneNumber,
                   darkmode: 0,
                   radius: 1500,
-                  profile_picture: 'male1',
+                  profile_picture: 'avatar1.png',
                   scheme: 'None',
                 };
                 //Insert into API.
