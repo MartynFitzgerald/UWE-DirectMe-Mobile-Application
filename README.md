@@ -11,15 +11,17 @@ This component is a mobile application that will be developed for Android and iO
 
 This is a diagram that shows the key of the state transition.
 
-<div align="center">
-![State TransitionKey](./git_screenshots/State_Key.jpg)
-</div>
+<p align="center">
+  <img align="center" alt="State Transition Key" src="./git_screenshots/State_Key.jpg"/>
+</p>
 
 This is a diagram that shows how the system shall be used.
 
-<div align="center">
-![State Transition Diagram](./git_screenshots/DirectMe_Mobile.png)
-</div>
+<p align="center">
+  <img align="center" alt="State Transition Diagram" src="./git_screenshots/DirectMe_Mobile.png"/>
+</p>
+
+<hr>
 
 ## Software Used
 
