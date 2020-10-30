@@ -32,7 +32,7 @@
     "react-native-uuid": "^1.4.9"
   },
   "devDependencies": {
-    "babel-preset-expo": "^8.1.0",
+    "babel-preset-expo": "^8.3.0",
     "@babel/core": "^7.12.3"
   },
   "private": true
